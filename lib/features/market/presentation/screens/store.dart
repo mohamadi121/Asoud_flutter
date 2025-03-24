@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +21,6 @@ import 'package:asood/features/market/presentation/widgets/themes_screen.dart';
 import 'package:asood/features/vendor/presentation/blocs/vendor/vendor_bloc.dart';
 import 'package:asood/features/vendor/presentation/blocs/workspace/workspace_bloc.dart';
 
-@RoutePage()
 class StoreScreen extends StatefulWidget {
   const StoreScreen({super.key, required this.market});
   final MarketModel market;

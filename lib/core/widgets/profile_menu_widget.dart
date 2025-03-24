@@ -1,9 +1,9 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import 'package:asood/core/constants/constants.dart';
-import 'package:asood/core/router/app_router.dart';
+import 'package:asood/core/router/app_routers.dart';
 import 'package:asood/core/utils/secure_storage.dart';
+import 'package:go_router/go_router.dart';
 
 import 'custom_button.dart';
 import 'custom_textfield.dart';
@@ -97,7 +97,7 @@ class ProfileDialog extends StatelessWidget {
           //profile
           InkWell(
             onTap: () {
-              context.router.push(const VendorProfileRoute());
+              context.push(Routes.vendorProfile);
             },
             child: Container(
               height: Dimensions.height * 0.05,
@@ -144,7 +144,7 @@ class ProfileDialog extends StatelessWidget {
             onTap: () {
               SecureStorage().deleteSecureStorage('token');
 
-              context.router.replace(LoginRoute());
+              context.go(Routes.login);
             },
             child: Container(
               height: Dimensions.height * 0.05,

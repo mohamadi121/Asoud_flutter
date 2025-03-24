@@ -1,5 +1,5 @@
 import 'package:asood/core/constants/constants.dart';
-import 'package:asood/core/router/app_router.dart';
+import 'package:asood/core/router/app_routers.dart';
 import 'package:asood/features/auth/domain/repositories/user_repository.dart';
 import 'package:asood/features/auth/presentation/blocs/login_bloc/login_bloc.dart';
 import 'package:asood/features/business_card/bloc/map_bloc.dart';
@@ -17,7 +17,6 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
@@ -30,8 +29,8 @@ void main() async {
 }
 
 class Asood extends StatelessWidget {
-  Asood({super.key});
-  final _appRouter = AppRouter();
+  const Asood({super.key});
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([
@@ -65,7 +64,7 @@ class Asood extends StatelessWidget {
             child: child as Widget,
           );
         },
-        routerConfig: _appRouter.config(),
+        routerConfig: AppRouter.router,
         debugShowCheckedModeBanner: false,
         localizationsDelegates: const [
           GlobalMaterialLocalizations.delegate,

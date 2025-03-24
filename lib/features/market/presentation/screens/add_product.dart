@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +7,6 @@ import 'package:asood/core/widgets/custom_textfield.dart';
 import 'package:asood/core/widgets/default_appbar.dart';
 import 'package:asood/features/market/presentation/blocs/add_product/add_product_bloc.dart';
 
-@RoutePage()
 class AddProduct extends StatefulWidget {
   const AddProduct({super.key, required this.marketId});
 
@@ -2579,10 +2577,9 @@ class _AddProductState extends State<AddProduct> {
 
                                             contentPadding: EdgeInsets.zero,
                                             dense: true,
-                                            fillColor:
-                                                WidgetStateProperty.all(
-                                                  Colora.primaryColor,
-                                                ),
+                                            fillColor: WidgetStateProperty.all(
+                                              Colora.primaryColor,
+                                            ),
 
                                             value:
                                                 1, // Assign a value of 1 to this option
@@ -2621,10 +2618,9 @@ class _AddProductState extends State<AddProduct> {
                                               vertical:
                                                   VisualDensity.minimumDensity,
                                             ),
-                                            fillColor:
-                                                WidgetStateProperty.all(
-                                                  Colora.primaryColor,
-                                                ),
+                                            fillColor: WidgetStateProperty.all(
+                                              Colora.primaryColor,
+                                            ),
 
                                             value:
                                                 1, // Assign a value of 1 to this option

@@ -3,11 +3,10 @@ import 'package:asood/core/widgets/search_box.dart';
 import 'package:asood/core/widgets/simple_bot_navbar.dart';
 import 'package:asood/core/widgets/store_card.dart';
 import 'package:asood/features/vendor/presentation/blocs/workspace/workspace_bloc.dart';
-import 'package:auto_route/auto_route.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-@RoutePage()
 class StoreInfoScreen extends StatelessWidget {
   const StoreInfoScreen({super.key});
 

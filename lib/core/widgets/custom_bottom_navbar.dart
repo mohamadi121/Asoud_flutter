@@ -1,13 +1,13 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 import 'package:asood/core/constants/constants.dart';
-import 'package:asood/core/router/app_router.dart';
+import 'package:asood/core/router/app_routers.dart';
 import 'package:asood/core/widgets/colorpicker.dart';
 import 'package:asood/features/market/presentation/blocs/bloc/market_bloc.dart';
 import 'package:asood/features/vendor/presentation/blocs/vendor/vendor_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
   final int? marketId;
@@ -159,7 +159,7 @@ void showBottomSheet(
                   //messenger
                   IconButton(
                     onPressed: () {
-                      context.router.push(const ChatListRoute());
+                      context.push(Routes.chatList);
                     },
                     icon: const Icon(
                       Icons.messenger_outline,
@@ -170,7 +170,7 @@ void showBottomSheet(
                   //shopping cart
                   IconButton(
                     onPressed: () {
-                      context.router.push(const ShoppingCartRoute());
+                      context.push(Routes.shoppingCart);
                     },
                     icon: const Icon(
                       Icons.shopping_cart_rounded,
@@ -188,7 +188,7 @@ void showBottomSheet(
                   //Takhfif Route
                   IconButton(
                     onPressed: () {
-                      context.router.push(const TakhfifRoute());
+                      context.push(Routes.takhfif);
                       /*  Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -285,7 +285,7 @@ void showBottomSheet(
                   // edit store info
                   IconButton(
                     onPressed: () {
-                      context.router.push(const EditStoreInfoRoute());
+                      context.push(Routes.editStoreInfo);
                       /*      Navigator.push(
                           context,
                           MaterialPageRoute(

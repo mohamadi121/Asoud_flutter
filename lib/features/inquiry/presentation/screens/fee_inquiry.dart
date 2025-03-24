@@ -1,14 +1,11 @@
-// ignore_for_file: avoid_unnecessary_containers, sized_box_for_whitespace
-
 import 'package:asood/core/constants/constants.dart';
 import 'package:asood/core/widgets/custom_button.dart';
 import 'package:asood/core/widgets/custom_textfield.dart';
 import 'package:asood/core/widgets/default_appbar.dart';
 import 'package:asood/core/widgets/simple_bot_navbar.dart';
-import 'package:auto_route/auto_route.dart';
+
 import 'package:flutter/material.dart';
 
-@RoutePage()
 class FeeInquiryScreen extends StatefulWidget {
   const FeeInquiryScreen({super.key});
 

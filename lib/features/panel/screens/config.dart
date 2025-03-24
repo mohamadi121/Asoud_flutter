@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import 'package:asood/core/constants/constants.dart';
@@ -7,7 +6,6 @@ import 'package:asood/core/widgets/default_appbar.dart';
 import 'package:asood/core/widgets/search_box.dart';
 import 'package:asood/core/widgets/simple_bot_navbar.dart';
 
-@RoutePage()
 class PanelConfigScreen extends StatefulWidget {
   const PanelConfigScreen({super.key});
 

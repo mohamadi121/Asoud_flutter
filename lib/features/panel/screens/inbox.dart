@@ -3,10 +3,9 @@ import 'package:asood/core/widgets/default_appbar.dart';
 import 'package:asood/core/widgets/search_box.dart';
 import 'package:asood/core/widgets/simple_bot_navbar.dart';
 import 'package:asood/features/panel/widgets/message_card.dart';
-import 'package:auto_route/auto_route.dart';
+
 import 'package:flutter/material.dart';
 
-@RoutePage()
 class PanelInboxScreen extends StatelessWidget {
   const PanelInboxScreen({super.key});
 

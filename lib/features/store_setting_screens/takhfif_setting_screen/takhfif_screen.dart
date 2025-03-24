@@ -2,10 +2,9 @@ import 'package:asood/core/constants/constants.dart';
 import 'package:asood/core/widgets/custom_button.dart';
 import 'package:asood/core/widgets/custom_textfield.dart';
 import 'package:asood/core/widgets/default_appbar.dart';
-import 'package:auto_route/auto_route.dart';
+
 import 'package:flutter/material.dart';
 
-@RoutePage()
 class TakhfifScreen extends StatelessWidget {
   const TakhfifScreen({super.key});
 

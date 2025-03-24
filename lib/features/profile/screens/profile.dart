@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import 'package:asood/core/constants/constants.dart';
@@ -8,7 +7,6 @@ import 'package:asood/core/widgets/default_appbar.dart';
 import 'package:asood/core/widgets/simple_bot_navbar.dart';
 import 'package:asood/features/profile/widget/picture_selector.dart';
 
-@RoutePage()
 class VendorProfileScreen extends StatelessWidget {
   const VendorProfileScreen({super.key});
 

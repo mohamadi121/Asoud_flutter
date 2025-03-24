@@ -1,7 +1,7 @@
 import 'package:asood/features/vendor/presentation/widget/basic_info.dart';
 import 'package:asood/features/vendor/presentation/widget/contacts_info.dart';
 import 'package:asood/features/vendor/presentation/widget/location_info.dart';
-import 'package:auto_route/auto_route.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,7 +11,6 @@ import 'package:asood/core/utils/snack_bar_util.dart';
 import 'package:asood/core/widgets/default_appbar.dart';
 import 'package:asood/features/vendor/presentation/blocs/create_workspace/create_workspace_bloc.dart';
 
-@RoutePage()
 class CreateWorkSpaceScreen extends StatefulWidget {
   const CreateWorkSpaceScreen({super.key});
 

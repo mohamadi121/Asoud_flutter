@@ -4,10 +4,9 @@ import 'package:asood/core/widgets/default_appbar.dart';
 import 'package:asood/core/widgets/simple_bot_navbar.dart';
 import 'package:asood/features/inquiry/presentation/widget/inquiry_top_bar_extended.dart';
 import 'package:asood/features/inquiry/presentation/widget/product_service_inquiry_list_widget.dart';
-import 'package:auto_route/auto_route.dart';
+
 import 'package:flutter/material.dart';
 
-@RoutePage()
 class OrdersListScreen extends StatelessWidget {
   const OrdersListScreen({super.key});
 

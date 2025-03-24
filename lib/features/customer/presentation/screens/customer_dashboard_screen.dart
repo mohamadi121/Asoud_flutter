@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,7 +7,6 @@ import 'package:asood/core/widgets/order_card_widget.dart';
 import 'package:asood/core/widgets/store_card.dart';
 import 'package:asood/features/vendor/presentation/blocs/workspace/workspace_bloc.dart';
 
-@RoutePage()
 class CustomerDashboardScreen extends StatefulWidget {
   const CustomerDashboardScreen({super.key});
 

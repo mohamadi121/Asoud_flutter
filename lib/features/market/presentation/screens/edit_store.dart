@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 import 'package:asood/core/constants/constants.dart';
@@ -8,7 +7,6 @@ import 'pages/basic_info.dart';
 import 'pages/contacts_info.dart';
 import 'pages/location_info.dart';
 
-@RoutePage()
 class EditStoreInfoScreen extends StatefulWidget {
   const EditStoreInfoScreen({super.key});
 

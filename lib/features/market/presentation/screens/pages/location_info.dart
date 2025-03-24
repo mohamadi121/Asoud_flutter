@@ -1,10 +1,11 @@
 import 'package:asood/core/constants/constants.dart';
-import 'package:asood/core/router/app_router.dart';
+import 'package:asood/core/router/app_routers.dart';
 import 'package:asood/core/widgets/custom_button.dart';
 import 'package:asood/core/widgets/custom_dialog.dart';
 import 'package:asood/core/widgets/custom_textfield.dart';
-import 'package:auto_route/auto_route.dart';
+
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class LocationInfo extends StatefulWidget {
   const LocationInfo({super.key});
@@ -296,8 +297,8 @@ class _LocationInfoState extends State<LocationInfo> {
                                                   children: [
                                                     CustomButton(
                                                       onPress: () {
-                                                        context.router.push(
-                                                          const StoresRoute(),
+                                                        context.push(
+                                                          Routes.store,
                                                         );
                                                         /*   Navigator.push(
                                                             context,

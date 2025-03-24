@@ -1,18 +1,14 @@
-// ignore_for_file: unused_import, sized_box_for_whitespace
-
 import 'package:asood/core/constants/constants.dart';
-import 'package:asood/core/router/app_router.dart';
-import 'package:auto_route/auto_route.dart';
+import 'package:asood/core/router/app_routers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:go_router/go_router.dart';
 
 import '../blocs/login_bloc/login_bloc.dart';
 
-import '../../../vendor/presentation/screens/home.dart';
-
-@RoutePage()
 class OtpScreen extends StatefulWidget {
   const OtpScreen({super.key});
   static const routeName = '/otpScreen';
@@ -45,7 +41,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     child: BlocConsumer<LoginBloc, LoginState>(
                       listener: (context, state) {
                         if (state.status == LoginStatus.success) {
-                          context.router.replace(VendorHomeRoute(title: ''));
+                          context.go(Routes.vendorHome, extra: "");
                         } else if (state.status == LoginStatus.error) {
                           if (state.error == 'Pin not valid') {
                             Fluttertoast.showToast(

@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,7 +9,6 @@ import 'package:asood/features/inquiry/presentation/blocs/inquiry_bloc.dart';
 import 'package:asood/features/inquiry/presentation/widget/inquiry_top_bar_widget.dart';
 import 'package:asood/features/inquiry/presentation/widget/product_service_inquiry_list_widget.dart';
 
-@RoutePage()
 class InquiryDetailsScreen extends StatelessWidget {
   const InquiryDetailsScreen({super.key});
 

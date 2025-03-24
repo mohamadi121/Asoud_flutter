@@ -1,5 +1,5 @@
 import 'package:asood/core/constants/constants.dart';
-import 'package:asood/core/router/app_router.dart';
+import 'package:asood/core/router/app_routers.dart';
 import 'package:asood/core/utils/secure_storage.dart';
 import 'package:asood/core/utils/snack_bar_util.dart';
 import 'package:asood/core/widgets/custom_button.dart';
@@ -7,14 +7,13 @@ import 'package:asood/core/widgets/custom_dialog.dart';
 import 'package:asood/core/widgets/custom_textfield.dart';
 import 'package:asood/core/widgets/map_widget_2.dart';
 import 'package:asood/features/vendor/presentation/blocs/create_workspace/create_workspace_bloc.dart';
-import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_map/flutter_map.dart';
+
+import 'package:go_router/go_router.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:location/location.dart';
 
 class LocationInfo extends StatefulWidget {
   final CreateWorkSpaceBloc bloc;
@@ -625,9 +624,8 @@ class _LocationInfoState extends State<LocationInfo> {
                                               CustomButton(
                                                 onPress: () {
                                                   Navigator.pop(context);
-                                                  context.router.pushNamed(
-                                                    '/stores',
-                                                  );
+
+                                                  context.push(Routes.store);
 
                                                   widget.bloc.add(
                                                     const ChangeTabView(
@@ -818,10 +816,10 @@ class _LocationInfoState extends State<LocationInfo> {
                                                             children: [
                                                               CustomButton(
                                                                 onPress: () {
-                                                                  context.router
-                                                                      .push(
-                                                                        const StoresRoute(),
-                                                                      );
+                                                                  context.push(
+                                                                    Routes
+                                                                        .store,
+                                                                  );
                                                                   /*        Navigator.push(
                                                                   context,
                                                                   MaterialPageRoute(

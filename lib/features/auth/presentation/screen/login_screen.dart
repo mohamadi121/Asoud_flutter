@@ -1,17 +1,14 @@
-// ignore_for_file: deprecated_member_use, avoid_print, unnecessary_import
-
 import 'package:asood/core/constants/constants.dart';
-import 'package:asood/core/router/app_router.dart';
-import 'package:auto_route/auto_route.dart';
+import 'package:asood/core/router/app_routers.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
 import '../blocs/login_bloc/login_bloc.dart';
 
-@RoutePage()
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
@@ -54,7 +51,8 @@ class LoginScreen extends StatelessWidget {
                       context,
                       MaterialPageRoute(builder: (context) => const OtpScreen()),
                     ); */
-                    context.router.replace(const OtpRoute());
+
+                    context.go(Routes.otp);
                   }
                   if (state.status == LoginStatus.error) {
                     ScaffoldMessenger.of(context).showSnackBar(

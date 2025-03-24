@@ -1,18 +1,17 @@
 import 'package:asood/core/constants/constants.dart';
 import 'package:asood/core/widgets/default_appbar.dart';
 import 'package:asood/core/widgets/simple_bot_navbar.dart';
-import 'package:auto_route/annotations.dart';
+
 import 'package:flutter/material.dart';
 
-@RoutePage()
-class ShoppingCart extends StatefulWidget {
-  const ShoppingCart({super.key});
+class ShoppingCartPage extends StatefulWidget {
+  const ShoppingCartPage({super.key});
 
   @override
-  State<ShoppingCart> createState() => _ShoppingCartState();
+  State<ShoppingCartPage> createState() => _ShoppingCartPageState();
 }
 
-class _ShoppingCartState extends State<ShoppingCart> {
+class _ShoppingCartPageState extends State<ShoppingCartPage> {
   bool showInvoice = false;
   bool showFinalMessage = false;
 
@@ -1292,9 +1291,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
                         contentPadding: EdgeInsets.zero,
                         dense: true,
-                        fillColor: WidgetStateProperty.all(
-                          Colora.primaryColor,
-                        ),
+                        fillColor: WidgetStateProperty.all(Colora.primaryColor),
 
                         value: 1, // Assign a value of 1 to this option
                         groupValue:
@@ -1327,9 +1324,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
                         contentPadding: EdgeInsets.zero,
                         dense: true,
-                        fillColor: WidgetStateProperty.all(
-                          Colora.primaryColor,
-                        ),
+                        fillColor: WidgetStateProperty.all(Colora.primaryColor),
 
                         value: 1, // Assign a value of 1 to this option
                         groupValue:
@@ -1362,9 +1357,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
                         contentPadding: EdgeInsets.zero,
                         dense: true,
-                        fillColor: WidgetStateProperty.all(
-                          Colora.primaryColor,
-                        ),
+                        fillColor: WidgetStateProperty.all(Colora.primaryColor),
 
                         value: 1, // Assign a value of 1 to this option
                         groupValue:
@@ -1397,9 +1390,7 @@ class _ShoppingCartState extends State<ShoppingCart> {
 
                         contentPadding: EdgeInsets.zero,
                         dense: true,
-                        fillColor: WidgetStateProperty.all(
-                          Colora.primaryColor,
-                        ),
+                        fillColor: WidgetStateProperty.all(Colora.primaryColor),
 
                         value: 1, // Assign a value of 1 to this option
                         groupValue:

@@ -1,7 +1,8 @@
 import 'package:asood/core/constants/constants.dart';
-import 'package:asood/core/router/app_router.dart';
-import 'package:auto_route/auto_route.dart';
+import 'package:asood/core/router/app_routers.dart';
+
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MessageCardWidget extends StatelessWidget {
   const MessageCardWidget({super.key});
@@ -95,7 +96,7 @@ class MessageCardWidget extends StatelessWidget {
                 const SizedBox(height: 20),
                 InkWell(
                   onTap: () {
-                    context.router.push(const PanelConfigRoute());
+                    context.push(Routes.panelConfig);
                   },
                   child: Container(
                     height: 35,

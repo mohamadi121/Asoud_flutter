@@ -3,11 +3,10 @@ import 'package:asood/core/widgets/colorpicker.dart';
 import 'package:asood/core/widgets/custom_button.dart';
 import 'package:asood/core/widgets/default_appbar.dart';
 import 'package:asood/core/widgets/simple_bot_navbar.dart';
-import 'package:auto_route/auto_route.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
-@RoutePage()
 class ColorSettingScreen extends StatefulWidget {
   const ColorSettingScreen({super.key});
 

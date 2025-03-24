@@ -1,7 +1,8 @@
-import 'package:asood/core/router/app_router.dart';
-import 'package:auto_route/auto_route.dart';
+import 'package:asood/core/router/app_routers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 
 class MenuDialog extends StatelessWidget {
   const MenuDialog({super.key});
@@ -14,7 +15,7 @@ class MenuDialog extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () {
-              context.router.push(VendorHomeRoute(title: "home"));
+              context.push(Routes.vendorHome, extra: "home");
               /* Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -28,7 +29,8 @@ class MenuDialog extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              context.router.push(const RoutesListRoute());
+              // context.router.push(const RoutesListRoute());
+              context.push(Routes.screenLists);
               /*  Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -40,7 +42,7 @@ class MenuDialog extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              context.router.push(const VendorDashboardRoute());
+              context.push(Routes.vendorDashboard);
               /*    Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -52,7 +54,7 @@ class MenuDialog extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              context.router.push(const CustomerDashboardRoute());
+              context.push(Routes.customerDashboard);
               /*  Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -64,7 +66,7 @@ class MenuDialog extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              context.router.push(const SettingsPageRoute());
+              context.push(Routes.settings);
               /*   Navigator.push(
                 context,
                 MaterialPageRoute(

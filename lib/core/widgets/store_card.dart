@@ -1,13 +1,12 @@
-// ignore_for_file: unused_import, sized_box_for_whitespace
-
-import 'package:auto_route/auto_route.dart';
+import 'package:asood/core/router/app_routers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'package:asood/core/models/market_model.dart';
-import 'package:asood/core/router/app_router.dart';
+
 import 'package:asood/features/vendor/presentation/blocs/workspace/workspace_bloc.dart';
 
 import '../constants/constants.dart';
@@ -365,10 +364,7 @@ class _StoreCardState extends State<StoreCard> {
                           CustomButton(
                             width: 110,
                             onPress: () {
-                              context.router.push(
-                                StoreRoute(market: widget.market),
-                              );
-
+                              context.push(Routes.store, extra: widget.market);
                               /*   Navigator.push(
                             context,
                             MaterialPageRoute(

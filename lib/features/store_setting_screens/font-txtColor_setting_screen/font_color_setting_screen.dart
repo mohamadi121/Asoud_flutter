@@ -4,11 +4,10 @@ import 'package:asood/core/widgets/custom_button.dart';
 import 'package:asood/core/widgets/default_appbar.dart';
 import 'package:asood/core/widgets/simple_bot_navbar.dart';
 import 'package:asood/features/store_setting_screens/widgets/font_list_widget.dart';
-import 'package:auto_route/auto_route.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
-@RoutePage()
 class FontColorSettingScreen extends StatefulWidget {
   const FontColorSettingScreen({super.key});
 

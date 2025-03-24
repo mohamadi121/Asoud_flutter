@@ -1,12 +1,11 @@
 import 'package:asood/core/constants/constants.dart';
 import 'package:asood/core/models/market_model.dart';
 import 'package:asood/core/widgets/custom_bottom_navbar.dart';
-import 'package:auto_route/auto_route.dart';
+
 import 'package:flutter/material.dart';
 
 import '../widgets/store_appbar.dart';
 
-@RoutePage()
 class EditStoreScreen extends StatelessWidget {
   const EditStoreScreen({super.key, required this.market});
   final MarketModel market;
@@ -154,9 +153,7 @@ class _ScrollableButtonListState extends State<ScrollableButtonList> {
                             ? WidgetStateProperty.all(Colora.primaryColor)
                             : WidgetStateProperty.all(Colors.white),
                     shadowColor: WidgetStateProperty.all(Colors.transparent),
-                    elevation: WidgetStateProperty.all(
-                      0,
-                    ), // Remove box shadow
+                    elevation: WidgetStateProperty.all(0), // Remove box shadow
                     shape: WidgetStateProperty.all(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25.0),

@@ -1,12 +1,12 @@
 // Temp File for new screen links
 import 'package:asood/core/constants/constants.dart';
-import 'package:asood/core/router/app_router.dart';
+import 'package:asood/core/router/app_routers.dart';
 import 'package:asood/core/widgets/custom_button.dart';
 import 'package:asood/core/widgets/default_appbar.dart';
-import 'package:auto_route/auto_route.dart';
-import 'package:flutter/material.dart';
 
-@RoutePage()
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
 class ScreensListScreen extends StatelessWidget {
   const ScreensListScreen({super.key});
 
@@ -60,7 +60,7 @@ class VendorScreens extends StatelessWidget {
           children: [
             CustomButton(
               onPress: () {
-                context.router.push(const VendorDashboardRoute());
+                context.push(Routes.vendorDashboard);
                 /*        Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -73,7 +73,7 @@ class VendorScreens extends StatelessWidget {
             const SizedBox(height: 10),
             CustomButton(
               onPress: () {
-                context.router.push(const VendorProfileRoute());
+                context.push(Routes.vendorProfile);
                 /*   Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -109,7 +109,7 @@ class CustomerScreens extends StatelessWidget {
                   builder: (context) => const CustomerDashboardScreen(),
                 ),
               ); */
-                context.router.push(const CustomerDashboardRoute());
+                context.push(Routes.customerDashboard);
               },
               text: "داشبورد خریدار",
             ),
@@ -139,7 +139,7 @@ class InquiryScreens extends StatelessWidget {
                     builder: (context) => const InquiryRequestsScreen(),
                   ),
                 ); */
-                context.router.push(const InquiryRequestsRoute());
+                context.push(Routes.inquiryRequests);
               },
               text: "لیست استعلام",
               textColor: Colors.white,
@@ -153,7 +153,7 @@ class InquiryScreens extends StatelessWidget {
                     builder: (context) => const FeeInquiryScreen(),
                   ),
                 ); */
-                context.router.push(const FeeInquiryRoute());
+                context.push(Routes.feeInquiry);
               },
               text: "استعلام بها",
               textColor: Colors.white,
@@ -167,7 +167,7 @@ class InquiryScreens extends StatelessWidget {
                     builder: (context) => const OrdersListScreen(),
                   ),
                 ); */
-                context.router.push(const OrdersListRoute());
+                context.push(Routes.ordersLists);
               },
               text: "لیست سفارشات",
               textColor: Colors.white,
@@ -181,7 +181,8 @@ class InquiryScreens extends StatelessWidget {
                     builder: (context) => const SubmitFeeInquiryScreen(),
                   ),
                 ); */
-                context.router.push(const SubmitFeeInquiryRoute());
+
+                context.push(Routes.submitFeeInquiry);
               },
               text: "ثبت استعلام بها",
               textColor: Colors.white,
@@ -195,7 +196,8 @@ class InquiryScreens extends StatelessWidget {
                     builder: (context) => const InquiryDetailsScreen(),
                   ),
                 ); */
-                context.router.push(const InquiryDetailsRoute());
+
+                context.push(Routes.inquiryDetails);
               },
               text: "صورت استعلام",
               textColor: Colors.white,
@@ -209,7 +211,8 @@ class InquiryScreens extends StatelessWidget {
                     builder: (context) => const InquiryResponseScreen(),
                   ),
                 ); */
-                context.router.push(const InquiryResponseRoute());
+
+                context.push(Routes.inquiryResponse);
               },
               text: "پاسخ به استعلام بها",
               textColor: Colors.white,
@@ -240,7 +243,8 @@ class OrderScreens extends StatelessWidget {
                     builder: (context) => const OrdersListScreen(),
                   ),
                 ); */
-                context.router.push(const OrdersListRoute());
+
+                context.push(Routes.ordersLists);
               },
               text: "لیست سفارشات",
               textColor: Colors.white,
@@ -272,7 +276,8 @@ class PanelScreens extends StatelessWidget {
                     builder: (context) => const PanelInboxScreen(),
                   ),
                 ); */
-                context.router.push(const PanelInboxRoute());
+
+                context.push(Routes.panelInbox);
               },
               text: "صندوق پیام",
               textColor: Colors.white,
@@ -285,7 +290,8 @@ class PanelScreens extends StatelessWidget {
                     MaterialPageRoute(
                       builder: (context) => const PanelConfigScreen(),
                     )); */
-                context.router.push(const PanelConfigRoute());
+
+                context.push(Routes.panelConfig);
               },
               text: "تنظیمات",
             ),

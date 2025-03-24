@@ -1,13 +1,12 @@
-import 'package:asood/core/constants/constants.dart';
-import 'package:asood/features/market/presentation/blocs/bloc/market_bloc.dart';
-import 'package:asood/features/market/presentation/screens/add_product.dart';
-import 'package:asood/features/vendor/presentation/blocs/vendor/vendor_bloc.dart';
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 
-@RoutePage()
+import 'package:asood/core/constants/constants.dart';
+import 'package:asood/features/market/presentation/blocs/bloc/market_bloc.dart';
+import 'package:asood/features/market/presentation/screens/add_product.dart';
+import 'package:asood/features/vendor/presentation/blocs/vendor/vendor_bloc.dart';
+
 class MultiViewSliderScreen extends StatefulWidget {
   const MultiViewSliderScreen({super.key});
 

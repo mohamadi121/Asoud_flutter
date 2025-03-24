@@ -1,11 +1,11 @@
-import 'package:asood/core/router/app_router.dart';
-import 'package:auto_route/auto_route.dart';
+import 'package:asood/core/router/app_routers.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../blocs/splash_bloc.dart';
 
-@RoutePage()
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
@@ -25,10 +25,11 @@ class SplashScreen extends StatelessWidget {
     return BlocListener<SplashBloc, SplashState>(
       listener: (context, state) {
         if (state.status == SplashStatus.exist) {
-          context.router.replace(VendorHomeRoute(title: ''));
+          context.go(Routes.vendorHome, extra: "");
           // Navigator.pushReplacementNamed(context, VendorHomeScreen.routeName);
         } else if (state.status == SplashStatus.notExist) {
-          context.router.replace(LoginRoute());
+          context.go(Routes.login);
+
           //  Navigator.pushReplacementNamed(context, LoginScreen.routeName);
         }
       },

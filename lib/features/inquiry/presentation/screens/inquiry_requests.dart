@@ -1,16 +1,15 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:asood/core/router/app_router.dart';
+import 'package:asood/core/router/app_routers.dart';
 import 'package:asood/core/widgets/custom_button.dart';
 import 'package:asood/core/widgets/default_appbar.dart';
 import 'package:asood/core/widgets/search_box.dart';
 import 'package:asood/core/widgets/simple_bot_navbar.dart';
 import 'package:asood/core/widgets/store_card.dart';
 import 'package:asood/features/vendor/presentation/blocs/workspace/workspace_bloc.dart';
+import 'package:go_router/go_router.dart';
 
-@RoutePage()
 class InquiryRequestsScreen extends StatelessWidget {
   const InquiryRequestsScreen({super.key});
 
@@ -50,7 +49,7 @@ class InquiryRequestsScreen extends StatelessWidget {
                   children: [
                     CustomButton(
                       onPress: () {
-                        context.router.push(const SubmitFeeInquiryRoute());
+                        context.push(Routes.submitFeeInquiry);
                         /*  Navigator.push(
                           context,
                           MaterialPageRoute(

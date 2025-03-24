@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 
@@ -72,7 +71,6 @@ Map dummyData = {
   ],
 };
 
-@RoutePage()
 class VendorHomeScreen extends StatefulWidget {
   const VendorHomeScreen({super.key, required this.title});
 
