@@ -1,4 +1,4 @@
-import 'package:asood/core/dio/api_status.dart';
+import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/features/auth/data/data_source/user_api_service.dart';
 
 class UserRepository {

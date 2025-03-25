@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:asood/core/dio/api_status.dart';
+import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/core/utils/secure_storage.dart';
 import 'package:asood/features/auth/domain/repositories/user_repository.dart';
 import 'package:bloc/bloc.dart';

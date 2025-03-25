@@ -1,20 +1,14 @@
-// ignore_for_file: unnecessary_null_comparison, unnecessary_type_check, unnecessary_import
-
 import 'dart:convert';
 
-import 'package:asood/core/utils/secure_storage.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
-import 'package:http/http.dart' as http;
+import 'package:asood/core/utils/secure_storage.dart';
 
 import 'error_response.dart';
 
 class ApiClient {
-  // final IsarObjectService<KeyValue> keyValueService =
-  //     IsarObjectService(KeyValueSchema);
   final String appBaseUrl;
 
   static const String noInternetMessage = 'عدم برقراری ارتباط با سرور';
@@ -23,7 +17,6 @@ class ApiClient {
   String? token;
   Map<String, String> _mainHeaders = {};
   readToken() async {
-    // token = await keyValueService.getValueByKey("token");
     token = await SecureStorage().readSecureStorage('token');
     updateHeader(token);
   }
@@ -261,9 +254,7 @@ class ApiClient {
     );
 
     if (response0.statusCode != 200 ||
-        response0.statusCode != 201 &&
-            response0.body != null &&
-            response0.body is! String) {
+        response0.statusCode != 201 && response0.body is! String) {
       var errorResponse = handleHttpError(response0.statusCode);
       response0 = http.Response(
         response0.body,

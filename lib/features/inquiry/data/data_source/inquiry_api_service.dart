@@ -2,12 +2,12 @@ import 'dart:io';
 
 import 'package:http/http.dart' as http;
 
-import 'package:asood/core/constants/links.dart';
-import 'package:asood/core/dio/api_client.dart';
-import 'package:asood/core/dio/api_status.dart';
+import 'package:asood/core/constants/ednpoints.dart';
+import 'package:asood/core/http_client/api_client.dart';
+import 'package:asood/core/http_client/api_status.dart';
 
 class InquiryAPIService {
-  ApiClient apiClient = ApiClient(appBaseUrl: '${BaseUrls.baseUrl}inquiry/');
+  ApiClient apiClient = ApiClient(appBaseUrl: '${Endpoints.baseUrl}inquiry/');
 
   Future submitInquiry(
     String inquiryType,

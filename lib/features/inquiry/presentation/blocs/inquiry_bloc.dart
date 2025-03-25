@@ -2,7 +2,7 @@
 
 import 'dart:io';
 
-import 'package:asood/core/dio/api_status.dart';
+import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/features/inquiry/data/model/inquiry_card_model.dart';
 import 'package:asood/features/inquiry/domain/inquiry_repository.dart';
 import 'package:bloc/bloc.dart';

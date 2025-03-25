@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:asood/core/dio/api_status.dart';
+import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/core/models/market_model.dart';
 import 'package:asood/features/vendor/domain/repository/market_repository.dart';
 import 'package:bloc/bloc.dart';

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:ui';
 
-import 'package:asood/core/dio/api_status.dart';
+import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/core/models/comment_model.dart';
 import 'package:asood/core/models/theme_model.dart';
 import 'package:asood/features/vendor/data/model/slider_model.dart';

@@ -1,6 +1,6 @@
 // ignore_for_file: unnecessary_type_check
 
-import 'package:asood/core/dio/api_status.dart';
+import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/core/models/market_model.dart';
 import 'package:asood/features/customer/data/model/customer_request_model.dart';
 import 'package:bloc/bloc.dart';

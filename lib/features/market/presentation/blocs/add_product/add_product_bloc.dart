@@ -1,4 +1,4 @@
-import 'package:asood/core/dio/api_status.dart';
+import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/features/market/data/model/product_model.dart';
 import 'package:asood/features/market/domain/repository/product_repository.dart';
 import 'package:bloc/bloc.dart';

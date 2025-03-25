@@ -1,6 +1,6 @@
-import 'package:asood/core/constants/links.dart';
-import 'package:asood/core/dio/api_client.dart';
-import 'package:asood/core/dio/api_status.dart';
+import 'package:asood/core/constants/ednpoints.dart';
+import 'package:asood/core/http_client/api_client.dart';
+import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/core/models/theme_model.dart';
 import 'package:asood/features/vendor/data/model/market_contact_model.dart';
 import 'package:asood/features/vendor/data/model/market_location_model.dart';
@@ -10,7 +10,7 @@ import 'package:image_picker/image_picker.dart';
 
 class MarketApiService {
   ApiClient apiClient = ApiClient(
-    appBaseUrl: '${BaseUrls.baseUrl}market/user/',
+    appBaseUrl: '${Endpoints.baseUrl}market/user/',
   );
 
   //create market base

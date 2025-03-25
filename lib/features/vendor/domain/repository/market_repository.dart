@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:asood/core/dio/api_status.dart';
+import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/core/models/theme_model.dart';
 import 'package:asood/core/utils/secure_storage.dart';
 import 'package:asood/features/vendor/data/data_source/market_api_service.dart';

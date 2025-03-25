@@ -1,4 +1,4 @@
-import 'package:asood/core/dio/api_status.dart';
+import 'package:asood/core/http_client/api_status.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 

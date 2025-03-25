@@ -1,11 +1,11 @@
-import 'package:asood/core/constants/links.dart';
-import 'package:asood/core/dio/api_client.dart';
-import 'package:asood/core/dio/api_status.dart';
+import 'package:asood/core/constants/ednpoints.dart';
+import 'package:asood/core/http_client/api_client.dart';
+import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/features/market/data/model/product_model.dart';
 import 'package:http/http.dart' as http;
 
 class ProductApiService {
-  ApiClient apiClient = ApiClient(appBaseUrl: BaseUrls.baseUrl);
+  ApiClient apiClient = ApiClient(appBaseUrl: Endpoints.baseUrl);
 
   //get products
   Future getProducts() async {
