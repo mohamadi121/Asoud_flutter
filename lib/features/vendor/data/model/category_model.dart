@@ -11,7 +11,7 @@ class CategoryModel {
 }
 
 class MainSubCategoryModel {
-  int? id;
+  String? id;
   String? title;
 
   MainSubCategoryModel({this.id, this.title});

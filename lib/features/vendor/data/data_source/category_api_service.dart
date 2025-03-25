@@ -17,19 +17,21 @@ class CategoryApiService {
   }
 
   Future getMainSubCategoryList(String categoryId) async {
-    var uri = 'list/$categoryId';
     try {
-      http.Response res = await apiClient.getData(uri);
+      http.Response res = await apiClient.getData(
+        "${Endpoints.categoryList}$categoryId/",
+      );
       return ApiStatus(res);
     } catch (e) {
       return CustomApiStatus();
     }
   }
 
-  Future getSubCategoryList(int mainSubCategoryId) async {
-    var uri = 'sub/list/$mainSubCategoryId';
+  Future getSubCategoryList(String mainSubCategoryId) async {
     try {
-      http.Response res = await apiClient.getData(uri);
+      http.Response res = await apiClient.getData(
+        "${Endpoints.subCategoryList}$mainSubCategoryId/",
+      );
       return ApiStatus(res);
     } catch (e) {
       return CustomApiStatus();

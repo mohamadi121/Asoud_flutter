@@ -129,12 +129,12 @@ class LoadMainSubCategory extends CreateWorkSpaceEvent {
 }
 
 class ChangeSubCategoryIndex extends CreateWorkSpaceEvent {
-  final int activeSubCategoryIndex;
+  final String activeSubCategoryIndex;
   const ChangeSubCategoryIndex({required this.activeSubCategoryIndex});
 }
 
 class LoadSubCategory extends CreateWorkSpaceEvent {
-  final int subCategoryId;
+  final String subCategoryId;
   const LoadSubCategory({required this.subCategoryId});
 }
 

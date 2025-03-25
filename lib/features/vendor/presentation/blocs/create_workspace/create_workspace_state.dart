@@ -44,7 +44,7 @@ class CreateWorkSpaceState extends Equatable {
   final int activeCategoryIndex;
   final List<CategoryModel> categoryList;
   final List<MainSubCategoryModel> mainSubCategoryList;
-  final int activeSubCategoryIndex;
+  final String activeSubCategoryIndex;
   final List<CategoryModel> subCategoryList;
 
   final List<CountryModel> countryList;
@@ -143,7 +143,7 @@ class CreateWorkSpaceState extends Equatable {
       activeCategoryIndex: -1,
       categoryList: const [],
       mainSubCategoryList: const [],
-      activeSubCategoryIndex: -1,
+      activeSubCategoryIndex: "-1",
       subCategoryList: const [],
 
       countryList: const [],
@@ -186,7 +186,7 @@ class CreateWorkSpaceState extends Equatable {
     int? activeCategoryIndex,
     List<CategoryModel>? categoryList,
     List<MainSubCategoryModel>? mainSubCategoryList,
-    int? activeSubCategoryIndex,
+    String? activeSubCategoryIndex,
     List<CategoryModel>? subCategoryList,
 
     List<CountryModel>? countryList,

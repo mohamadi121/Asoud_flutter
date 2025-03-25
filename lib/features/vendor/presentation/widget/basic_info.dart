@@ -235,7 +235,7 @@ class _BasicInfoState extends State<BasicInfo> {
                                     } else {
                                       catBloc.add(
                                         const ChangeSubCategoryIndex(
-                                          activeSubCategoryIndex: -1,
+                                          activeSubCategoryIndex: "-1",
                                         ),
                                       );
                                     }

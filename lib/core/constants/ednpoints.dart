@@ -21,4 +21,6 @@ class Endpoints {
   /// category
   static String userCategory = '${baseUrl}category/';
   static String categoryGroupList = 'group/list/';
+  static String categoryList = 'list/';
+  static String subCategoryList = 'sub/list/';
 }
