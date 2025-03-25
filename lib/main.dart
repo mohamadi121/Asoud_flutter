@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:asood/core/constants/constants.dart';
+import 'package:asood/core/http_client/api_client.dart';
 import 'package:asood/core/router/app_routers.dart';
 import 'package:asood/features/auth/domain/repositories/user_repository.dart';
 import 'package:asood/features/auth/presentation/blocs/login_bloc/login_bloc.dart';
@@ -25,6 +28,7 @@ void main() async {
 
   Hive.registerAdapter(MarketBaseModelAdapter());
   Hive.registerAdapter(MarketContactModelAdapter());
+  HttpOverrides.global = MyHttpOverrides();
   runApp(Asood());
 }
 

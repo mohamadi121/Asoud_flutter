@@ -8,7 +8,7 @@ class CreateWorkSpaceState extends Equatable {
   final String businessId;
   final String name;
   final String description;
-  final int subCategory;
+  final String subCategory;
   final String slogan;
   final CWSStatus status;
   final String message;
@@ -124,7 +124,7 @@ class CreateWorkSpaceState extends Equatable {
       businessId: '',
       name: '',
       description: '',
-      subCategory: 0,
+      subCategory: "0",
       slogan: '',
       activeTabIndex: 0,
       hasWorkTime: false,
@@ -165,7 +165,7 @@ class CreateWorkSpaceState extends Equatable {
     WorkHours? workHours,
     String? name,
     String? description,
-    int? subCategory,
+    String? subCategory,
     String? slogan,
     CWSStatus? status,
     String? message,

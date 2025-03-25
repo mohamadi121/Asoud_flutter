@@ -261,8 +261,10 @@ class CreateWorkSpaceBloc
       if (res is Success) {
         final json = jsonDecode(res.response.toString());
         final initList = json['data'] as List;
+        print("_________");
         final categoryList =
             initList.map((e) => CategoryModel.fromJson(e)).toList();
+        print(categoryList);
         emit(
           state.copyWith(status: CWSStatus.success, categoryList: categoryList),
         );

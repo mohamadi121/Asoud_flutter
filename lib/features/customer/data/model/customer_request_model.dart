@@ -1,8 +1,5 @@
-// ignore_for_file: override_on_non_overriding_member
-
 import 'dart:convert';
 
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 class CustomerReqModel {
   final int requestId;
   final String paymentType;
@@ -54,6 +51,5 @@ class CustomerReqModel {
   factory CustomerReqModel.fromJson(String source) =>
       CustomerReqModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
-  @override
   bool get stringify => true;
 }

@@ -1,4 +1,5 @@
 import 'package:asood/core/constants/constants.dart';
+import 'package:asood/core/helper/nationalcode_checker.dart';
 import 'package:asood/core/widgets/custom_button.dart';
 import 'package:asood/core/widgets/custom_textfield.dart';
 import 'package:asood/core/widgets/radio_button.dart';
@@ -13,6 +14,7 @@ class BasicInfo extends StatefulWidget {
 }
 
 class _BasicInfoState extends State<BasicInfo> {
+  TextEditingController nationalCodeController = TextEditingController();
   String selectedValue = '';
 
   @override
@@ -89,8 +91,19 @@ class _BasicInfoState extends State<BasicInfo> {
                   ),
                   const SizedBox(height: 7),
                   CustomTextField(
-                    controller: TextEditingController(),
+                    maxLength: 10,
+                    keyboardType: TextInputType.number,
+                    controller: nationalCodeController,
                     text: "کد ملی",
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'لطفا کد ملی را وارد کنید';
+                      }
+                      if (!isValidIranianNationalCode(value)) {
+                        return 'کد ملی معتبر نیست';
+                      }
+                      return null;
+                    },
                   ),
                   const Text(
                     "کد ملی صرفا جهت تخصیص آگهی به شما میباشد",

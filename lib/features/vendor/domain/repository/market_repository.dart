@@ -23,7 +23,7 @@ class MarketRepository {
     String businessId,
     String name,
     String description,
-    int subCategory,
+    String subCategory,
     String slogan,
   ) async {
     var res = await marketApiService.createMarketBase(

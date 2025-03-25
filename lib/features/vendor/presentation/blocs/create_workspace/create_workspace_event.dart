@@ -14,7 +14,7 @@ class CreateMarket extends CreateWorkSpaceEvent {
   final String businessId;
   final String name;
   final String description;
-  final int subCategory;
+  final String subCategory;
   final String slogan;
 
   const CreateMarket({
@@ -124,7 +124,7 @@ class ChangeCategoryIndex extends CreateWorkSpaceEvent {
 class LoadCategory extends CreateWorkSpaceEvent {}
 
 class LoadMainSubCategory extends CreateWorkSpaceEvent {
-  final int categoryId;
+  final String categoryId;
   const LoadMainSubCategory({required this.categoryId});
 }
 

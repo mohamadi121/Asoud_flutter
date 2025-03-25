@@ -1,3 +1,4 @@
+import 'package:asood/core/helper/nationalcode_checker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,7 +27,7 @@ class _BasicInfoState extends State<BasicInfo> {
   final TextEditingController slogan = TextEditingController();
   final TextEditingController idCode = TextEditingController();
 
-  int selectedCategoryId = 0;
+  String selectedCategoryId = "0";
   String selectedCategoryName = 'انتخاب شغل';
 
   bool isInProcess = false;
@@ -214,7 +215,7 @@ class _BasicInfoState extends State<BasicInfo> {
                                   ),
                                   onTap: () {
                                     if (state.activeSubCategoryIndex !=
-                                        state.mainSubCategoryList[index].id!) {
+                                        state.mainSubCategoryList[index].id) {
                                       catBloc.add(
                                         ChangeSubCategoryIndex(
                                           activeSubCategoryIndex:
@@ -406,10 +407,19 @@ class _BasicInfoState extends State<BasicInfo> {
                   ),
                   const SizedBox(height: 7),
                   CustomTextField(
-                    isRequired: true,
+                    maxLength: 10,
+                    keyboardType: TextInputType.number,
                     controller: idCode,
                     text: "کد ملی",
-                    keyboardType: TextInputType.number,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'لطفا کد ملی را وارد کنید';
+                      }
+                      if (!isValidIranianNationalCode(value)) {
+                        return 'کد ملی معتبر نیست';
+                      }
+                      return null;
+                    },
                   ),
                   const Padding(
                     padding: EdgeInsets.all(8.0),

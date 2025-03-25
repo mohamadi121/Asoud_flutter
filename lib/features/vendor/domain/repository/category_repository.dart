@@ -7,7 +7,7 @@ class CategoryRepository {
     return await categoryApiService.getCategoryList();
   }
 
-  Future<dynamic> getMainSubCategoryList(int categoryId) async {
+  Future<dynamic> getMainSubCategoryList(String categoryId) async {
     return await categoryApiService.getMainSubCategoryList(categoryId);
   }
 

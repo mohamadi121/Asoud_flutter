@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
@@ -282,5 +283,14 @@ class MultipartBody {
 }
 
 class CustomRequest extends http.BaseRequest {
-  CustomRequest(String method, Uri url) : super(method, url);
+  CustomRequest(super.method, super.url);
+}
+
+class MyHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
+  }
 }
