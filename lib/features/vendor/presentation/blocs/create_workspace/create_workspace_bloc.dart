@@ -60,7 +60,6 @@ class CreateWorkSpaceBloc
         );
 
         if (res is Success) {
-          var json = jsonDecode(res.response.toString());
           emit(
             state.copyWith(
               activeTabIndex: 1,

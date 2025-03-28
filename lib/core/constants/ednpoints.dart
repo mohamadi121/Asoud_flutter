@@ -17,10 +17,14 @@ class Endpoints {
   /// user
   static String userAdvertise = "advertise/";
   static String userContact = 'contact/';
-  // http://asoud.ir/api/v1/category/group/list/
+
   /// category
   static String userCategory = '${baseUrl}category/';
   static String categoryGroupList = 'group/list/';
   static String categoryList = 'list/';
   static String subCategoryList = 'sub/list/';
+
+  /// market
+  static String ownerMarket = '${baseUrl}owner/market/';
+  static String ownerCreateMarket = 'create/';
 }

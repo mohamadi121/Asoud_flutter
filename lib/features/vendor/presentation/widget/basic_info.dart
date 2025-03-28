@@ -485,7 +485,9 @@ class _BasicInfoState extends State<BasicInfo> {
                                     //   marketType: selectedValue,
                                     //   subCategory: 1,
                                     // ));
-                                    // bloc.add(const ChangeTabView(activeTabIndex: 1));
+                                    // bloc.add(
+                                    //   const ChangeTabView(activeTabIndex: 1),
+                                    // );
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
@@ -532,7 +534,7 @@ class _BasicInfoState extends State<BasicInfo> {
                                       description.text.isNotEmpty &&
                                       slogan.text.isNotEmpty &&
                                       idCode.text.isNotEmpty &&
-                                      selectedCategoryId != 0) {
+                                      selectedCategoryId.isNotEmpty) {
                                     bloc.add(
                                       CreateMarket(
                                         businessId: businessId.text,

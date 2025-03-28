@@ -80,8 +80,10 @@ class _CreateWorkSpaceScreenState extends State<CreateWorkSpaceScreen>
                   ? _tabController.index = state.activeTabIndex
                   : null;
               if (state.status == CWSStatus.success) {
+                print(state.activeTabIndex);
                 _tabController.index = state.activeTabIndex;
               } else if (state.status == CWSStatus.failure) {
+                print(state.status);
                 showSnackBar(context, "مشکلی پیش آمده مجددا تلاش کنید");
               }
             },
@@ -91,9 +93,7 @@ class _CreateWorkSpaceScreenState extends State<CreateWorkSpaceScreen>
                   children: [
                     Container(
                       margin: EdgeInsets.only(top: Dimensions.height * 0.01),
-                      // padding: const EdgeInsets.symmetric(
-                      //   vertical: 15, horizontal: Dimensions.khorisontal
-                      // ),
+
                       child: Column(
                         children: [
                           // for appbar
@@ -117,9 +117,7 @@ class _CreateWorkSpaceScreenState extends State<CreateWorkSpaceScreen>
                                 dividerHeight: 0,
                                 isScrollable: false,
 
-                                indicatorColor:
-                                    Colors
-                                        .transparent, // Remove indicator color
+                                indicatorColor: Colors.transparent,
                                 tabs: [
                                   buildTab(state, 'مشخصات پایه', 0),
                                   buildTab(state, 'مشخصات ارتباطی', 1),

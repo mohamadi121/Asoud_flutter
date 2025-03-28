@@ -4,14 +4,12 @@ import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/core/models/theme_model.dart';
 import 'package:asood/features/vendor/data/model/market_contact_model.dart';
 import 'package:asood/features/vendor/data/model/market_location_model.dart';
-import 'package:flutter/material.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
 class MarketApiService {
-  ApiClient apiClient = ApiClient(
-    appBaseUrl: '${Endpoints.baseUrl}market/user/',
-  );
+  ApiClient apiClient = ApiClient(appBaseUrl: Endpoints.ownerMarket);
 
   //create market base
   Future createMarketBase(
@@ -30,9 +28,12 @@ class MarketApiService {
       "sub_category": subCategory,
       "slogan": slogan,
     };
-    var uri = 'create/';
+
     try {
-      http.Response res = await apiClient.postData(uri, body);
+      http.Response res = await apiClient.postData(
+        Endpoints.ownerCreateMarket,
+        body,
+      );
 
       return ApiStatus(res);
     } catch (e) {

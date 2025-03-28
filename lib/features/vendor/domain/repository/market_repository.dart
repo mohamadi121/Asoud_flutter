@@ -36,16 +36,20 @@ class MarketRepository {
     );
     //save the market base model to isar if its success
     if (res is Success) {
+      print("___________________");
+      print(res.response);
       final json = jsonDecode(res.response.toString());
-      final marketBase = MarketBaseModel.fromJson(json);
+      print(MarketBaseModel.fromJson(jsonEncode(json['data'])));
+      final marketBase = MarketBaseModel.fromJson(jsonEncode(json['data']));
+
       // await isar.create(marketBase);
       SecureStorage().writeSecureStorage(
         'market_id',
         json['data']['market'].toString(),
       );
       SecureStorage().writeSecureStorage('marketActiveTabIndex', '1');
+      return res;
     }
-    return res;
   }
 
   //write all codes depends on market api service for repository here
