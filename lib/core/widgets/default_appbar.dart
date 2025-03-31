@@ -38,7 +38,7 @@ class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ] else ...[
               Text(
-                title! ?? '',
+                title!,
                 style: const TextStyle(
                   color: Colora.scaffold,
                   fontSize: 20,

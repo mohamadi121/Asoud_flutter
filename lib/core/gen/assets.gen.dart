@@ -1,5 +1,3 @@
-part of constants;
-
 /// GENERATED CODE - DO NOT MODIFY BY HAND
 /// *****************************************************
 ///  FlutterGen
@@ -8,6 +6,7 @@ part of constants;
 // coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: directives_ordering,unnecessary_import,implicit_dynamic_list_literal,deprecated_member_use
+part of '../constants/constants.dart';
 
 class $AssetsImagesGen {
   const $AssetsImagesGen();
@@ -29,13 +28,13 @@ class $AssetsImagesGen {
   AssetGenImage get logoPng => const AssetGenImage('assets/images/logo.png');
 
   /// File path: assets/images/logo.svg
-  SvgGenImage get logoSvg => const SvgGenImage('assets/images/logo.svg');
+  String get logoSvg => 'assets/images/logo.svg';
 
-  /// File path: assets/images/logosvgg.svg
-  SvgGenImage get logoSvgSvg => const SvgGenImage('assets/images/logosvgg.svg');
+  /// File path: assets/images/logo_svg.svg
+  String get logoSvgSvg => 'assets/images/logo_svg.svg';
 
-  /// File path: assets/images/logosvgg_2.svg
-  SvgGenImage get logoSvg2 => const SvgGenImage('assets/images/logosvgg_2.svg');
+  /// File path: assets/images/logo_svg_2.svg
+  String get logoSvg2 => 'assets/images/logo_svg_2.svg';
 
   /// File path: assets/images/placeholder.jpg
   AssetGenImage get placeholder =>
@@ -129,78 +128,6 @@ class AssetGenImage {
 
   ImageProvider provider({AssetBundle? bundle, String? package}) {
     return AssetImage(_assetName, bundle: bundle, package: package);
-  }
-
-  String get path => _assetName;
-
-  String get keyName => _assetName;
-}
-
-class SvgGenImage {
-  const SvgGenImage(this._assetName, {this.size, this.flavors = const {}})
-    : _isVecFormat = false;
-
-  const SvgGenImage.vec(this._assetName, {this.size, this.flavors = const {}})
-    : _isVecFormat = true;
-
-  final String _assetName;
-  final Size? size;
-  final Set<String> flavors;
-  final bool _isVecFormat;
-
-  svgg.SvgPicture svg({
-    Key? key,
-    bool matchTextDirection = false,
-    AssetBundle? bundle,
-    String? package,
-    double? width,
-    double? height,
-    BoxFit fit = BoxFit.contain,
-    AlignmentGeometry alignment = Alignment.center,
-    bool allowDrawingOutsideViewBox = false,
-    WidgetBuilder? placeholderBuilder,
-    String? semanticsLabel,
-    bool excludeFromSemantics = false,
-    svgg.SvgTheme? theme,
-    ColorFilter? colorFilter,
-    Clip clipBehavior = Clip.hardEdge,
-    @deprecated Color? color,
-    @deprecated BlendMode colorBlendMode = BlendMode.srcIn,
-    @deprecated bool cacheColorFilter = false,
-  }) {
-    final svgg.BytesLoader loader;
-    if (_isVecFormat) {
-      loader = vgg.AssetBytesLoader(
-        _assetName,
-        assetBundle: bundle,
-        packageName: package,
-      );
-    } else {
-      loader = svgg.SvgAssetLoader(
-        _assetName,
-        assetBundle: bundle,
-        packageName: package,
-        theme: theme,
-      );
-    }
-    return svgg.SvgPicture(
-      loader,
-      key: key,
-      matchTextDirection: matchTextDirection,
-      width: width,
-      height: height,
-      fit: fit,
-      alignment: alignment,
-      allowDrawingOutsideViewBox: allowDrawingOutsideViewBox,
-      placeholderBuilder: placeholderBuilder,
-      semanticsLabel: semanticsLabel,
-      excludeFromSemantics: excludeFromSemantics,
-      colorFilter:
-          colorFilter ??
-          (color == null ? null : ColorFilter.mode(color, colorBlendMode)),
-      clipBehavior: clipBehavior,
-      cacheColorFilter: cacheColorFilter,
-    );
   }
 
   String get path => _assetName;

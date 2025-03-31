@@ -1,296 +1,286 @@
-import 'dart:convert';
-import 'dart:io';
-
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
-import 'package:asood/core/utils/secure_storage.dart';
+import 'package:asood/core/constants/constants.dart';
+import 'package:asood/core/helper/secure_storage.dart';
 
 import 'error_response.dart';
 
-class ApiClient {
+class DioClient {
   final String appBaseUrl;
-
-  static const String noInternetMessage = 'عدم برقراری ارتباط با سرور';
   final int timeoutInSeconds = 30;
+  late Dio dio;
 
-  String? token;
-  Map<String, String> _mainHeaders = {};
-  readToken() async {
-    token = await SecureStorage().readSecureStorage('token');
-    updateHeader(token);
-  }
-
-  ApiClient({required this.appBaseUrl});
-
-  Map<String, String> updateHeader(String? token, {bool setHeader = true}) {
-    Map<String, String> header = {};
-    header.addAll({
-      'Content-Type': 'application/json; charset=utf-8',
-      'Authorization': 'Token $token',
-    });
-    if (setHeader) {
-      _mainHeaders = header;
-    }
-    return header;
-  }
-
-  //get method handler for api
-  Future<http.Response> getData(
-    String uri, {
-    Map<String, dynamic>? query,
-    Map<String, String>? headers,
-  }) async {
-    headers == null ? await readToken() : null;
-
-    try {
-      if (kDebugMode) {
-        debugPrint('Token: $token');
-        debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
-      }
-      http.Response response = await http
-          .get(Uri.parse(appBaseUrl + uri), headers: headers ?? _mainHeaders)
-          .timeout(Duration(seconds: timeoutInSeconds));
-
-      return handleResponse(response, uri);
-    } catch (e) {
-      if (kDebugMode) {
-        print('----------------${e.toString()}');
-      }
-      return http.Response(noInternetMessage, 1);
-    }
-  }
-
-  //post data to api
-  Future<http.Response> postData(
-    String uri,
-    dynamic body, {
-    Map<String, String>? headers,
-  }) async {
-    try {
-      headers == null ? await readToken() : null;
-      if (kDebugMode) {
-        debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
-        debugPrint('====> API Body: $body');
-      }
-      http.Response response = await http
-          .post(
-            Uri.parse(appBaseUrl + uri),
-            body: jsonEncode(body),
-            headers: headers ?? _mainHeaders,
-          )
-          .timeout(Duration(seconds: timeoutInSeconds));
-      debugPrint('====> API Status Code: ${response.statusCode}');
-      return handleResponse(response, uri);
-    } catch (e) {
-      return http.Response(noInternetMessage, 1);
-    }
-  }
-
-  //image upload to server
-  Future<http.Response> postMultipartData(
-    String uri,
-    Map<String, String> body,
-    List<MultipartBody> multipartBody, {
-    Map<String, String>? headers,
-  }) async {
-    headers == null ? await readToken() : null;
-    try {
-      if (kDebugMode) {
-        debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
-        debugPrint('====> API Body: $body with ${multipartBody.length} files');
-      }
-      http.MultipartRequest request = http.MultipartRequest(
-        'POST',
-        Uri.parse(appBaseUrl + uri),
-      );
-      request.headers.addAll(headers ?? _mainHeaders);
-      for (MultipartBody multipart in multipartBody) {
-        if (multipart.file != null) {
-          Uint8List list = await multipart.file!.readAsBytes();
-          request.files.add(
-            http.MultipartFile(
-              multipart.key,
-              multipart.file!.readAsBytes().asStream(),
-              list.length,
-              filename: 'asood.png',
-            ),
-          );
-        }
-      }
-      request.fields.addAll(body);
-      http.Response response = await http.Response.fromStream(
-        await request.send(),
-      );
-      print(response.statusCode);
-      return handleResponse(response, uri);
-    } catch (e) {
-      return http.Response(noInternetMessage, 1);
-    }
-  }
-
-  //image upload to server
-  Future<http.Response> patchMultipartData(
-    String uri,
-    Map<String, String> body,
-    List<MultipartBody> multipartBody, {
-    Map<String, String>? headers,
-  }) async {
-    headers == null ? await readToken() : null;
-    try {
-      if (kDebugMode) {
-        debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
-        debugPrint('====> API Body: $body with ${multipartBody.length} files');
-      }
-      http.MultipartRequest request = http.MultipartRequest(
-        'PATCH',
-        Uri.parse(appBaseUrl + uri),
-      );
-      request.headers.addAll(headers ?? _mainHeaders);
-      for (MultipartBody multipart in multipartBody) {
-        if (multipart.file != null) {
-          Uint8List list = await multipart.file!.readAsBytes();
-          request.files.add(
-            http.MultipartFile(
-              multipart.key,
-              multipart.file!.readAsBytes().asStream(),
-              list.length,
-              filename: 'asood.png',
-            ),
-          );
-        }
-      }
-      request.fields.addAll(body);
-      http.Response response = await http.Response.fromStream(
-        await request.send(),
-      );
-      print(response.statusCode);
-      return handleResponse(response, uri);
-    } catch (e) {
-      return http.Response(noInternetMessage, 1);
-    }
-  }
-
-  //put data to api
-  Future<http.Response> putData(
-    String uri,
-    dynamic body, {
-    Map<String, String>? headers,
-  }) async {
-    try {
-      headers == null ? await readToken() : null;
-      if (kDebugMode) {
-        debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
-        debugPrint('====> API Body: $body');
-      }
-      http.Response response = await http
-          .put(
-            Uri.parse(appBaseUrl + uri),
-            body: jsonEncode(body),
-            headers: headers ?? _mainHeaders,
-          )
-          .timeout(Duration(seconds: timeoutInSeconds));
-      return handleResponse(response, uri);
-    } catch (e) {
-      return http.Response(noInternetMessage, 1);
-    }
-  }
-
-  //patch data
-  Future<http.Response> patchData(
-    String uri,
-    dynamic body, {
-    Map<String, String>? headers,
-  }) async {
-    try {
-      headers == null ? await readToken() : null;
-      if (kDebugMode) {
-        debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
-        debugPrint('====> API Body: $body');
-      }
-      http.Response response = await http
-          .patch(
-            Uri.parse(appBaseUrl + uri),
-            body: jsonEncode(body),
-            headers: headers ?? _mainHeaders,
-          )
-          .timeout(Duration(seconds: timeoutInSeconds));
-      return handleResponse(response, uri);
-    } catch (e) {
-      return http.Response(noInternetMessage, 1);
-    }
-  }
-
-  //delete methode
-  Future<http.Response> deleteData(
-    String uri, {
-    Map<String, String>? headers,
-  }) async {
-    try {
-      headers == null ? await readToken() : null;
-      if (kDebugMode) {
-        debugPrint('====> API Call: $uri\nHeader: $_mainHeaders');
-      }
-      http.Response response = await http
-          .delete(Uri.parse(appBaseUrl + uri), headers: headers ?? _mainHeaders)
-          .timeout(Duration(seconds: timeoutInSeconds));
-      return handleResponse(response, uri);
-    } catch (e) {
-      return http.Response(noInternetMessage, 1);
-    }
-  }
-
-  ///handle the http response and return controlled response to repository
-  http.Response handleResponse(http.Response response, String uri) {
-    try {} catch (_) {}
-    //create a response object
-    http.Response response0 = http.Response(
-      response.body,
-      response.statusCode,
-      // response.body.toString(),
-      request: CustomRequest(response.request!.method, response.request!.url),
-      headers: response.headers,
-      reasonPhrase: response.reasonPhrase,
+  DioClient({required this.appBaseUrl}) {
+    // Initialize Dio with base options
+    dio = Dio(
+      BaseOptions(
+        baseUrl: appBaseUrl,
+        connectTimeout: Duration(seconds: timeoutInSeconds),
+        receiveTimeout: Duration(seconds: timeoutInSeconds),
+        headers: {'Content-Type': 'application/json; charset=utf-8'},
+      ),
     );
 
-    if (response0.statusCode != 200 ||
-        response0.statusCode != 201 && response0.body is! String) {
-      var errorResponse = handleHttpError(response0.statusCode);
-      response0 = http.Response(
-        response0.body,
-        response0.statusCode,
-        reasonPhrase: errorResponse,
+    // Add an interceptor to attach token to requests
+    dio.interceptors.add(
+      InterceptorsWrapper(
+        onRequest: (options, handler) async {
+          String? token = await SecureStorage.readSecureStorage(Keys.token);
+          if (token != "ND") {
+            options.headers['Authorization'] = 'Token $token';
+            debugPrint('🚀 Token being sent: $token'); // این خط جدید اضافه شده
+          }
+          if (kDebugMode) {
+            debugPrint(
+              '====> API Call: ${options.path}\nHeader: ${options.headers}',
+            );
+          }
+          return handler.next(options);
+        },
+
+        onError: (error, handler) {
+          if (kDebugMode) {
+            debugPrint('====> API Error: ${error.message}');
+          }
+          return handler.next(error);
+        },
+      ),
+    );
+    dio.interceptors.add(
+      LogInterceptor(
+        request: true, // نمایش اطلاعات درخواست
+        requestHeader: true, // نمایش هدرهای درخواست
+        requestBody: true, // نمایش بدنه درخواست
+        responseHeader: false, // نمایش هدرهای پاسخ
+        responseBody: true, // نمایش بدنه پاسخ
+        error: true, // نمایش ارورها
+        logPrint: (log) => print(log), // تابعی برای نمایش لاگ‌ها
+      ),
+    );
+  }
+
+  // Perform a GET request
+  Future<Response> getData(
+    String uri, {
+    Map<String, dynamic>? queryParameters,
+    Map<String, dynamic>? headers,
+  }) async {
+    try {
+      Response response = await dio.get(
+        uri,
+        queryParameters: queryParameters,
+        options: Options(headers: headers),
       );
-    } else if (response0.statusCode != 200 ||
-        response0.statusCode != 201 && response0.body == null) {
-      response0 = http.Response("", 0, reasonPhrase: noInternetMessage);
+      return _handleResponse(response, uri);
+    } on DioException catch (e) {
+      return _handleDioException(e, uri);
     }
+  }
+
+  // Perform a POST request
+  Future<Response> postData(
+    String uri,
+    dynamic data, {
+    Map<String, dynamic>? headers,
+  }) async {
+    try {
+      if (kDebugMode) {
+        debugPrint('====> API Body: $data');
+      }
+      Response response = await dio.post(
+        uri,
+        data: data,
+        options: Options(headers: headers),
+      );
+      return _handleResponse(response, uri);
+    } on DioException catch (e) {
+      return _handleDioException(e, uri);
+    }
+  }
+
+  // Perform a POST request with multipart data (e.g., file upload)
+  Future<Response> postMultipartData(
+    String uri,
+    Map<String, String> data,
+    List<MultipartBody> multipartBody, {
+    Map<String, dynamic>? headers,
+  }) async {
+    try {
+      FormData formData = FormData();
+      // Add text fields
+      data.forEach((key, value) {
+        formData.fields.add(MapEntry(key, value));
+      });
+      // Add files
+      for (MultipartBody multipart in multipartBody) {
+        if (multipart.file != null) {
+          String fileName = multipart.file!.name;
+          formData.files.add(
+            MapEntry(
+              multipart.key,
+              await MultipartFile.fromFile(
+                multipart.file!.path,
+                filename: fileName,
+              ),
+            ),
+          );
+        }
+      }
+      if (kDebugMode) {
+        debugPrint(
+          '====> API Multipart POST: $uri with data: $data and ${multipartBody.length} file(s)',
+        );
+      }
+      Response response = await dio.post(
+        uri,
+        data: formData,
+        options: Options(headers: headers),
+      );
+      return _handleResponse(response, uri);
+    } on DioException catch (e) {
+      return _handleDioException(e, uri);
+    }
+  }
+
+  // Perform a PATCH request with multipart data (e.g., file update)
+  Future<Response> patchMultipartData(
+    String uri,
+    Map<String, String> data,
+    List<MultipartBody> multipartBody, {
+    Map<String, dynamic>? headers,
+  }) async {
+    try {
+      FormData formData = FormData();
+      // Add text fields
+      data.forEach((key, value) {
+        formData.fields.add(MapEntry(key, value));
+      });
+      // Add files
+      for (MultipartBody multipart in multipartBody) {
+        if (multipart.file != null) {
+          String fileName = multipart.file!.name;
+          formData.files.add(
+            MapEntry(
+              multipart.key,
+              await MultipartFile.fromFile(
+                multipart.file!.path,
+                filename: fileName,
+              ),
+            ),
+          );
+        }
+      }
+      if (kDebugMode) {
+        debugPrint(
+          '====> API Multipart PATCH: $uri with data: $data and ${multipartBody.length} file(s)',
+        );
+      }
+      Response response = await dio.patch(
+        uri,
+        data: formData,
+        options: Options(headers: headers),
+      );
+      return _handleResponse(response, uri);
+    } on DioException catch (e) {
+      return _handleDioException(e, uri);
+    }
+  }
+
+  // Perform a PUT request
+  Future<Response> putData(
+    String uri,
+    dynamic data, {
+    Map<String, dynamic>? headers,
+  }) async {
+    try {
+      Response response = await dio.put(
+        uri,
+        data: data,
+        options: Options(headers: headers),
+      );
+      return _handleResponse(response, uri);
+    } on DioException catch (e) {
+      return _handleDioException(e, uri);
+    }
+  }
+
+  // Perform a PATCH request
+  Future<Response> patchData(
+    String uri,
+    dynamic data, {
+    Map<String, dynamic>? headers,
+  }) async {
+    try {
+      Response response = await dio.patch(
+        uri,
+        data: data,
+        options: Options(headers: headers),
+      );
+      return _handleResponse(response, uri);
+    } on DioException catch (e) {
+      return _handleDioException(e, uri);
+    }
+  }
+
+  // Perform a DELETE request
+  Future<Response> deleteData(
+    String uri, {
+    Map<String, dynamic>? headers,
+  }) async {
+    try {
+      Response response = await dio.delete(
+        uri,
+        options: Options(headers: headers),
+      );
+      return _handleResponse(response, uri);
+    } on DioException catch (e) {
+      return _handleDioException(e, uri);
+    }
+  }
+
+  // Handle API responses (success or failure)
+  Response _handleResponse(Response response, String uri) {
     if (kDebugMode) {
       debugPrint(
-        '====> API http.Response: [${response0.statusCode}] $uri\n${response0.body}',
+        '====> API Response: [${response.statusCode}] $uri\n${response.data}',
       );
     }
-    return response0;
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      return response;
+    } else {
+      // Convert HTTP error code to readable message
+      String errorMessage = handleHttpError(response.statusCode!);
+      throw DioException(
+        requestOptions: response.requestOptions,
+        response: response,
+        error: errorMessage,
+      );
+    }
+  }
+
+  // Handle Dio errors (network or server-related issues)
+  Response _handleDioException(DioException error, String uri) {
+    if (kDebugMode) {
+      debugPrint('====> Error on $uri: ${error.message}');
+    }
+    // Provide an appropriate error message
+    String errorMessage =
+        error.response != null
+            ? handleHttpError(error.response!.statusCode!)
+            : 'Unable to connect to the server';
+    throw DioException(
+      requestOptions: error.requestOptions,
+      error: errorMessage,
+      response: error.response,
+    );
   }
 }
 
+// Model for handling multipart file uploads
 class MultipartBody {
-  String key;
-  XFile? file;
-
+  final String key;
+  final XFile? file;
   MultipartBody(this.key, this.file);
-}
-
-class CustomRequest extends http.BaseRequest {
-  CustomRequest(super.method, super.url);
-}
-
-class MyHttpOverrides extends HttpOverrides {
-  @override
-  HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
-  }
 }

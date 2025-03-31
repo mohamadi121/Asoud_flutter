@@ -1,4 +1,4 @@
-part of constants;
+part of "./constants.dart";
 
 //i create a custom decoration for box and
 const double cKmanualradius = 10;

@@ -1,4 +1,4 @@
-part of 'constants.dart';
+part of "./constants.dart";
 
 abstract class Colora {
   Colora._();

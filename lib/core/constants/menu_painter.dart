@@ -1,18 +1,23 @@
-part of constants;
+part of "./constants.dart";
 
 class CurvedPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     // Drawing the curved path
-    var paint = Paint()
-      ..color = Colora.primaryColor
-      ..strokeWidth = 15;
+    var paint =
+        Paint()
+          ..color = Colora.primaryColor
+          ..strokeWidth = 15;
 
     var path = Path();
 
     path.moveTo(0, size.height * 0.4);
     path.quadraticBezierTo(
-        size.width * 0.5, size.height * 0.1, size.width, size.height * 0.4);
+      size.width * 0.5,
+      size.height * 0.1,
+      size.width,
+      size.height * 0.4,
+    );
     // path.quadraticBezierTo(
     //     size.width * 0.5, size.height * 0.1, size.width, size.height * 0.4);
     path.lineTo(size.width, size.height);
@@ -21,14 +26,16 @@ class CurvedPainter extends CustomPainter {
     canvas.drawPath(path, paint);
 
     // Drawing circles on the curved path
-    var circlePaint = Paint()
-      ..color = Colora.primaryColor
-      ..style = PaintingStyle.fill;
+    var circlePaint =
+        Paint()
+          ..color = Colora.primaryColor
+          ..style = PaintingStyle.fill;
 
-    var circleBorderPaint = Paint()
-      ..color = Colors.white
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 5;
+    var circleBorderPaint =
+        Paint()
+          ..color = Colors.white
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 5;
 
     // Circle 3 (larger)
     // double circle3X = size.width * 0.87;
@@ -38,7 +45,10 @@ class CurvedPainter extends CustomPainter {
     double circle3Radius = 27.0;
     canvas.drawCircle(Offset(circle3X, circle3Y), circle3Radius, circlePaint);
     canvas.drawCircle(
-        Offset(circle3X, circle3Y), circle3Radius, circleBorderPaint);
+      Offset(circle3X, circle3Y),
+      circle3Radius,
+      circleBorderPaint,
+    );
 
     // Circle 3 (larger)
     // double circle2X = size.width * 0.7;
@@ -48,7 +58,10 @@ class CurvedPainter extends CustomPainter {
     double circle2Radius = 30;
     canvas.drawCircle(Offset(circle2X, circle2Y), circle2Radius, circlePaint);
     canvas.drawCircle(
-        Offset(circle2X, circle2Y), circle2Radius, circleBorderPaint);
+      Offset(circle2X, circle2Y),
+      circle2Radius,
+      circleBorderPaint,
+    );
 
     // Circle 3 (larger)
     double circle3x = size.width * 0.5;
@@ -57,7 +70,10 @@ class CurvedPainter extends CustomPainter {
     double circle1Radius = 35.0;
     canvas.drawCircle(Offset(circle3x, circle1Y), circle1Radius, circlePaint);
     canvas.drawCircle(
-        Offset(circle3x, circle1Y), circle1Radius, circleBorderPaint);
+      Offset(circle3x, circle1Y),
+      circle1Radius,
+      circleBorderPaint,
+    );
 
     // double circle4x = size.width * 0.32;
     double circle4x = size.width * 0.29;
@@ -66,7 +82,10 @@ class CurvedPainter extends CustomPainter {
     double circle4Radius = 30.0;
     canvas.drawCircle(Offset(circle4x, circle4Y), circle4Radius, circlePaint);
     canvas.drawCircle(
-        Offset(circle4x, circle4Y), circle4Radius, circleBorderPaint);
+      Offset(circle4x, circle4Y),
+      circle4Radius,
+      circleBorderPaint,
+    );
 
     // double circle5x = size.width * 0.15;
     double circle5x = size.width * 0.11;
@@ -75,7 +94,10 @@ class CurvedPainter extends CustomPainter {
     double circle5Radius = 27.0;
     canvas.drawCircle(Offset(circle5x, circle5Y), circle5Radius, circlePaint);
     canvas.drawCircle(
-        Offset(circle5x, circle5Y), circle5Radius, circleBorderPaint);
+      Offset(circle5x, circle5Y),
+      circle5Radius,
+      circleBorderPaint,
+    );
   }
 
   @override
@@ -88,9 +110,10 @@ class CCurvedPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     // Drawing the curved path
-    var paint = Paint()
-      ..color = Colora.primaryColor
-      ..strokeWidth = 15;
+    var paint =
+        Paint()
+          ..color = Colora.primaryColor
+          ..strokeWidth = 15;
 
     var path = Path();
 
@@ -98,7 +121,11 @@ class CCurvedPainter extends CustomPainter {
     // path.quadraticBezierTo(
     //     size.width * 0.5, -35, size.width, size.height * 0.4);
     path.quadraticBezierTo(
-        size.width * 0.5, -25, size.width, size.height * 0.4);
+      size.width * 0.5,
+      -25,
+      size.width,
+      size.height * 0.4,
+    );
     path.lineTo(size.width, size.height);
     path.lineTo(0, size.height);
 

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:asood/core/constants/constants.dart';
+import 'package:asood/core/helper/secure_storage.dart';
 import 'package:asood/core/router/app_routers.dart';
-import 'package:asood/core/utils/secure_storage.dart';
-import 'package:go_router/go_router.dart';
 
 import 'custom_button.dart';
 import 'custom_textfield.dart';
@@ -142,7 +142,7 @@ class ProfileDialog extends StatelessWidget {
           //logout account
           InkWell(
             onTap: () {
-              SecureStorage().deleteSecureStorage('token');
+              SecureStorage.deleteSecureStorage(Keys.token);
 
               context.go(Routes.login);
             },

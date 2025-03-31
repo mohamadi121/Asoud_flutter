@@ -1,12 +1,11 @@
-// ignore_for_file: non_constant_identifier_names
-
+import 'package:dio/dio.dart';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 
 class Success {
   int? code;
   Object? response;
   String? message;
+
   Success({this.code, this.response, this.message});
 }
 
@@ -17,25 +16,32 @@ class Failure {
   Failure({this.code, this.errorResponse});
 }
 
-ApiStatus(http.Response response) {
-  var res = jsonDecode(response.body);
-  if (res['success'] == true) {
-    return Success(
-      code: res['code'],
-      response: utf8.decode(response.bodyBytes),
-      message: res['message'],
-    );
-  } else {
+// Handles API responses using Dio
+apiStatus(Response response) {
+  try {
+    var res = response.data;
+
+    if (res['success'] == true) {
+      return Success(
+        code: response.statusCode,
+        response: utf8.decode(jsonEncode(res).codeUnits),
+        message: res['message'],
+      );
+    } else {
+      return Failure(
+        code: response.statusCode,
+        errorResponse: res['error']?['detail'] ?? 'خطای نامشخص!',
+      );
+    }
+  } catch (e) {
     return Failure(
-      code: response.statusCode,
-      errorResponse: res['error']['detail'],
+      code: response.statusCode ?? 500,
+      errorResponse: 'خطای پردازش پاسخ سرور',
     );
   }
 }
 
-CustomApiStatus() {
-  return Failure(
-    code: 301,
-    errorResponse: 'عدم برقراری ارتباط با سرور',
-  );
+// Handles API errors in case of network failure or other issues
+customApiStatus() {
+  return Failure(code: 301, errorResponse: 'عدم برقراری ارتباط با سرور');
 }

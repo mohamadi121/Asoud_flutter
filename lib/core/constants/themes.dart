@@ -1,1 +1,1 @@
-part of constants;
+part of "./constants.dart";

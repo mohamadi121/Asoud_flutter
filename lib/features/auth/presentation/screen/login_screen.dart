@@ -1,254 +1,207 @@
-import 'package:asood/core/constants/constants.dart';
-import 'package:asood/core/router/app_routers.dart';
-
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
-import '../blocs/login_bloc/login_bloc.dart';
+import 'package:asood/core/constants/constants.dart';
+import 'package:asood/core/router/app_routers.dart';
+import 'package:asood/features/auth/presentation/blocs/login_bloc.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({super.key});
 
   final TextEditingController controller = TextEditingController();
-  static const routeName = '/loginScreen';
+
+  void _showSnackBar(BuildContext context, String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        backgroundColor: Colora.primaryColor,
+        content: Text(message, style: const TextStyle(color: Colora.scaffold)),
+      ),
+    );
+  }
+
+  submit(BuildContext context, AuthState state) {
+    String phone = controller.text.trim();
+    if (!state.termStatus) {
+      _showSnackBar(
+        context,
+        "بدون پذیرفتن قوانین و مقررات امکان استفاده از آسود نمیباشد!",
+      );
+    } else if (phone.isEmpty) {
+      _showSnackBar(context, "لطفا شماره تلفن خود را وارد کنید");
+    } else {
+      context.read<AuthBloc>().add(SendOtp(phone: "0$phone"));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colora.primaryColor,
-      child: SafeArea(
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Stack(
-            fit: StackFit.expand,
-            children: <Widget>[
-              //background
-              Image.asset('assets/images/login.png', fit: BoxFit.cover),
+    return Scaffold(
+      backgroundColor: Colora.primaryColor,
+      body: SafeArea(
+        child: Stack(
+          fit: StackFit.expand,
+          children: [
+            Assets.images.login.image(fit: BoxFit.cover),
 
-              //logo
-              Positioned(
-                top: 30,
-                right: Dimensions.width * 0.25,
-                left: Dimensions.width * 0.25,
-                height: Dimensions.height * 0.1,
-                child: AspectRatio(
-                  aspectRatio: 1,
-                  child: Image.asset(
-                    'assets/images/asood.png',
-                    fit: BoxFit.scaleDown,
-                  ),
-                ),
+            /// لوگو
+            Positioned(
+              top: 30,
+              right: Dimensions.width * 0.25,
+              left: Dimensions.width * 0.25,
+              height: Dimensions.height * 0.1,
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: Assets.images.asood.image(fit: BoxFit.scaleDown),
               ),
+            ),
 
-              BlocConsumer<LoginBloc, LoginState>(
-                listener: (context, state) {
-                  if (state.status == LoginStatus.success &&
-                      state.termStatus == true) {
-                    /*     Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => const OtpScreen()),
-                    ); */
-
-                    context.go(Routes.otp);
-                  }
-                  if (state.status == LoginStatus.error) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        backgroundColor: Colora.primaryColor,
-                        content: Text(
-                          "کد ارسال نشد",
-                          style: TextStyle(color: Colora.scaffold),
-                        ),
-                      ),
-                    );
-                    print(state.error);
-                  }
-                },
-                builder: (context, state) {
-                  ///دقت کن این بیلدر پایینی رو اضافه گذاشتم
-                  ///نذاشتنی خطا میده وو تو خطا توضیح داده یه سری چیزا بعد دیدم بیلدر گذاشتم طبق توضیح درست شد
-                  ///اما اصولا نباید اینطور باشه دنبال راه حل بهتر میگردم براش
-                  return Center(
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 145),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          //checkbox
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Container(
-                                width: 24,
-                                height: 24,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                margin: const EdgeInsets.only(left: 5),
-                                child: Transform.scale(
-                                  scale: 1.3,
-                                  child: Checkbox(
-                                    activeColor: Colora.scaffold,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    checkColor: Colora.primaryColor,
-                                    side: const BorderSide(
-                                      color: Colora.scaffold,
-                                    ),
-                                    value: state.termStatus,
-                                    onChanged: (value) {
-                                      BlocProvider.of<LoginBloc>(context).add(
-                                        ToggleTermsCheckboxEvent(
-                                          isClicked: value!,
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ), // Replace with your checkbox logic
-                              const Row(
-                                children: [
-                                  Text(
-                                    'توافق نامه کاربری',
-                                    style: TextStyle(
-                                      color: Colora.lightBlue,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                  Text(
-                                    ' را خوانده قبول دارم',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-
-                          const SizedBox(height: 10),
-
-                          Directionality(
-                            textDirection: TextDirection.ltr,
-                            child: Container(
-                              padding: const EdgeInsets.only(
-                                right: 10,
-                                left: 20,
-                                top: 10,
-                              ),
-                              height: 50,
-                              width: Dimensions.width * .8,
+            BlocConsumer<AuthBloc, AuthState>(
+              listener: (context, state) {
+                if (state.status == AuthStatus.success && state.termStatus) {
+                  context.go(Routes.otp);
+                } else if (state.status == AuthStatus.error) {
+                  _showSnackBar(context, "کد ارسال نشد");
+                  debugPrint(state.error);
+                }
+              },
+              builder: (context, state) {
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: 145),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        /// checkbox
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 24,
+                              height: 24,
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
                                 color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
                               ),
-                              child: IntlPhoneField(
-                                textAlign: TextAlign.start,
-                                controller: controller,
-                                searchText: "جستجو کشور",
-                                languageCode: 'fa',
-                                decoration: const InputDecoration(
-                                  counter: Offstage(),
-                                  hintTextDirection: TextDirection.rtl,
-                                  contentPadding: EdgeInsets.only(top: 4),
-                                  hintText: 'شماره تلفن:',
-
-                                  hintStyle: TextStyle(color: Colora.lightBlue),
-                                  hintFadeDuration: Duration.zero,
-                                  alignLabelWithHint: true,
-                                  // labelStyle: TextStyle(color: Colors.black),
-                                  border: InputBorder.none,
-                                  errorText: null,
+                              margin: const EdgeInsets.only(left: 5),
+                              child: Checkbox(
+                                activeColor: Colora.scaffold,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5),
                                 ),
-                                initialCountryCode: 'IR',
-                                showCountryFlag: true,
-                                autovalidateMode: AutovalidateMode.disabled,
-                                dropdownIconPosition: IconPosition.trailing,
-                                onChanged: (phone) {
-                                  print(phone.completeNumber);
+                                checkColor: Colora.primaryColor,
+                                side: const BorderSide(color: Colora.scaffold),
+                                value: state.termStatus,
+                                onChanged: (value) {
+                                  context.read<AuthBloc>().add(
+                                    ToggleTermsCheckboxEvent(isClicked: value!),
+                                  );
                                 },
                               ),
                             ),
-                          ),
 
-                          const SizedBox(height: 8),
-
-                          ElevatedButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                const Color.fromARGB(255, 255, 255, 255),
-                              ),
-                            ),
-                            onPressed: () {
-                              String phone = "0${controller.text}";
-                              if (state.termStatus == true) {
-                                if (controller.text.isNotEmpty) {
-                                  context.read<LoginBloc>().add(
-                                    SendOtp(phone: phone),
-                                  );
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                      backgroundColor: Colora.primaryColor,
-                                      content: Text(
-                                        "لطفا شماره تلفن خود را وارد کنید",
-                                        style: TextStyle(
-                                          color: Colora.scaffold,
-                                        ),
-                                      ),
-                                    ),
-                                  );
-                                }
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    backgroundColor: Colora.primaryColor,
-                                    content: Text(
-                                      "بدون پذیرفتن قوانین و مقررات امکان استفاده از آسود نمیباشد!",
-                                      style: TextStyle(color: Colora.scaffold),
-                                    ),
+                            const Row(
+                              children: [
+                                Text(
+                                  'توافق نامه کاربری',
+                                  style: TextStyle(
+                                    color: Colora.lightBlue,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                );
-                              }
-                            },
-                            child: Container(
-                              width: Dimensions.width * 0.25,
-                              height: Dimensions.height * 0.04,
-                              alignment: Alignment.center,
-                              child:
-                                  state.status == LoginStatus.loading
-                                      ? Transform.scale(
-                                        scale: 0.6,
-                                        child: const CircularProgressIndicator(
-                                          color: Colora.primaryColor,
-                                        ),
-                                      )
-                                      : const Center(
-                                        child: Text(
-                                          "ارسال کد تایید",
-                                          style: TextStyle(
-                                            color: Colora.primaryColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 15.0,
-                                          ),
-                                        ),
-                                      ),
+                                ),
+                                Text(
+                                  ' را خوانده قبول دارم',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+
+                        const SizedBox(height: 10),
+
+                        /// فیلد شماره تلفن
+                        Directionality(
+                          textDirection: TextDirection.ltr,
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 10,
+                            ),
+                            height: 50,
+                            width: Dimensions.width * .8,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(50),
+                              color: Colors.white,
+                            ),
+                            child: IntlPhoneField(
+                              textAlign: TextAlign.start,
+                              controller: controller,
+                              searchText: "جستجو کشور",
+                              languageCode: 'fa',
+                              onSubmitted: (p0) => submit(context, state),
+                              decoration: const InputDecoration(
+                                counter: Offstage(),
+                                hintTextDirection: TextDirection.rtl,
+
+                                hintText: 'شماره تلفن:',
+                                hintStyle: TextStyle(color: Colora.lightBlue),
+                                hintFadeDuration: Duration.zero,
+                                alignLabelWithHint: true,
+                                border: InputBorder.none,
+                              ),
+                              initialCountryCode: 'IR',
+                              showCountryFlag: true,
+                              autovalidateMode: AutovalidateMode.disabled,
+                              dropdownIconPosition: IconPosition.trailing,
+                              onChanged: (phone) {
+                                debugPrint(phone.completeNumber);
+                              },
                             ),
                           ),
-                        ],
-                      ),
+                        ),
+
+                        const SizedBox(height: 8),
+
+                        /// دکمه ارسال کد تایید
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.white,
+                          ),
+                          onPressed: () => submit(context, state),
+                          child: Container(
+                            width: Dimensions.width * 0.25,
+                            height: Dimensions.height * 0.04,
+                            alignment: Alignment.center,
+                            child:
+                                state.status == AuthStatus.loading
+                                    ? Transform.scale(
+                                      scale: 0.6,
+                                      child: const CircularProgressIndicator(
+                                        color: Colora.primaryColor,
+                                      ),
+                                    )
+                                    : const Text(
+                                      "ارسال کد تایید",
+                                      style: TextStyle(
+                                        color: Colora.primaryColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15.0,
+                                      ),
+                                    ),
+                          ),
+                        ),
+                      ],
                     ),
-                  );
-                },
-              ),
-            ],
-          ),
+                  ),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );
