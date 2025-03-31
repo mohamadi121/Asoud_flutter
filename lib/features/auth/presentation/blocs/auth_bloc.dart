@@ -5,8 +5,8 @@ import 'package:bloc/bloc.dart';
 import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/features/auth/domain/repository/auth_repository.dart';
 
-part 'login_event.dart';
-part 'login_state.dart';
+part 'auth_event.dart';
+part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final AuthRepository authRepository;

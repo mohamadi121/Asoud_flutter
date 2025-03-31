@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import 'package:asood/core/constants/constants.dart';
 import 'package:asood/core/router/app_routers.dart';
-import 'package:asood/features/auth/presentation/blocs/login_bloc.dart';
+import 'package:asood/features/auth/presentation/blocs/auth_bloc.dart';
 
 class OtpScreen extends StatelessWidget {
   const OtpScreen({super.key});

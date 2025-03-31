@@ -1,4 +1,4 @@
-part of 'login_bloc.dart';
+part of 'auth_bloc.dart';
 
 enum AuthStatus { initial, loading, success, error }
 
