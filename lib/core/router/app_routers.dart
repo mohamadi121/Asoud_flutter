@@ -1,3 +1,4 @@
+import 'package:asood/features/vendor/presentation/screen/vendor_home.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:asood/features/auth/presentation/screen/login_screen.dart';
@@ -8,7 +9,7 @@ part './app_routes.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.splash,
+    initialLocation: Routes.vendorHome,
     routes: [
       GoRoute(
         path: Routes.splash,
@@ -16,6 +17,13 @@ class AppRouter {
       ),
       GoRoute(path: Routes.login, builder: (context, state) => LoginScreen()),
       GoRoute(path: Routes.otp, builder: (context, state) => const OtpScreen()),
+      GoRoute(
+        path: Routes.vendorHome,
+        builder: (context, state) {
+          // final title = state.extra as String;
+          return VendorHomeScreen();
+        },
+      ),
     ],
   );
 }

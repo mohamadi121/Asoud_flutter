@@ -2,7 +2,7 @@
 import 'package:asood/core/constants/constants.dart';
 import 'package:asood/core/router/app_routers.dart';
 import 'package:asood/core/widgets/custom_button.dart';
-import 'package:asood/core/widgets/default_appbar.dart';
+import 'package:asood/core/widgets/appbar/default_appbar.dart';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -13,7 +13,7 @@ class ScreensListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: DefaultAppBar(context: context, title: 'لیست صفحات'),
+      appBar: DefaultAppBar(title: 'لیست صفحات'),
       body: SafeArea(
         child: Container(
           margin: const EdgeInsets.all(20),

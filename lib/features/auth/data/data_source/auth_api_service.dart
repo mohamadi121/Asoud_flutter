@@ -13,7 +13,7 @@ class AuthApiService {
   // Send verification code to user
   Future userAuth(String number) async {
     var body = {"mobile_number": number};
-    print(Endpoints.loginCreate);
+
     try {
       Response res = await dioClient.postData(
         Endpoints.loginCreate,
@@ -21,8 +21,7 @@ class AuthApiService {
         headers: Endpoints.simpleHeader,
       );
       return apiStatus(res);
-    } catch (e, stacktrace) {
-      print("❌ userAuth Error: $e\nStacktrace: $stacktrace");
+    } catch (e) {
       return customApiStatus();
     }
   }
@@ -38,8 +37,7 @@ class AuthApiService {
         headers: Endpoints.simpleHeader,
       );
       return apiStatus(res);
-    } catch (e, stacktrace) {
-      print("❌ verifyUser Error: $e\nStacktrace: $stacktrace");
+    } catch (e) {
       return customApiStatus();
     }
   }
@@ -49,8 +47,7 @@ class AuthApiService {
     try {
       Response res = await dioClient.getData(Endpoints.userAdvertise);
       return apiStatus(res);
-    } catch (e, stacktrace) {
-      print("❌ getAdvertises Error: $e\nStacktrace: $stacktrace");
+    } catch (e) {
       return customApiStatus();
     }
   }
@@ -60,8 +57,7 @@ class AuthApiService {
     try {
       Response res = await dioClient.getData(Endpoints.userContact);
       return apiStatus(res);
-    } catch (e, stacktrace) {
-      print("❌ getContacts Error: $e\nStacktrace: $stacktrace");
+    } catch (e) {
       return customApiStatus();
     }
   }
@@ -77,8 +73,7 @@ class AuthApiService {
       );
 
       return apiStatus(res);
-    } catch (e, stacktrace) {
-      print("❌ logout Error: $e\nStacktrace: $stacktrace");
+    } catch (e) {
       return customApiStatus();
     }
   }

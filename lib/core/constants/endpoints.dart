@@ -18,10 +18,9 @@ class Endpoints {
   static String userContact = 'contact/';
 
   /// category
-  static String userCategory = '${baseUrl}category/';
-  static String categoryGroupList = 'group/list/';
-  static String categoryList = 'list/';
-  static String subCategoryList = 'sub/list/';
+  static String categoryGroupList = 'category/group/list/';
+  static String categoryList = 'category/list/';
+  static String subCategoryList = 'category/sub/list/';
 
   /// market
   static String ownerMarket = '${baseUrl}owner/market/';
