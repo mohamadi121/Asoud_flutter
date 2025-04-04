@@ -12,6 +12,7 @@ class AuthApiService {
 
   // Send verification code to user
   Future userAuth(String number) async {
+    print(number);
     var body = {"mobile_number": number};
 
     try {
@@ -28,7 +29,11 @@ class AuthApiService {
 
   // Verify user SMS code
   Future verifyUser(String number, String code) async {
-    var body = {"mobile_number": number, 'pin': code};
+    print("__________________________");
+    print(number);
+    print(code);
+
+    var body = {"mobile_number": 09102192016, 'pin': code};
 
     try {
       Response res = await dioClient.postData(

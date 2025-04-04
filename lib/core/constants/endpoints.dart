@@ -25,4 +25,13 @@ class Endpoints {
   /// market
   static String ownerMarket = '${baseUrl}owner/market/';
   static String ownerCreateMarket = 'create/';
+
+  /// region
+  static String countryList = 'region/country/list/';
+
+  /// this needs {{countryID}}
+  static String provinceList = 'region/province/list/';
+
+  /// this needs {{provinceID}}
+  static String cityList = 'region/city/list/';
 }

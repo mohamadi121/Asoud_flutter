@@ -1,3 +1,4 @@
+import 'package:asood/features/create_workspace/presentation/screen/create_workspace.dart';
 import 'package:flutter/material.dart';
 
 import 'package:asood/core/constants/constants.dart';
@@ -11,7 +12,7 @@ Map dummyData = {
     {
       "title": "ایجاد دفتر کار",
       "image": Container(),
-      // "page": const CreateWorkSpaceScreen(),
+      "page": const CreateWorkSpaceScreen(),
     },
     {"title": "کسب درآمد از آسود", "image": Container()},
     {
@@ -216,7 +217,7 @@ class DashboardAdditionalWidget extends StatelessWidget {
             SizedBox(
               height: Dimensions.height * .45,
               width: Dimensions.width * .7,
-              // padding: EdgeInsets.only(top: Dimensions.height * 0.02),
+
               child: GridView.count(
                 physics: const NeverScrollableScrollPhysics(),
                 crossAxisCount: 3,

@@ -1,25 +1,27 @@
+import 'package:dio/dio.dart';
+
 import 'package:asood/core/constants/endpoints.dart';
 import 'package:asood/core/http_client/api_client.dart';
 import 'package:asood/core/http_client/api_status.dart';
-import 'package:dio/dio.dart';
 
-class CategoryApiService {
+class RegionApiServices {
   DioClient dioClient;
-  CategoryApiService({required this.dioClient});
+  RegionApiServices({required this.dioClient});
 
-  Future getCategoryList() async {
+  Future getCountryList() async {
     try {
-      Response res = await dioClient.getData(Endpoints.categoryGroupList);
+      Response res = await dioClient.getData(Endpoints.countryList);
+
       return apiStatus(res);
     } catch (e) {
       return customApiStatus();
     }
   }
 
-  Future getMainSubCategoryList(String categoryId) async {
+  Future getProvinceList(countryId) async {
     try {
       Response res = await dioClient.getData(
-        "${Endpoints.categoryList}$categoryId/",
+        "${Endpoints.provinceList}$countryId/",
       );
       return apiStatus(res);
     } catch (e) {
@@ -27,10 +29,10 @@ class CategoryApiService {
     }
   }
 
-  Future getSubCategoryList(String mainSubCategoryId) async {
+  Future getCityList(provinceId) async {
     try {
       Response res = await dioClient.getData(
-        "${Endpoints.subCategoryList}$mainSubCategoryId/",
+        "${Endpoints.cityList}$provinceId/",
       );
       return apiStatus(res);
     } catch (e) {

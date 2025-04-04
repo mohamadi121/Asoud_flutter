@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:bloc/bloc.dart';
 
 import 'package:asood/core/http_client/api_status.dart';
@@ -49,7 +47,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       var res = await authRepository.verifyCode(event.phone, event.otp);
       if (res is Success) {
-        var json = jsonDecode(res.response.toString());
+        // var json = jsonDecode(res.response.toString());
 
         // KeyValue token = KeyValue(
         //   key: "token",
