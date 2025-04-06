@@ -1,4 +1,5 @@
 import 'package:asood/features/create_workspace/presentation/bloc/create_workspace_bloc.dart';
+import 'package:asood/features/job_managment/presentation/bloc/jobmanagment_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -34,6 +35,7 @@ class Asood extends StatelessWidget {
         BlocProvider(create: (context) => locator<SplashBloc>()),
         BlocProvider(create: (context) => locator<AuthBloc>()),
         BlocProvider(create: (context) => locator<CreateWorkSpaceBloc>()),
+        BlocProvider(create: (context) => locator<JobmanagmentBloc>()),
       ],
       child: MaterialApp.router(
         builder: (context, child) {

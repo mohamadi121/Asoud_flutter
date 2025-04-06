@@ -1,5 +1,5 @@
-import 'package:asood/features/create_workspace/data/data_source/category_api_service.dart';
-import 'package:asood/features/create_workspace/domain/repository/category_repository.dart';
+import 'package:asood/features/job_managment/data/data_source/category_api_service.dart';
+import 'package:asood/features/job_managment/domain/repository/category_repository.dart';
 
 class CategoryRepositoryImp implements CategoryRepository {
   final CategoryApiService categoryApiService;

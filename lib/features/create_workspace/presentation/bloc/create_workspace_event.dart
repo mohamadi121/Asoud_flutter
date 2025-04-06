@@ -111,34 +111,6 @@ class SetDiscount extends CreateWorkSpaceEvent {
 
 class PayPrice extends CreateWorkSpaceEvent {}
 
-//category
-class ChangeCategoryIndex extends CreateWorkSpaceEvent {
-  final int activeCategoryIndex;
-  const ChangeCategoryIndex({required this.activeCategoryIndex});
-}
-
-class LoadCategory extends CreateWorkSpaceEvent {}
-
-class LoadMainSubCategory extends CreateWorkSpaceEvent {
-  final String categoryId;
-  const LoadMainSubCategory({required this.categoryId});
-}
-
-class ChangeSubCategoryIndex extends CreateWorkSpaceEvent {
-  final String activeSubCategoryIndex;
-  const ChangeSubCategoryIndex({required this.activeSubCategoryIndex});
-}
-
-class LoadSubCategory extends CreateWorkSpaceEvent {
-  final String subCategoryId;
-  const LoadSubCategory({required this.subCategoryId});
-}
-
-class ChangeSelectedCategoryName extends CreateWorkSpaceEvent {
-  final String selectedCat;
-  const ChangeSelectedCategoryName({required this.selectedCat});
-}
-
 //region
 class LoadCountry extends CreateWorkSpaceEvent {}
 

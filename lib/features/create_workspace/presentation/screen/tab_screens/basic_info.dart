@@ -1,6 +1,7 @@
 import 'package:asood/core/helper/secure_storage.dart';
 import 'package:asood/core/helper/snack_bar_util.dart';
 import 'package:asood/core/helper/validators.dart';
+import 'package:asood/core/router/app_routers.dart';
 import 'package:asood/features/create_workspace/presentation/bloc/create_workspace_bloc.dart';
 import 'package:asood/features/create_workspace/presentation/widgets/simple_title.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:asood/core/constants/constants.dart';
 import 'package:asood/core/widgets/custom_button.dart';
 import 'package:asood/core/widgets/custom_textfield.dart';
 import 'package:asood/core/widgets/radio_button.dart';
+import 'package:go_router/go_router.dart';
 
 class BasicInfo extends StatefulWidget {
   final CreateWorkSpaceBloc bloc;
@@ -45,8 +47,6 @@ class _BasicInfoState extends State<BasicInfo> {
     // selectedValue = widget.bloc.state.marketType;
     inProcess();
     //idCode.text =  widget.bloc.state.idCode;
-    catBloc = BlocProvider.of<CreateWorkSpaceBloc>(context);
-    catBloc.add(LoadCategory());
   }
 
   void inProcess() async {
@@ -64,7 +64,6 @@ class _BasicInfoState extends State<BasicInfo> {
   }
 
   submit(CreateWorkSpaceBloc bloc) {
-    print(bloc.state.activeCategoryIndex == -1);
     if (_formKey.currentState!.validate() &&
         bloc.state.marketType.isNotEmpty &&
         bloc.state.activeCategoryIndex >= 0) {
@@ -79,7 +78,7 @@ class _BasicInfoState extends State<BasicInfo> {
         ),
       );
 
-      bloc.add(const ChangeCategoryIndex(activeCategoryIndex: -1));
+      // bloc.add(const ChangeCategoryIndex(activeCategoryIndex: -1));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -91,261 +90,6 @@ class _BasicInfoState extends State<BasicInfo> {
         ),
       );
     }
-  }
-
-  void category() {
-    FocusManager.instance.primaryFocus?.unfocus();
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(20.0)),
-          ),
-          contentPadding: const EdgeInsets.symmetric(
-            horizontal: 0.0,
-            vertical: 0,
-          ),
-          insetPadding: const EdgeInsets.all(10),
-          backgroundColor: Colora.scaffold,
-          content: BlocBuilder<CreateWorkSpaceBloc, CreateWorkSpaceState>(
-            builder: (context, state) {
-              return SizedBox(
-                width: Dimensions.width * 0.9,
-                height: Dimensions.height * 0.6,
-                child: Row(
-                  children: [
-                    //main category
-                    Container(
-                      width: Dimensions.width * 0.35,
-                      height: Dimensions.height * 0.6,
-                      decoration: const BoxDecoration(
-                        color: Colora.scaffold_,
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(20.0),
-                          bottomRight: Radius.circular(20.0),
-                        ),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                          topRight: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
-                        ),
-                        child: ListView.builder(
-                          itemCount: state.categoryList.length,
-                          itemBuilder: (context, index) {
-                            return Container(
-                              height: Dimensions.height * 0.08,
-                              decoration: BoxDecoration(
-                                color:
-                                    state.activeCategoryIndex == index
-                                        ? Colora.primaryColor
-                                        : Colors.transparent,
-                                border: Border(
-                                  bottom: BorderSide(
-                                    color: Colora.primaryColor.withValues(
-                                      alpha: 0.1,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              child: MaterialButton(
-                                onPressed: () {
-                                  catBloc.add(
-                                    LoadMainSubCategory(
-                                      categoryId: state.categoryList[index].id!,
-                                    ),
-                                  );
-                                  catBloc.add(
-                                    ChangeCategoryIndex(
-                                      activeCategoryIndex: index,
-                                    ),
-                                  );
-                                  // setState(() {
-                                  //   countryName = state.countryList[index].name!;
-                                  // });
-                                  //
-                                  // countryId = state.countryList[index].id!;
-                                  // Navigator.of(context).pop();
-                                },
-                                child: Text(
-                                  state.categoryList[index].title.toString(),
-                                  textAlign: TextAlign.center,
-                                  maxLines: 3,
-                                  style: TextStyle(
-                                    color:
-                                        state.activeCategoryIndex == index
-                                            ? Colora.scaffold
-                                            : Colora.primaryColor,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-
-                    // main sub category
-                    SizedBox(
-                      width: Dimensions.width * 0.55,
-                      height: Dimensions.height * 0.6,
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          bottomLeft: Radius.circular(20),
-                        ),
-                        child: ListView.builder(
-                          itemCount: state.mainSubCategoryList.length,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                //button
-                                InkWell(
-                                  child: Container(
-                                    width: Dimensions.width * 0.55,
-                                    height: Dimensions.height * 0.08,
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: Dimensions.width * 0.05,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colora.backgroundSwitch.withValues(
-                                        alpha: 0.8,
-                                      ),
-                                      border: Border(
-                                        bottom: BorderSide(
-                                          color: Colora.scaffold.withValues(
-                                            alpha: 0.2,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          state
-                                              .mainSubCategoryList[index]
-                                              .title!,
-                                          style: TextStyle(
-                                            color: Colora.scaffold,
-                                            fontSize: Dimensions.width * 0.035,
-                                          ),
-                                        ),
-                                        Icon(
-                                          state.activeSubCategoryIndex ==
-                                                  state
-                                                      .mainSubCategoryList[index]
-                                                      .id!
-                                              ? Icons.arrow_drop_up_rounded
-                                              : Icons.arrow_drop_down_rounded,
-                                          color: Colora.scaffold,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    if (state.activeSubCategoryIndex !=
-                                        state.mainSubCategoryList[index].id) {
-                                      catBloc.add(
-                                        ChangeSubCategoryIndex(
-                                          activeSubCategoryIndex:
-                                              state
-                                                  .mainSubCategoryList[index]
-                                                  .id!,
-                                        ),
-                                      );
-                                      catBloc.add(
-                                        LoadSubCategory(
-                                          subCategoryId:
-                                              state
-                                                  .mainSubCategoryList[index]
-                                                  .id!,
-                                        ),
-                                      );
-                                    } else {
-                                      catBloc.add(
-                                        const ChangeSubCategoryIndex(
-                                          activeSubCategoryIndex: "-1",
-                                        ),
-                                      );
-                                    }
-                                  },
-                                ),
-
-                                //sub category
-                                if (state.activeSubCategoryIndex ==
-                                    state.mainSubCategoryList[index].id!) ...[
-                                  ...List.generate(
-                                    state.subCategoryList.length,
-                                    (index) {
-                                      return InkWell(
-                                        child: Container(
-                                          width: Dimensions.width * 0.55,
-                                          height: Dimensions.height * 0.08,
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal: Dimensions.width * 0.05,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: Colora.backgroundSwitch
-                                                .withValues(alpha: 0.2),
-                                            border: Border(
-                                              bottom: BorderSide(
-                                                color: Colora.scaffold
-                                                    .withValues(alpha: 0.2),
-                                              ),
-                                            ),
-                                          ),
-                                          child: Center(
-                                            child: Text(
-                                              state
-                                                  .subCategoryList[index]
-                                                  .title!,
-                                              style: TextStyle(
-                                                color: Colora.primaryColor,
-                                                fontSize:
-                                                    Dimensions.width * 0.035,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        onTap: () {
-                                          selectedCategoryId =
-                                              state.subCategoryList[index].id!;
-                                          context
-                                              .read<CreateWorkSpaceBloc>()
-                                              .add(
-                                                ChangeSelectedCategoryName(
-                                                  selectedCat:
-                                                      state
-                                                          .subCategoryList[index]
-                                                          .title!,
-                                                ),
-                                              );
-
-                                          Navigator.pop(context);
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              );
-            },
-          ),
-        );
-      },
-    );
   }
 
   @override
@@ -478,7 +222,7 @@ class _BasicInfoState extends State<BasicInfo> {
                         color: Colora.scaffold,
                       ),
                       child: MaterialButton(
-                        onPressed: () => category(),
+                        onPressed: () => context.go(Routes.jobManagement),
                         child: Text(
                           context
                               .read<CreateWorkSpaceBloc>()
@@ -516,11 +260,11 @@ class _BasicInfoState extends State<BasicInfo> {
                                         description.text.isNotEmpty &&
                                         slogan.text.isNotEmpty &&
                                         idCode.text.isNotEmpty) {
-                                      bloc.add(
-                                        const ChangeCategoryIndex(
-                                          activeCategoryIndex: -1,
-                                        ),
-                                      );
+                                      // bloc.add(
+                                      //   const ChangeCategoryIndex(
+                                      //     activeCategoryIndex: -1,
+                                      //   ),
+                                      // );
                                       // bloc.add(CreateMarket(
                                       //   businessId: businessId.text,
                                       //   name: name.text,

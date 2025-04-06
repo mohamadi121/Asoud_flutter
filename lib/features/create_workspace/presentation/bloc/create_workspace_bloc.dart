@@ -5,10 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:asood/core/constants/constants.dart';
 import 'package:asood/core/http_client/api_status.dart';
-import 'package:asood/features/create_workspace/domain/repository/category_repository.dart';
+
 import 'package:asood/features/create_workspace/domain/repository/market_repository.dart';
 import 'package:asood/features/create_workspace/domain/repository/region_repository.dart';
-import 'package:asood/features/vendor/data/model/category_model.dart';
+import 'package:asood/features/job_managment/data/model/category_model.dart';
 import 'package:asood/features/vendor/data/model/country_model.dart';
 import 'package:asood/features/vendor/data/model/market_contact_model.dart';
 import 'package:asood/features/vendor/data/model/market_location_model.dart';
@@ -23,9 +23,7 @@ class CreateWorkSpaceBloc
 
   final RegionRepository regionRepo;
 
-  final CategoryRepository categoryRepo;
-
-  CreateWorkSpaceBloc(this.marketRepo, this.regionRepo, this.categoryRepo)
+  CreateWorkSpaceBloc(this.marketRepo, this.regionRepo)
     : super(CreateWorkSpaceState.initial()) {
     //on ChangeTabView change active index
     on<ChangeTabView>((event, emit) {
@@ -108,22 +106,6 @@ class CreateWorkSpaceBloc
     on<SetDiscount>(_setDiscount);
 
     on<PayPrice>(_payPrice);
-
-    //category
-    on<ChangeCategoryIndex>((event, emit) {
-      emit(state.copyWith(activeCategoryIndex: event.activeCategoryIndex));
-    });
-    on<ChangeSelectedCategoryName>((event, emit) {
-      emit(state.copyWith(selectedCategoryName: event.selectedCat));
-    });
-    on<LoadCategory>(_getCategory);
-    on<LoadMainSubCategory>(_getMainSubCategory);
-    on<ChangeSubCategoryIndex>((event, emit) {
-      emit(
-        state.copyWith(activeSubCategoryIndex: event.activeSubCategoryIndex),
-      );
-    });
-    on<LoadSubCategory>(_getSubCategory);
 
     //region
     on<LoadCountry>(_getCountries);
@@ -253,83 +235,6 @@ class CreateWorkSpaceBloc
         //     status: CWSStatus.failure, error: res.error.toString()));
       }
     } catch (e) {}
-  }
-
-  //list of category
-  _getCategory(LoadCategory event, Emitter<CreateWorkSpaceState> emit) async {
-    emit(state.copyWith(status: CWSStatus.loading));
-    try {
-      final res = await categoryRepo.getCategoryList();
-      if (res is Success) {
-        final json = jsonDecode(res.response.toString());
-        final initList = json['data'] as List;
-        print("_________");
-        final categoryList =
-            initList.map((e) => CategoryModel.fromJson(e)).toList();
-        print(categoryList);
-        emit(
-          state.copyWith(status: CWSStatus.success, categoryList: categoryList),
-        );
-      } else {
-        emit(state.copyWith(status: CWSStatus.failure));
-      }
-    } catch (e) {
-      emit(state.copyWith(status: CWSStatus.failure));
-    }
-  }
-
-  //list of main sub category
-  _getMainSubCategory(
-    LoadMainSubCategory event,
-    Emitter<CreateWorkSpaceState> emit,
-  ) async {
-    emit(state.copyWith(status: CWSStatus.loading));
-    try {
-      final res = await categoryRepo.getMainSubCategoryList(event.categoryId);
-      if (res is Success) {
-        final json = jsonDecode(res.response.toString());
-        final initList = json['data'] as List;
-        final mainSubCategory =
-            initList.map((e) => MainSubCategoryModel.fromJson(e)).toList();
-        emit(
-          state.copyWith(
-            status: CWSStatus.success,
-            mainSubCategoryList: mainSubCategory,
-          ),
-        );
-      } else {
-        emit(state.copyWith(status: CWSStatus.failure));
-      }
-    } catch (e) {
-      emit(state.copyWith(status: CWSStatus.failure));
-    }
-  }
-
-  //list of sub category
-  _getSubCategory(
-    LoadSubCategory event,
-    Emitter<CreateWorkSpaceState> emit,
-  ) async {
-    emit(state.copyWith(status: CWSStatus.loading));
-    try {
-      final res = await categoryRepo.getSubCategoryList(event.subCategoryId);
-      if (res is Success) {
-        final json = jsonDecode(res.response.toString());
-        final initList = json['data'] as List;
-        final subCategory =
-            initList.map((e) => CategoryModel.fromJson(e)).toList();
-        emit(
-          state.copyWith(
-            status: CWSStatus.success,
-            subCategoryList: subCategory,
-          ),
-        );
-      } else {
-        emit(state.copyWith(status: CWSStatus.failure));
-      }
-    } catch (e) {
-      emit(state.copyWith(status: CWSStatus.failure));
-    }
   }
 
   //--------------- Region ----------

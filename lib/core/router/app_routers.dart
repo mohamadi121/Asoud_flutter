@@ -1,3 +1,4 @@
+import 'package:asood/features/job_managment/presentation/screen/job_managment.dart';
 import 'package:asood/features/vendor/presentation/screen/vendor_home.dart';
 import 'package:go_router/go_router.dart';
 
@@ -9,7 +10,7 @@ part './app_routes.dart';
 
 class AppRouter {
   static final GoRouter router = GoRouter(
-    initialLocation: Routes.splash,
+    initialLocation: Routes.vendorHome,
     routes: [
       GoRoute(
         path: Routes.splash,
@@ -23,6 +24,10 @@ class AppRouter {
           // final title = state.extra as String;
           return VendorHomeScreen();
         },
+      ),
+      GoRoute(
+        path: Routes.jobManagement,
+        builder: (context, state) => JobManagementScreen(),
       ),
     ],
   );
