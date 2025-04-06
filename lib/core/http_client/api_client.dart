@@ -28,7 +28,7 @@ class DioClient {
       InterceptorsWrapper(
         onRequest: (options, handler) async {
           String? token = await SecureStorage.readSecureStorage(Keys.token);
-          if (token != "ND") {
+          if (token != "ND" && token != null) {
             options.headers['Authorization'] = 'Token $token';
             debugPrint('🚀 Token being sent: $token'); // این خط جدید اضافه شده
           }

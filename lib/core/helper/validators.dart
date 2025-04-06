@@ -1,4 +1,24 @@
 class Validators {
+  static String? simpleFieldEmpty(String? value) {
+    if (value == null || value.isEmpty) {
+      return "فیلد نمایشده نمی‌تواند خالی باشد.";
+    }
+
+    return null;
+  }
+
+  static String? companyValidation(String? value) {
+    if (value == null || value.isEmpty) {
+      return "لطفاً کد ملی را وارد کنید.";
+    }
+
+    if (!RegExp(r'^\d{11}$').hasMatch(value)) {
+      return "شناسه ملی باید 11 رقم و فقط شامل اعداد باشد.";
+    }
+
+    return null; // یعنی مشکلی نداره و معتبره
+  }
+
   static String? iranianNationalCodeValidator(String? value) {
     if (value == null || value.isEmpty) {
       return "لطفاً کد ملی را وارد کنید.";

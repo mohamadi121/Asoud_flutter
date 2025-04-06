@@ -21,6 +21,7 @@ class BasicInfo extends StatefulWidget {
 }
 
 class _BasicInfoState extends State<BasicInfo> {
+  final _formKey = GlobalKey<FormState>();
   String selectedValue = '';
   final TextEditingController name = TextEditingController();
   final TextEditingController businessId = TextEditingController();
@@ -59,6 +60,36 @@ class _BasicInfoState extends State<BasicInfo> {
     } else {
       isInProcess = false;
       print('object');
+    }
+  }
+
+  submit(CreateWorkSpaceBloc bloc) {
+    print(bloc.state.activeCategoryIndex == -1);
+    if (_formKey.currentState!.validate() &&
+        bloc.state.marketType.isNotEmpty &&
+        bloc.state.activeCategoryIndex >= 0) {
+      bloc.add(
+        CreateMarket(
+          businessId: businessId.text,
+          name: name.text,
+          description: description.text,
+          slogan: slogan.text,
+          marketType: selectedValue,
+          subCategory: selectedCategoryId,
+        ),
+      );
+
+      bloc.add(const ChangeCategoryIndex(activeCategoryIndex: -1));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Colora.borderAvatar,
+          content: Text(
+            "لطفا تمامی فیلد های لازم را پر نمایید.",
+            style: TextStyle(color: Colora.scaffold),
+          ),
+        ),
+      );
     }
   }
 
@@ -320,7 +351,7 @@ class _BasicInfoState extends State<BasicInfo> {
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<CreateWorkSpaceBloc>(context);
-
+    bool isMarketTypeShop = bloc.state.marketType == "shop";
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: Dimensions.khorisontal),
       child: SingleChildScrollView(
@@ -354,243 +385,220 @@ class _BasicInfoState extends State<BasicInfo> {
                 borderRadius: BorderRadius.circular(20),
                 color: Colora.primaryColor,
               ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const SimpleTitle(title: 'انتخاب قالب'),
+              child: Form(
+                key: _formKey,
 
-                  BlocBuilder<CreateWorkSpaceBloc, CreateWorkSpaceState>(
-                    builder: (context, state) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          radioButton(
-                            title: "فروشگاهی",
-                            value: "shop",
-                            groupValue: state.marketType,
-                            onChanged: (value) {
-                              context.read<CreateWorkSpaceBloc>().add(
-                                SetMarketType(marketType: value!),
-                              );
-                            },
-                          ),
-                          radioButton(
-                            title: "شرکتی",
-                            value: "company",
-                            groupValue: state.marketType,
-                            onChanged: (value) {
-                              context.read<CreateWorkSpaceBloc>().add(
-                                SetMarketType(marketType: value!),
-                              );
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 7),
-                  CustomTextField(
-                    controller: businessId,
-                    isRequired: true,
-                    text: "شناسه کسب و کار",
-                  ),
-                  const SizedBox(height: 7),
-                  CustomTextField(
-                    isRequired: true,
-                    controller: name,
-                    text: "نام کسب و کار",
-                  ),
-                  const SizedBox(height: 7),
-                  CustomTextField(
-                    isRequired: true,
-                    controller: description,
-                    text: "توضیحات",
-                    maxLine: 6,
-                  ),
-                  const SizedBox(height: 7),
-                  CustomTextField(
-                    isRequired: true,
-                    controller: slogan,
-                    text: "شعار تبلیغاتی",
-                  ),
-                  const SizedBox(height: 7),
-                  CustomTextField(
-                    maxLength: 10,
-                    keyboardType: TextInputType.number,
-                    controller: idCode,
-                    text: "کد ملی",
-                    validator: Validators.iranianNationalCodeValidator,
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text(
-                      "کد ملی صرفا جهت تخصیص آگهی به شما میباشد",
-                      style: TextStyle(color: Colors.white),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const SimpleTitle(title: 'انتخاب قالب'),
+
+                    BlocBuilder<CreateWorkSpaceBloc, CreateWorkSpaceState>(
+                      builder: (context, state) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            radioButton(
+                              title: "فروشگاهی",
+                              value: "shop",
+                              groupValue: state.marketType,
+                              onChanged: (value) {
+                                context.read<CreateWorkSpaceBloc>().add(
+                                  SetMarketType(marketType: value!),
+                                );
+                              },
+                            ),
+                            radioButton(
+                              title: "شرکتی",
+                              value: "company",
+                              groupValue: state.marketType,
+                              onChanged: (value) {
+                                context.read<CreateWorkSpaceBloc>().add(
+                                  SetMarketType(marketType: value!),
+                                );
+                              },
+                            ),
+                          ],
+                        );
+                      },
                     ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                    width: Dimensions.width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(Dimensions.twenty),
-                      color: Colora.scaffold,
+                    const SizedBox(height: 7),
+                    CustomTextField(
+                      controller: businessId,
+                      isRequired: true,
+                      text: isMarketTypeShop ? "شناسه کسب و کار" : "شناسه شرکت",
+                      validator: Validators.simpleFieldEmpty,
                     ),
-                    child: MaterialButton(
-                      onPressed: () => category(),
+                    const SizedBox(height: 7),
+                    CustomTextField(
+                      isRequired: true,
+                      controller: name,
+                      text: isMarketTypeShop ? "نام کسب و کار" : "نام شرکت",
+                      validator: Validators.simpleFieldEmpty,
+                    ),
+                    const SizedBox(height: 7),
+                    CustomTextField(
+                      isRequired: true,
+                      controller: description,
+                      text: "توضیحات",
+                      maxLine: 6,
+                      validator: Validators.simpleFieldEmpty,
+                    ),
+                    const SizedBox(height: 7),
+                    CustomTextField(
+                      isRequired: true,
+                      controller: slogan,
+                      text: isMarketTypeShop ? "شعار تبلیغاتی" : "شعار شرکت",
+                      validator: Validators.simpleFieldEmpty,
+                    ),
+                    const SizedBox(height: 7),
+                    CustomTextField(
+                      maxLength: isMarketTypeShop ? 10 : 11,
+                      keyboardType: TextInputType.number,
+                      controller: idCode,
+                      text: isMarketTypeShop ? "کد ملی" : "شناسه ملی",
+                      validator:
+                          isMarketTypeShop
+                              ? Validators.iranianNationalCodeValidator
+                              : Validators.companyValidation,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.all(8.0),
                       child: Text(
-                        context
-                            .read<CreateWorkSpaceBloc>()
-                            .state
-                            .selectedCategoryName,
-                        style: const TextStyle(
-                          color: Colora.primaryColor,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        "کد ملی صرفا جهت تخصیص آگهی به شما میباشد",
+                        style: TextStyle(color: Colors.white),
                       ),
-                      // text: selectedCategoryName,
-                      // color: Colors.white,
-                      // textColor: Colora.primaryColor,
-                      // height: Dimensions.height * 0.05,
-                      // fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
+                    Container(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child:
-                          isInProcess
-                              ? CustomButton(
-                                onPress: () async {
-                                  await SecureStorage.deleteSecureStorage(
-                                    'market_id',
-                                  );
-                                  await SecureStorage.deleteSecureStorage(
-                                    'marketActiveTabIndex',
-                                  );
-                                  if (businessId.text.isNotEmpty &&
-                                      name.text.isNotEmpty &&
-                                      description.text.isNotEmpty &&
-                                      slogan.text.isNotEmpty &&
-                                      idCode.text.isNotEmpty) {
-                                    bloc.add(
-                                      const ChangeCategoryIndex(
-                                        activeCategoryIndex: -1,
-                                      ),
-                                    );
-                                    // bloc.add(CreateMarket(
-                                    //   businessId: businessId.text,
-                                    //   name: name.text,
-                                    //   description: description.text,
-                                    //   slogan: slogan.text,
-                                    //   marketType: selectedValue,
-                                    //   subCategory: 1,
-                                    // ));
-                                    // bloc.add(
-                                    //   const ChangeTabView(activeTabIndex: 1),
-                                    // );
-                                  } else {
-                                    if (!context.mounted) return;
-                                    showSnackBar(
-                                      context,
-
-                                      "لطفا تمامی فیلد های لازم را پر نمایید.",
-                                    );
-                                  }
-                                },
-                                text:
-                                    BlocProvider.of<CreateWorkSpaceBloc>(
-                                              context,
-                                            ).state.status ==
-                                            CWSStatus.loading
-                                        ? null
-                                        : "ویرایش",
-                                color: Colors.white,
-                                textColor: Colora.primaryColor,
-                                height: 40,
-                                width: 100,
-                                btnWidget:
-                                    BlocProvider.of<CreateWorkSpaceBloc>(
-                                              context,
-                                            ).state.status ==
-                                            CWSStatus.loading
-                                        ? const Center(
-                                          child: SizedBox(
-                                            height: 25,
-                                            width: 25,
-                                            child: CircularProgressIndicator(),
-                                          ),
-                                        )
-                                        : null,
-                              )
-                              : CustomButton(
-                                onPress: () {
-                                  if (businessId.text.isNotEmpty &&
-                                      name.text.isNotEmpty &&
-                                      description.text.isNotEmpty &&
-                                      slogan.text.isNotEmpty &&
-                                      idCode.text.isNotEmpty &&
-                                      selectedCategoryId.isNotEmpty) {
-                                    bloc.add(
-                                      CreateMarket(
-                                        businessId: businessId.text,
-                                        name: name.text,
-                                        description: description.text,
-                                        slogan: slogan.text,
-                                        marketType: selectedValue,
-                                        subCategory: selectedCategoryId,
-                                      ),
-                                    );
-
-                                    bloc.add(
-                                      const ChangeCategoryIndex(
-                                        activeCategoryIndex: -1,
-                                      ),
-                                    );
-                                  } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        backgroundColor: Colora.borderAvatar,
-                                        content: Text(
-                                          "لطفا تمامی فیلد های لازم را پر نمایید.",
-                                          style: TextStyle(
-                                            color: Colora.scaffold,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                },
-                                text:
-                                    BlocProvider.of<CreateWorkSpaceBloc>(
-                                              context,
-                                            ).state.status ==
-                                            CWSStatus.loading
-                                        ? null
-                                        : "بعدی",
-                                color: Colors.white,
-                                textColor: Colora.primaryColor,
-                                height: 40,
-                                width: 100,
-                                btnWidget:
-                                    BlocProvider.of<CreateWorkSpaceBloc>(
-                                              context,
-                                            ).state.status ==
-                                            CWSStatus.loading
-                                        ? const Center(
-                                          child: SizedBox(
-                                            height: 25,
-                                            width: 25,
-                                            child: CircularProgressIndicator(),
-                                          ),
-                                        )
-                                        : null,
-                              ),
+                      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                      width: Dimensions.width,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(Dimensions.twenty),
+                        color: Colora.scaffold,
+                      ),
+                      child: MaterialButton(
+                        onPressed: () => category(),
+                        child: Text(
+                          context
+                              .read<CreateWorkSpaceBloc>()
+                              .state
+                              .selectedCategoryName,
+                          style: const TextStyle(
+                            color: Colora.primaryColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        // text: selectedCategoryName,
+                        // color: Colors.white,
+                        // textColor: Colora.primaryColor,
+                        // height: Dimensions.height * 0.05,
+                        // fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 10),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child:
+                            isInProcess
+                                ? CustomButton(
+                                  onPress: () async {
+                                    await SecureStorage.deleteSecureStorage(
+                                      'market_id',
+                                    );
+                                    await SecureStorage.deleteSecureStorage(
+                                      'marketActiveTabIndex',
+                                    );
+                                    if (businessId.text.isNotEmpty &&
+                                        name.text.isNotEmpty &&
+                                        description.text.isNotEmpty &&
+                                        slogan.text.isNotEmpty &&
+                                        idCode.text.isNotEmpty) {
+                                      bloc.add(
+                                        const ChangeCategoryIndex(
+                                          activeCategoryIndex: -1,
+                                        ),
+                                      );
+                                      // bloc.add(CreateMarket(
+                                      //   businessId: businessId.text,
+                                      //   name: name.text,
+                                      //   description: description.text,
+                                      //   slogan: slogan.text,
+                                      //   marketType: selectedValue,
+                                      //   subCategory: 1,
+                                      // ));
+                                      // bloc.add(
+                                      //   const ChangeTabView(activeTabIndex: 1),
+                                      // );
+                                    } else {
+                                      if (!context.mounted) return;
+                                      showSnackBar(
+                                        context,
+
+                                        "لطفا تمامی فیلد های لازم را پر نمایید.",
+                                      );
+                                    }
+                                  },
+                                  text:
+                                      BlocProvider.of<CreateWorkSpaceBloc>(
+                                                context,
+                                              ).state.status ==
+                                              CWSStatus.loading
+                                          ? null
+                                          : "ویرایش",
+                                  color: Colors.white,
+                                  textColor: Colora.primaryColor,
+                                  height: 40,
+                                  width: 100,
+                                  btnWidget:
+                                      BlocProvider.of<CreateWorkSpaceBloc>(
+                                                context,
+                                              ).state.status ==
+                                              CWSStatus.loading
+                                          ? const Center(
+                                            child: SizedBox(
+                                              height: 25,
+                                              width: 25,
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            ),
+                                          )
+                                          : null,
+                                )
+                                : CustomButton(
+                                  onPress: () => submit(bloc),
+                                  text:
+                                      BlocProvider.of<CreateWorkSpaceBloc>(
+                                                context,
+                                              ).state.status ==
+                                              CWSStatus.loading
+                                          ? null
+                                          : "بعدی",
+                                  color: Colors.white,
+                                  textColor: Colora.primaryColor,
+                                  height: 40,
+                                  width: 100,
+                                  btnWidget:
+                                      BlocProvider.of<CreateWorkSpaceBloc>(
+                                                context,
+                                              ).state.status ==
+                                              CWSStatus.loading
+                                          ? const Center(
+                                            child: SizedBox(
+                                              height: 25,
+                                              width: 25,
+                                              child:
+                                                  CircularProgressIndicator(),
+                                            ),
+                                          )
+                                          : null,
+                                ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
