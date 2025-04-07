@@ -4,6 +4,7 @@ import 'package:asood/core/helper/validators.dart';
 import 'package:asood/core/router/app_routers.dart';
 import 'package:asood/features/create_workspace/presentation/bloc/create_workspace_bloc.dart';
 import 'package:asood/features/create_workspace/presentation/widgets/simple_title.dart';
+import 'package:asood/features/job_managment/presentation/bloc/jobmanagment_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -222,7 +223,10 @@ class _BasicInfoState extends State<BasicInfo> {
                         color: Colora.scaffold,
                       ),
                       child: MaterialButton(
-                        onPressed: () => context.go(Routes.jobManagement),
+                        onPressed: () {
+                          context.push(Routes.jobManagement);
+                          context.read<JobmanagmentBloc>().add(LoadCategory());
+                        },
                         child: Text(
                           context
                               .read<CreateWorkSpaceBloc>()

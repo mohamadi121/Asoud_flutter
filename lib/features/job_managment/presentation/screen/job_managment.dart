@@ -1,3 +1,4 @@
+import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/features/job_managment/presentation/bloc/jobmanagment_bloc.dart';
 import 'package:asood/features/job_managment/presentation/screen/group_tab.dart';
 import 'package:flutter/material.dart';
@@ -97,8 +98,8 @@ class _JobManagementScreenState extends State<JobManagementScreen>
                             physics: const NeverScrollableScrollPhysics(),
                             children: [
                               GroupTab(bloc: bloc),
-                              // ContactsInfo(bloc: bloc),
-                              // LocationInfo(bloc: bloc),
+                              GroupTab(bloc: bloc),
+                              GroupTab(bloc: bloc),
                             ],
                           ),
                         ),

@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import '../constants/constants.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton(
-  {
+  const CustomButton({
     super.key,
     required this.onPress,
     this.height,
@@ -13,7 +12,7 @@ class CustomButton extends StatelessWidget {
     this.btnWidget,
     this.textColor,
     this.text,
-    this.fontWeight
+    this.fontWeight,
   });
 
   final void Function() onPress;
@@ -30,9 +29,9 @@ class CustomButton extends StatelessWidget {
     return GestureDetector(
       onTap: onPress,
       child: Container(
-        padding: EdgeInsets.only(
-          bottom: Dimensions.height * 0.007
-        ),
+        // padding: EdgeInsets.only(
+        //   bottom: Dimensions.height * 0.007
+        // ),
         decoration: BoxDecoration(
           color: Colora.primaryColor,
           borderRadius: BorderRadius.circular(buttonRadius),
@@ -42,16 +41,17 @@ class CustomButton extends StatelessWidget {
           width: width ?? Dimensions.width,
           decoration: BoxDecoration(
             color: color ?? Colora.lightBlue,
-            borderRadius: BorderRadius.circular(buttonRadius)
+            borderRadius: BorderRadius.circular(buttonRadius),
           ),
           child: Center(
-            child: btnWidget ??
+            child:
+                btnWidget ??
                 Text(
                   text ?? "",
                   style: ATextStyle.unSelectedBtn.copyWith(
                     fontStyle: FontStyle.normal,
                     color: textColor ?? Colors.white,
-                    fontWeight: fontWeight
+                    fontWeight: fontWeight,
                   ),
                 ),
           ),

@@ -36,13 +36,15 @@ class JobmanagmentBloc extends Bloc<JobmanagmentEvent, JobmanagmentState> {
     emit(state.copyWith(status: CWSStatus.loading));
     try {
       final res = await categoryRepository.getCategoryList();
+      if (res is Failure) {
+        print("++++++++++++++++++++++++++");
+        print(res.errorResponse);
+        print(res.code);
+      }
       if (res is Success) {
-        final json = jsonDecode(res.response.toString());
-        final initList = json['data'] as List;
-        print("_________");
+        final initList = res.response as List;
         final categoryList =
             initList.map((e) => CategoryModel.fromJson(e)).toList();
-        print(categoryList);
         emit(
           state.copyWith(status: CWSStatus.success, categoryList: categoryList),
         );
@@ -50,6 +52,7 @@ class JobmanagmentBloc extends Bloc<JobmanagmentEvent, JobmanagmentState> {
         emit(state.copyWith(status: CWSStatus.failure));
       }
     } catch (e) {
+      print(e);
       emit(state.copyWith(status: CWSStatus.failure));
     }
   }

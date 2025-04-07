@@ -1,7 +1,5 @@
 part of 'jobmanagment_bloc.dart';
 
-enum CWSStatus { initial, loading, success, failure }
-
 class JobmanagmentState {
   final int activeTabIndex;
   final CWSStatus status;

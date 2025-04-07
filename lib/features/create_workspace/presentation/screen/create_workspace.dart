@@ -97,8 +97,8 @@ class _CreateWorkSpaceScreenState extends State<CreateWorkSpaceScreen>
                             physics: const NeverScrollableScrollPhysics(),
                             children: [
                               BasicInfo(bloc: bloc),
-                              // ContactsInfo(bloc: bloc),
-                              // LocationInfo(bloc: bloc),
+                              BasicInfo(bloc: bloc),
+                              BasicInfo(bloc: bloc),
                             ],
                           ),
                         ),

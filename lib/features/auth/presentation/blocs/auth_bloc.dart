@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:asood/core/helper/secure_storage.dart';
 import 'package:bloc/bloc.dart';
 
 import 'package:asood/core/http_client/api_status.dart';
@@ -47,7 +50,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       var res = await authRepository.verifyCode(event.phone, event.otp);
       if (res is Success) {
-        // var json = jsonDecode(res.response.toString());
+        var json = jsonDecode(res.response.toString());
 
         // KeyValue token = KeyValue(
         //   key: "token",
@@ -55,7 +58,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         // );
         // await _isarService.create(token);
 
-        // SecureStorage().writeSecureStorage('token', json["data"]["token"]);
+        SecureStorage.writeSecureStorage('token', json["data"]["token"]);
 
         emit(state.copyWith(status: AuthStatus.success));
       } else if (res is Failure) {

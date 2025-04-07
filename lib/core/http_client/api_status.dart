@@ -24,7 +24,7 @@ apiStatus(Response response) {
     if (res['success'] == true) {
       return Success(
         code: response.statusCode,
-        response: utf8.decode(jsonEncode(res).codeUnits),
+        response: res['data'],
         message: res['message'],
       );
     } else {
@@ -45,3 +45,5 @@ apiStatus(Response response) {
 customApiStatus() {
   return Failure(code: 301, errorResponse: 'عدم برقراری ارتباط با سرور');
 }
+
+enum CWSStatus { initial, loading, success, failure }

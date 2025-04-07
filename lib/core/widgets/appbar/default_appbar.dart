@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:asood/core/constants/constants.dart';
 import 'package:asood/core/widgets/appbar/menu_dialog.dart';
+import 'package:go_router/go_router.dart';
 import 'profile_menu_widget.dart';
 
 class DefaultAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -210,7 +211,7 @@ class NewAppBar extends StatelessWidget {
                     color: Colora.scaffold,
                     size: Dimensions.width * 0.07,
                   ),
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: () => context.pop(),
                 ),
       ),
     );

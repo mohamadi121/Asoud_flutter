@@ -12,8 +12,6 @@ class CategoryApiService {
       Response res = await dioClient.getData(Endpoints.categoryGroupList);
       return apiStatus(res);
     } catch (e) {
-      print("________________");
-      print(e);
       return customApiStatus();
     }
   }
