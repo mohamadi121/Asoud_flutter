@@ -1,4 +1,4 @@
-import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 
 import 'package:asood/core/constants/endpoints.dart';
@@ -9,7 +9,7 @@ import 'package:asood/features/vendor/data/model/market_contact_model.dart';
 import 'package:asood/features/vendor/data/model/market_location_model.dart';
 
 class MarketApiService {
-  DioClient dioClient;
+  ApiClient dioClient;
   MarketApiService({required this.dioClient});
 
   // Create market base
@@ -31,13 +31,13 @@ class MarketApiService {
     };
 
     try {
-      Response res = await dioClient.postData(
+      http.Response res = await dioClient.postData(
         Endpoints.ownerCreateMarket,
         body,
       );
-      return apiStatus(res);
+      return ApiStatus(res);
     } catch (e) {
-      return customApiStatus();
+      return CustomApiStatus();
     }
   }
 
@@ -56,10 +56,10 @@ class MarketApiService {
     };
 
     try {
-      Response res = await dioClient.postData('contact/create/', body);
-      return apiStatus(res);
+      http.Response res = await dioClient.postData('contact/create/', body);
+      return ApiStatus(res);
     } catch (e) {
-      return customApiStatus();
+      return CustomApiStatus();
     }
   }
 
@@ -75,40 +75,40 @@ class MarketApiService {
     };
 
     try {
-      Response res = await dioClient.postData('location/create/', body);
-      return apiStatus(res);
+      http.Response res = await dioClient.postData('location/create/', body);
+      return ApiStatus(res);
     } catch (e) {
-      return customApiStatus();
+      return CustomApiStatus();
     }
   }
 
   // Get market list
   Future getMarketList() async {
     try {
-      Response res = await dioClient.getData('list/');
-      return apiStatus(res);
+      http.Response res = await dioClient.getData('list/');
+      return ApiStatus(res);
     } catch (e) {
-      return customApiStatus();
+      return CustomApiStatus();
     }
   }
 
   // Inactive market
   Future inactiveMarket(String marketId) async {
     try {
-      Response res = await dioClient.getData('inactive/$marketId');
-      return apiStatus(res);
+      http.Response res = await dioClient.getData('inactive/$marketId');
+      return ApiStatus(res);
     } catch (e) {
-      return customApiStatus();
+      return CustomApiStatus();
     }
   }
 
   // Queue market
   Future queueMarket(String marketId) async {
     try {
-      Response res = await dioClient.getData('queue/$marketId');
-      return apiStatus(res);
+      http.Response res = await dioClient.getData('queue/$marketId');
+      return ApiStatus(res);
     } catch (e) {
-      return customApiStatus();
+      return CustomApiStatus();
     }
   }
 
@@ -116,24 +116,24 @@ class MarketApiService {
   Future uploadMarketLogo(XFile imagesFile, marketId) async {
     List<MultipartBody> images = [MultipartBody('logo_img', imagesFile)];
     try {
-      Response res = await dioClient.postMultipartData(
+      http.Response res = await dioClient.postMultipartData(
         'logo/$marketId/',
         {},
         images,
       );
-      return apiStatus(res);
+      return ApiStatus(res);
     } catch (e) {
-      return customApiStatus();
+      return CustomApiStatus();
     }
   }
 
   // Delete market logo
   Future deleteMarketLogo(String marketId) async {
     try {
-      Response res = await dioClient.deleteData('logo/$marketId/');
-      return apiStatus(res);
+      http.Response res = await dioClient.deleteData('logo/$marketId/');
+      return ApiStatus(res);
     } catch (e) {
-      return customApiStatus();
+      return CustomApiStatus();
     }
   }
 
@@ -141,34 +141,34 @@ class MarketApiService {
   Future uploadMarketBackground(XFile imagesFile, String marketId) async {
     List<MultipartBody> images = [MultipartBody('background_img', imagesFile)];
     try {
-      Response res = await dioClient.postMultipartData(
+      http.Response res = await dioClient.postMultipartData(
         'background/$marketId/',
         {},
         images,
       );
-      return apiStatus(res);
+      return ApiStatus(res);
     } catch (e) {
-      return customApiStatus();
+      return CustomApiStatus();
     }
   }
 
   // Delete market background
   Future deleteMarketBackground(String marketId) async {
     try {
-      Response res = await dioClient.deleteData('background/$marketId/');
-      return apiStatus(res);
+      http.Response res = await dioClient.deleteData('background/$marketId/');
+      return ApiStatus(res);
     } catch (e) {
-      return customApiStatus();
+      return CustomApiStatus();
     }
   }
 
   // Get market slider by id
   Future getMarketSlider(String marketId) async {
     try {
-      Response res = await dioClient.getData('slider/$marketId');
-      return apiStatus(res);
+      http.Response res = await dioClient.getData('slider/$marketId');
+      return ApiStatus(res);
     } catch (e) {
-      return customApiStatus();
+      return CustomApiStatus();
     }
   }
 
@@ -176,14 +176,14 @@ class MarketApiService {
   Future createMarketSlider(String marketId, XFile imagesFile) async {
     List<MultipartBody> images = [MultipartBody('slider_img', imagesFile)];
     try {
-      Response res = await dioClient.postMultipartData(
+      http.Response res = await dioClient.postMultipartData(
         'slider/$marketId/',
         {},
         images,
       );
-      return apiStatus(res);
+      return ApiStatus(res);
     } catch (e) {
-      return customApiStatus();
+      return CustomApiStatus();
     }
   }
 
@@ -191,34 +191,34 @@ class MarketApiService {
   Future editMarketSlider(String sliderId, XFile imagesFile) async {
     List<MultipartBody> images = [MultipartBody('slider_img', imagesFile)];
     try {
-      Response res = await dioClient.patchMultipartData(
+      http.Response res = await dioClient.patchMultipartData(
         'slider/$sliderId/',
         {},
         images,
       );
-      return apiStatus(res);
+      return ApiStatus(res);
     } catch (e) {
-      return customApiStatus();
+      return CustomApiStatus();
     }
   }
 
   // Modify slider by slider id
   Future modifyMarketSlider(Map<String, dynamic> body, String sliderId) async {
     try {
-      Response res = await dioClient.patchData('slider/$sliderId', body);
-      return apiStatus(res);
+      http.Response res = await dioClient.patchData('slider/$sliderId', body);
+      return ApiStatus(res);
     } catch (e) {
-      return customApiStatus();
+      return CustomApiStatus();
     }
   }
 
   // Delete slider by id
   Future deleteMarketSlider(String sliderId) async {
     try {
-      Response res = await dioClient.deleteData('slider/$sliderId/');
-      return apiStatus(res);
+      http.Response res = await dioClient.deleteData('slider/$sliderId/');
+      return ApiStatus(res);
     } catch (e) {
-      return customApiStatus();
+      return CustomApiStatus();
     }
   }
 
@@ -233,20 +233,20 @@ class MarketApiService {
       "secondary_font_color": themeModel.secondaryFontColor,
     };
     try {
-      Response res = await dioClient.postData('theme/$marketId/', body);
-      return apiStatus(res);
+      http.Response res = await dioClient.postData('theme/$marketId/', body);
+      return ApiStatus(res);
     } catch (e) {
-      return customApiStatus();
+      return CustomApiStatus();
     }
   }
 
   // Get market comments
   Future getMarketComments(String marketId) async {
     try {
-      Response res = await dioClient.getData('comment/list/$marketId');
-      return apiStatus(res);
+      http.Response res = await dioClient.getData('comment/list/$marketId');
+      return ApiStatus(res);
     } catch (e) {
-      return customApiStatus();
+      return CustomApiStatus();
     }
   }
 }

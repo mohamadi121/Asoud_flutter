@@ -12,7 +12,7 @@ class LoadCategory extends JobmanagmentEvent {}
 
 //category
 class ChangeCategoryIndex extends JobmanagmentEvent {
-  final int activeCategoryIndex;
+  final String activeCategoryIndex;
   ChangeCategoryIndex({required this.activeCategoryIndex});
 }
 

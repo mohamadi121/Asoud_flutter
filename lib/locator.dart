@@ -24,22 +24,22 @@ GetIt locator = GetIt.instance;
 
 locatorSetup() async {
   /// Dio client
-  locator.registerLazySingleton<DioClient>(
-    () => DioClient(appBaseUrl: Endpoints.baseUrl),
+  locator.registerLazySingleton<ApiClient>(
+    () => ApiClient(appBaseUrl: Endpoints.baseUrl),
   );
 
   /// Api Services
   locator.registerFactory(
-    () => AuthApiService(dioClient: locator<DioClient>()),
+    () => AuthApiService(dioClient: locator<ApiClient>()),
   );
   locator.registerFactory(
-    () => CategoryApiService(dioClient: locator<DioClient>()),
+    () => CategoryApiService(dioClient: locator<ApiClient>()),
   );
   locator.registerFactory(
-    () => MarketApiService(dioClient: locator<DioClient>()),
+    () => MarketApiService(dioClient: locator<ApiClient>()),
   );
   locator.registerFactory(
-    () => RegionApiServices(dioClient: locator<DioClient>()),
+    () => RegionApiServices(dioClient: locator<ApiClient>()),
   );
 
   /// Repositories

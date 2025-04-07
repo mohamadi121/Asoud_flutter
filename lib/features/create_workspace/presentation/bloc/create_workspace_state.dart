@@ -1,7 +1,5 @@
 part of 'create_workspace_bloc.dart';
 
-enum CWSStatus { initial, loading, success, failure }
-
 class CreateWorkSpaceState {
   final String businessId;
   final String name;
@@ -41,7 +39,7 @@ class CreateWorkSpaceState {
 
   final int activeCategoryIndex;
   final List<CategoryModel> categoryList;
-  final List<MainSubCategoryModel> mainSubCategoryList;
+  final List<CategoryModel> mainSubCategoryList;
   final String activeSubCategoryIndex;
   final List<CategoryModel> subCategoryList;
   final String selectedCategoryName;
@@ -186,7 +184,7 @@ class CreateWorkSpaceState {
 
     int? activeCategoryIndex,
     List<CategoryModel>? categoryList,
-    List<MainSubCategoryModel>? mainSubCategoryList,
+    List<CategoryModel>? mainSubCategoryList,
     String? activeSubCategoryIndex,
     List<CategoryModel>? subCategoryList,
     String? selectedCategoryName,

@@ -66,7 +66,7 @@ class JobmanagmentBloc extends Bloc<JobmanagmentEvent, JobmanagmentState> {
         final json = jsonDecode(res.response.toString());
         final initList = json['data'] as List;
         final mainSubCategory =
-            initList.map((e) => MainSubCategoryModel.fromJson(e)).toList();
+            initList.map((e) => CategoryModel.fromJson(e)).toList();
         emit(
           state.copyWith(
             status: CWSStatus.success,

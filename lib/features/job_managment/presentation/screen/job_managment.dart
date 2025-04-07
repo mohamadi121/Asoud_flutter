@@ -1,5 +1,6 @@
 import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/features/job_managment/presentation/bloc/jobmanagment_bloc.dart';
+import 'package:asood/features/job_managment/presentation/screen/cat_tab.dart';
 import 'package:asood/features/job_managment/presentation/screen/group_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -98,7 +99,7 @@ class _JobManagementScreenState extends State<JobManagementScreen>
                             physics: const NeverScrollableScrollPhysics(),
                             children: [
                               GroupTab(bloc: bloc),
-                              GroupTab(bloc: bloc),
+                              CatTab(bloc: bloc),
                               GroupTab(bloc: bloc),
                             ],
                           ),

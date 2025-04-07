@@ -4,9 +4,9 @@ class JobmanagmentState {
   final int activeTabIndex;
   final CWSStatus status;
   final String error;
-  final int activeCategoryIndex;
+  final String activeCategoryIndex;
   final List<CategoryModel> categoryList;
-  final List<MainSubCategoryModel> mainSubCategoryList;
+  final List<CategoryModel> mainSubCategoryList;
   final String activeSubCategoryIndex;
   final List<CategoryModel> subCategoryList;
   final String selectedCategoryName;
@@ -30,7 +30,7 @@ class JobmanagmentState {
       error: "",
       activeTabIndex: 0,
       selectedCategoryName: "",
-      activeCategoryIndex: -1,
+      activeCategoryIndex: "",
       categoryList: const [],
       mainSubCategoryList: const [],
       activeSubCategoryIndex: "-1",
@@ -42,9 +42,9 @@ class JobmanagmentState {
     CWSStatus? status,
     String? error,
     int? activeTabIndex,
-    int? activeCategoryIndex,
+    String? activeCategoryIndex,
     List<CategoryModel>? categoryList,
-    List<MainSubCategoryModel>? mainSubCategoryList,
+    List<CategoryModel>? mainSubCategoryList,
     String? activeSubCategoryIndex,
     List<CategoryModel>? subCategoryList,
     String? selectedCategoryName,

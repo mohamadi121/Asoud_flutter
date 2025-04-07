@@ -9,15 +9,15 @@ import 'package:asood/core/constants/constants.dart';
 
 import 'package:asood/core/widgets/custom_button.dart';
 
-class GroupTab extends StatefulWidget {
+class CatTab extends StatefulWidget {
   final JobmanagmentBloc bloc;
-  const GroupTab({required this.bloc, super.key});
+  const CatTab({required this.bloc, super.key});
 
   @override
-  State<GroupTab> createState() => _GroupTabState();
+  State<CatTab> createState() => _CatTabState();
 }
 
-class _GroupTabState extends State<GroupTab> {
+class _CatTabState extends State<CatTab> {
   String selectedCategoryId = "0";
 
   late JobmanagmentBloc catBloc;
@@ -110,11 +110,11 @@ class _GroupTabState extends State<GroupTab> {
                     // padding: const EdgeInsets.symmetric(horizontal: Dimensions.khorisontal),
                     padding: EdgeInsets.all(Dimensions.height * 0.01),
                     child: ListView.builder(
-                      itemCount: state.categoryList.length,
+                      itemCount: state.mainSubCategoryList.length,
                       shrinkWrap: true,
                       itemBuilder: (BuildContext context, int index) {
                         CategoryModel selectedCategory =
-                            state.categoryList[index];
+                            state.mainSubCategoryList[index];
                         return CustomButton(
                           onPress: () {
                             bloc.add(
@@ -123,11 +123,6 @@ class _GroupTabState extends State<GroupTab> {
                               ),
                             );
                             bloc.add(ChangeTabView(activeTabIndex: 1));
-                            bloc.add(
-                              LoadMainSubCategory(
-                                categoryId: selectedCategory.id!,
-                              ),
-                            );
                           },
                           text:
                               BlocProvider.of<JobmanagmentBloc>(

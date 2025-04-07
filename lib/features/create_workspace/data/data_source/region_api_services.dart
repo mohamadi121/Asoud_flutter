@@ -1,42 +1,42 @@
-import 'package:dio/dio.dart';
+import 'package:http/http.dart' as http;
 
 import 'package:asood/core/constants/endpoints.dart';
 import 'package:asood/core/http_client/api_client.dart';
 import 'package:asood/core/http_client/api_status.dart';
 
 class RegionApiServices {
-  DioClient dioClient;
+  ApiClient dioClient;
   RegionApiServices({required this.dioClient});
 
   Future getCountryList() async {
     try {
-      Response res = await dioClient.getData(Endpoints.countryList);
+      http.Response res = await dioClient.getData(Endpoints.countryList);
 
-      return apiStatus(res);
+      return ApiStatus(res);
     } catch (e) {
-      return customApiStatus();
+      return CustomApiStatus();
     }
   }
 
   Future getProvinceList(countryId) async {
     try {
-      Response res = await dioClient.getData(
+      http.Response res = await dioClient.getData(
         "${Endpoints.provinceList}$countryId/",
       );
-      return apiStatus(res);
+      return ApiStatus(res);
     } catch (e) {
-      return customApiStatus();
+      return CustomApiStatus();
     }
   }
 
   Future getCityList(provinceId) async {
     try {
-      Response res = await dioClient.getData(
+      http.Response res = await dioClient.getData(
         "${Endpoints.cityList}$provinceId/",
       );
-      return apiStatus(res);
+      return ApiStatus(res);
     } catch (e) {
-      return customApiStatus();
+      return CustomApiStatus();
     }
   }
 }
