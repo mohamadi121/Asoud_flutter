@@ -115,17 +115,45 @@ class _GroupTabState extends State<GroupTab> {
                       itemBuilder: (BuildContext context, int index) {
                         CategoryModel selectedCategory =
                             state.categoryList[index];
-                        return Container(
-                          height: 30,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(
-                              Dimensions.twenty,
-                            ),
-                          ),
-                          child: Center(child: Text(selectedCategory.title!)),
+                        return CustomButton(
+                          onPress: () {},
+                          text:
+                              BlocProvider.of<JobmanagmentBloc>(
+                                        context,
+                                      ).state.status ==
+                                      CWSStatus.loading
+                                  ? null
+                                  : selectedCategory.title!,
+                          color: Colors.white,
+                          textColor: Colora.primaryColor,
+                          height: 40,
+                          width: 100,
+                          btnWidget:
+                              BlocProvider.of<JobmanagmentBloc>(
+                                        context,
+                                      ).state.status ==
+                                      CWSStatus.loading
+                                  ? const Center(
+                                    child: SizedBox(
+                                      height: 25,
+                                      width: 25,
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  )
+                                  : null,
                         );
+
+                        //  Container(
+                        //   height: 30,
+                        //   width: double.infinity,
+                        //   decoration: BoxDecoration(
+                        //     color: Colors.white,
+                        //     borderRadius: BorderRadius.circular(
+                        //       Dimensions.twenty,
+                        //     ),
+                        //   ),
+                        //   child: Center(child: Text(selectedCategory.title!)),
+                        // );
                       },
                     ),
                   );
