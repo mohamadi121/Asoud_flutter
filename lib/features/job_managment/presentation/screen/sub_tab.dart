@@ -1,25 +1,27 @@
 import 'package:asood/core/helper/snack_bar_util.dart';
 import 'package:asood/core/http_client/api_status.dart';
+import 'package:asood/core/router/app_routers.dart';
+import 'package:asood/features/create_workspace/presentation/bloc/create_workspace_bloc.dart';
 import 'package:asood/features/job_managment/data/model/category_model.dart';
 import 'package:asood/features/job_managment/presentation/bloc/jobmanagment_bloc.dart';
 import 'package:asood/features/job_managment/presentation/widgets/category_builder.dart';
-import 'package:asood/features/job_managment/presentation/widgets/edit_cat_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:asood/core/constants/constants.dart';
 
 import 'package:asood/core/widgets/custom_button.dart';
+import 'package:go_router/go_router.dart';
 
-class GroupTab extends StatefulWidget {
+class SubTab extends StatefulWidget {
   final JobmanagmentBloc bloc;
-  const GroupTab({required this.bloc, super.key});
+  const SubTab({required this.bloc, super.key});
 
   @override
-  State<GroupTab> createState() => _GroupTabState();
+  State<SubTab> createState() => _SubTabState();
 }
 
-class _GroupTabState extends State<GroupTab> {
+class _SubTabState extends State<SubTab> {
   String selectedCategoryId = "0";
 
   late JobmanagmentBloc catBloc;
@@ -104,24 +106,27 @@ class _GroupTabState extends State<GroupTab> {
                       borderRadius: BorderRadius.circular(20),
                       color: Colora.primaryColor,
                     ),
+
                     padding: EdgeInsets.all(Dimensions.height * 0.01),
                     child: CategoryBuilder(
                       state: state,
                       onItemTap: (index) {
                         CategoryModel selectedCategory =
-                            state.categoryList[index];
+                            state.subCategoryList[index];
                         bloc.add(
                           ChangeCategoryIndex(
                             activeCategoryIndex: selectedCategory.id!,
                           ),
                         );
-                        bloc.add(ChangeTabView(activeTabIndex: 1));
-
-                        bloc.add(
-                          LoadMainSubCategory(categoryId: selectedCategory.id!),
+                        context.read<CreateWorkSpaceBloc>().add(
+                          ChangeSelectedCategory(
+                            selectedCategoryName: selectedCategory.title!,
+                            activeCategoryIndex: selectedCategory.id!,
+                          ),
                         );
+                        context.pop();
                       },
-                      categories: state.categoryList,
+                      categories: state.subCategoryList,
                     ),
                   );
                 }
@@ -158,7 +163,7 @@ class _GroupTabState extends State<GroupTab> {
                           : null,
                 ),
                 CustomButton(
-                  onPress: () => showCustomFormDialog(context),
+                  onPress: () {},
                   text:
                       BlocProvider.of<JobmanagmentBloc>(context).state.status ==
                               CWSStatus.loading

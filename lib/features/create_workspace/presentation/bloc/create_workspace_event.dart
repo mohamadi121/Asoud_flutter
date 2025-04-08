@@ -93,6 +93,16 @@ class ChangeHasWorkTime extends CreateWorkSpaceEvent {
   const ChangeHasWorkTime({required this.hasWorkTime});
 }
 
+//change selected category
+class ChangeSelectedCategory extends CreateWorkSpaceEvent {
+  final String selectedCategoryName;
+  final String activeCategoryIndex;
+  const ChangeSelectedCategory({
+    required this.selectedCategoryName,
+    required this.activeCategoryIndex,
+  });
+}
+
 //validate required text fields
 class Validator extends CreateWorkSpaceEvent {
   final String phoneNumber1;

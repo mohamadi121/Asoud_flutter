@@ -33,7 +33,7 @@ class JobmanagmentBloc extends Bloc<JobmanagmentEvent, JobmanagmentState> {
   }
   //list of category
   _getCategory(LoadCategory event, Emitter<JobmanagmentState> emit) async {
-    emit(state.copyWith(status: CWSStatus.loading));
+    emit(state.copyWith(status: CWSStatus.loading, activeTabIndex: 0));
     try {
       final res = await categoryRepository.getCategoryList();
 
@@ -63,10 +63,12 @@ class JobmanagmentBloc extends Bloc<JobmanagmentEvent, JobmanagmentState> {
         event.categoryId,
       );
       if (res is Success) {
-        final json = jsonDecode(res.response.toString());
-        final initList = json['data'] as List;
+        final dataList = res.response as List<dynamic>;
+
         final mainSubCategory =
-            initList.map((e) => CategoryModel.fromJson(e)).toList();
+            dataList
+                .map((e) => CategoryModel.fromJson(e as Map<String, dynamic>))
+                .toList();
         emit(
           state.copyWith(
             status: CWSStatus.success,
@@ -92,10 +94,13 @@ class JobmanagmentBloc extends Bloc<JobmanagmentEvent, JobmanagmentState> {
         event.subCategoryId,
       );
       if (res is Success) {
-        final json = jsonDecode(res.response.toString());
-        final initList = json['data'] as List;
+        final dataList = res.response as List<dynamic>;
+
         final subCategory =
-            initList.map((e) => CategoryModel.fromJson(e)).toList();
+            dataList
+                .map((e) => CategoryModel.fromJson(e as Map<String, dynamic>))
+                .toList();
+
         emit(
           state.copyWith(
             status: CWSStatus.success,

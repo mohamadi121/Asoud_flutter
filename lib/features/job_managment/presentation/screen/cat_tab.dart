@@ -2,6 +2,7 @@ import 'package:asood/core/helper/snack_bar_util.dart';
 import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/features/job_managment/data/model/category_model.dart';
 import 'package:asood/features/job_managment/presentation/bloc/jobmanagment_bloc.dart';
+import 'package:asood/features/job_managment/presentation/widgets/category_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,61 +24,6 @@ class _CatTabState extends State<CatTab> {
   late JobmanagmentBloc catBloc;
 
   @override
-  void initState() {
-    super.initState();
-    // name.text = widget.bloc.state.name;
-    // businessId.text = widget.bloc.state.businessId;
-    // description.text = widget.bloc.state.description;
-    // slogan.text = widget.bloc.state.slogan;
-    // selectedValue = widget.bloc.state.marketType;
-    // inProcess();
-    //idCode.text =  widget.bloc.state.idCode;
-  }
-
-  // void inProcess() async {
-  //   String tabIndex = await SecureStorage.readSecureStorage('market_id');
-  //   String marketId = await SecureStorage.readSecureStorage(
-  //     'marketActiveTabIndex',
-  //   );
-
-  //   if (tabIndex != 'ND' && marketId != 'ND') {
-  //     isInProcess = true;
-  //   } else {
-  //     isInProcess = false;
-  //     print('object');
-  //   }
-  // }
-
-  // submit(CreateWorkSpaceBloc bloc) {
-  //   if (_formKey.currentState!.validate() &&
-  //       bloc.state.marketType.isNotEmpty &&
-  //       bloc.state.activeCategoryIndex >= 0) {
-  //     bloc.add(
-  //       CreateMarket(
-  //         businessId: businessId.text,
-  //         name: name.text,
-  //         description: description.text,
-  //         slogan: slogan.text,
-  //         marketType: selectedValue,
-  //         subCategory: selectedCategoryId,
-  //       ),
-  //     );
-
-  //     // bloc.add(const ChangeCategoryIndex(activeCategoryIndex: -1));
-  //   } else {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         backgroundColor: Colora.borderAvatar,
-  //         content: Text(
-  //           "لطفا تمامی فیلد های لازم را پر نمایید.",
-  //           style: TextStyle(color: Colora.scaffold),
-  //         ),
-  //       ),
-  //     );
-  //   }
-  // }
-
-  @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<JobmanagmentBloc>(context);
 
@@ -89,14 +35,10 @@ class _CatTabState extends State<CatTab> {
             BlocConsumer<JobmanagmentBloc, JobmanagmentState>(
               listener: (context, state) {
                 if (state.status == CWSStatus.failure) {
-                  print(state.error);
                   showSnackBar(context, "مشکلی پیش آمده مجددا تلاش کنید");
                 }
               },
               builder: (context, state) {
-                if (state.status == CWSStatus.failure) {
-                  print(state.status);
-                }
                 if (state.status == CWSStatus.success) {
                   return Container(
                     width: Dimensions.width,
@@ -107,61 +49,23 @@ class _CatTabState extends State<CatTab> {
                       color: Colora.primaryColor,
                     ),
 
-                    // padding: const EdgeInsets.symmetric(horizontal: Dimensions.khorisontal),
                     padding: EdgeInsets.all(Dimensions.height * 0.01),
-                    child: ListView.builder(
-                      itemCount: state.mainSubCategoryList.length,
-                      shrinkWrap: true,
-                      itemBuilder: (BuildContext context, int index) {
+                    child: CategoryBuilder(
+                      state: state,
+                      onItemTap: (index) {
                         CategoryModel selectedCategory =
                             state.mainSubCategoryList[index];
-                        return CustomButton(
-                          onPress: () {
-                            bloc.add(
-                              ChangeCategoryIndex(
-                                activeCategoryIndex: selectedCategory.id!,
-                              ),
-                            );
-                            bloc.add(ChangeTabView(activeTabIndex: 1));
-                          },
-                          text:
-                              BlocProvider.of<JobmanagmentBloc>(
-                                        context,
-                                      ).state.status ==
-                                      CWSStatus.loading
-                                  ? null
-                                  : selectedCategory.title!,
-                          color: Colors.white,
-                          textColor: Colora.primaryColor,
-                          height: 40,
-                          width: 100,
-                          btnWidget:
-                              BlocProvider.of<JobmanagmentBloc>(
-                                        context,
-                                      ).state.status ==
-                                      CWSStatus.loading
-                                  ? const Center(
-                                    child: SizedBox(
-                                      height: 25,
-                                      width: 25,
-                                      child: CircularProgressIndicator(),
-                                    ),
-                                  )
-                                  : null,
+                        bloc.add(
+                          ChangeCategoryIndex(
+                            activeCategoryIndex: selectedCategory.id!,
+                          ),
                         );
-
-                        //  Container(
-                        //   height: 30,
-                        //   width: double.infinity,
-                        //   decoration: BoxDecoration(
-                        //     color: Colors.white,
-                        //     borderRadius: BorderRadius.circular(
-                        //       Dimensions.twenty,
-                        //     ),
-                        //   ),
-                        //   child: Center(child: Text(selectedCategory.title!)),
-                        // );
+                        bloc.add(ChangeTabView(activeTabIndex: 2));
+                        bloc.add(
+                          LoadSubCategory(subCategoryId: selectedCategory.id!),
+                        );
                       },
+                      categories: state.mainSubCategoryList,
                     ),
                   );
                 }

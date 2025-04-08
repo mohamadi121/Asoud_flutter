@@ -107,6 +107,15 @@ class CreateWorkSpaceBloc
 
     on<PayPrice>(_payPrice);
 
+    on<ChangeSelectedCategory>((event, emit) {
+      emit(
+        state.copyWith(
+          activeCategoryId: event.activeCategoryIndex,
+          selectedCategoryName: event.selectedCategoryName,
+        ),
+      );
+    });
+
     //region
     on<LoadCountry>(_getCountries);
     on<LoadProvince>(_getProvinces);

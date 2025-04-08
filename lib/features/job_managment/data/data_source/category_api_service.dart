@@ -1,40 +1,43 @@
 import 'package:asood/core/constants/endpoints.dart';
 import 'package:asood/core/http_client/api_client.dart';
 import 'package:asood/core/http_client/api_status.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
 class CategoryApiService {
-  ApiClient dioClient;
+  DioClient dioClient;
   CategoryApiService({required this.dioClient});
 
   Future getCategoryList() async {
     try {
-      http.Response res = await dioClient.getData(Endpoints.categoryGroupList);
-      return ApiStatus(res);
+      Response res = await dioClient.getData(Endpoints.categoryGroupList);
+      return apiStatus(res);
     } catch (e) {
-      return CustomApiStatus();
+      return customApiStatus();
     }
   }
 
   Future getMainSubCategoryList(String categoryId) async {
     try {
-      http.Response res = await dioClient.getData(
+      Response res = await dioClient.getData(
         "${Endpoints.categoryList}$categoryId/",
       );
-      return ApiStatus(res);
+
+      return apiStatus(res);
     } catch (e) {
-      return CustomApiStatus();
+      return customApiStatus();
     }
   }
 
   Future getSubCategoryList(String mainSubCategoryId) async {
     try {
-      http.Response res = await dioClient.getData(
+      Response res = await dioClient.getData(
         "${Endpoints.subCategoryList}$mainSubCategoryId/",
       );
-      return ApiStatus(res);
+      print("______$res-------------");
+
+      return apiStatus(res);
     } catch (e) {
-      return CustomApiStatus();
+      return customApiStatus();
     }
   }
 }

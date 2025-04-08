@@ -1,13 +1,13 @@
 import 'package:asood/core/constants/constants.dart';
 import 'package:asood/core/constants/endpoints.dart';
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 
 import 'package:asood/core/helper/secure_storage.dart';
 import 'package:asood/core/http_client/api_client.dart';
 import 'package:asood/core/http_client/api_status.dart';
 
 class AuthApiService {
-  final ApiClient dioClient;
+  final DioClient dioClient;
   AuthApiService({required this.dioClient});
 
   // Send verification code to user
@@ -15,14 +15,14 @@ class AuthApiService {
     var body = {"mobile_number": number};
 
     try {
-      http.Response res = await dioClient.postData(
+      Response res = await dioClient.postData(
         Endpoints.loginCreate,
         body,
         headers: Endpoints.simpleHeader,
       );
-      return ApiStatus(res);
+      return apiStatus(res);
     } catch (e) {
-      return CustomApiStatus();
+      return customApiStatus();
     }
   }
 
@@ -31,35 +31,34 @@ class AuthApiService {
     var body = {"mobile_number": number, 'pin': code};
 
     try {
-      http.Response res = await dioClient.postData(
+      Response res = await dioClient.postData(
         Endpoints.loginVerify,
         body,
         headers: Endpoints.simpleHeader,
       );
-
-      return ApiStatus(res);
+      return apiStatus(res);
     } catch (e) {
-      return CustomApiStatus();
+      return customApiStatus();
     }
   }
 
   // Get user advertisements
   Future getAdvertises() async {
     try {
-      http.Response res = await dioClient.getData(Endpoints.userAdvertise);
-      return ApiStatus(res);
+      Response res = await dioClient.getData(Endpoints.userAdvertise);
+      return apiStatus(res);
     } catch (e) {
-      return CustomApiStatus();
+      return customApiStatus();
     }
   }
 
   // Get user contacts
   Future getContacts() async {
     try {
-      http.Response res = await dioClient.getData(Endpoints.userContact);
-      return ApiStatus(res);
+      Response res = await dioClient.getData(Endpoints.userContact);
+      return apiStatus(res);
     } catch (e) {
-      return CustomApiStatus();
+      return customApiStatus();
     }
   }
 
@@ -68,14 +67,14 @@ class AuthApiService {
     try {
       String? token = await SecureStorage.readSecureStorage(Keys.token);
 
-      http.Response res = await dioClient.getData(
+      Response res = await dioClient.getData(
         Endpoints.logout,
         headers: {'Authorization': 'Token $token'},
       );
 
-      return ApiStatus(res);
+      return apiStatus(res);
     } catch (e) {
-      return CustomApiStatus();
+      return customApiStatus();
     }
   }
 }

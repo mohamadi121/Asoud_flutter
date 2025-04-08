@@ -50,15 +50,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       var res = await authRepository.verifyCode(event.phone, event.otp);
       if (res is Success) {
-        var json = jsonDecode(res.response.toString());
+        print(res.response);
+        var json = res.response as Map<String, dynamic>;
 
-        // KeyValue token = KeyValue(
-        //   key: "token",
-        //   value: json["data"]["token"],
-        // );
-        // await _isarService.create(token);
-
-        SecureStorage.writeSecureStorage('token', json["data"]["token"]);
+        SecureStorage.writeSecureStorage('token', json["token"]);
 
         emit(state.copyWith(status: AuthStatus.success));
       } else if (res is Failure) {

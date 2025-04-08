@@ -66,9 +66,8 @@ class _BasicInfoState extends State<BasicInfo> {
   }
 
   submit(CreateWorkSpaceBloc bloc) {
-    if (_formKey.currentState!.validate() &&
-        bloc.state.marketType.isNotEmpty &&
-        bloc.state.activeCategoryIndex >= 0) {
+    if (_formKey.currentState!.validate() && bloc.state.marketType.isNotEmpty) {
+      // bloc.state.activeCategoryId >= 0) {
       bloc.add(
         CreateMarket(
           businessId: businessId.text,

@@ -9,6 +9,7 @@ abstract class Routes {
   static const vendorDashboard = "/vendor_dashboard";
   static const vendorProfile = "/vendor_profile";
   static const customerDashboard = "/customer_dashboard";
+  static const createWorkSpace = "/create_workspace";
   static const feeInquiry = "/fee_inquiry";
 
   static const inquiryDetails = "/inquiry_details";

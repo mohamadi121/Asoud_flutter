@@ -33,7 +33,7 @@ class JobmanagmentState {
       activeCategoryIndex: "",
       categoryList: const [],
       mainSubCategoryList: const [],
-      activeSubCategoryIndex: "-1",
+      activeSubCategoryIndex: "",
       subCategoryList: const [],
     );
   }

@@ -1,3 +1,4 @@
+import 'package:asood/features/create_workspace/presentation/screen/create_workspace.dart';
 import 'package:asood/features/job_managment/presentation/screen/job_managment.dart';
 import 'package:asood/features/vendor/presentation/screen/vendor_home.dart';
 import 'package:go_router/go_router.dart';
@@ -24,6 +25,10 @@ class AppRouter {
           // final title = state.extra as String;
           return VendorHomeScreen();
         },
+      ),
+      GoRoute(
+        path: Routes.createWorkSpace,
+        builder: (context, state) => CreateWorkSpaceScreen(),
       ),
       GoRoute(
         path: Routes.jobManagement,

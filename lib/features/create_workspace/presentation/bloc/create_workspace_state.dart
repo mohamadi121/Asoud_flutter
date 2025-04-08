@@ -37,11 +37,7 @@ class CreateWorkSpaceState {
   final String latitude;
   final String longitude;
 
-  final int activeCategoryIndex;
-  final List<CategoryModel> categoryList;
-  final List<CategoryModel> mainSubCategoryList;
-  final String activeSubCategoryIndex;
-  final List<CategoryModel> subCategoryList;
+  final String activeCategoryId;
   final String selectedCategoryName;
 
   final List<CountryModel> countryList;
@@ -50,7 +46,6 @@ class CreateWorkSpaceState {
 
   const CreateWorkSpaceState({
     required this.phoneBorder,
-    required this.selectedCategoryName,
     required this.emailBorder,
     required this.phoneNumber1,
     required this.phoneNumber2,
@@ -80,11 +75,8 @@ class CreateWorkSpaceState {
     required this.latitude,
     required this.longitude,
 
-    required this.activeCategoryIndex,
-    required this.categoryList,
-    required this.mainSubCategoryList,
-    required this.activeSubCategoryIndex,
-    required this.subCategoryList,
+    required this.activeCategoryId,
+    required this.selectedCategoryName,
 
     required this.countryList,
     required this.provinceList,
@@ -98,7 +90,7 @@ class CreateWorkSpaceState {
       phoneNumber1: '',
       phoneNumber2: '',
       telephone: '',
-      selectedCategoryName: 'انتخاب شغل',
+
       fax: '',
       email: '',
       websiteUrl: '',
@@ -139,11 +131,8 @@ class CreateWorkSpaceState {
       latitude: '',
       longitude: '',
 
-      activeCategoryIndex: -1,
-      categoryList: const [],
-      mainSubCategoryList: const [],
-      activeSubCategoryIndex: "-1",
-      subCategoryList: const [],
+      activeCategoryId: "",
+      selectedCategoryName: 'انتخاب شغل',
 
       countryList: const [],
       provinceList: const [],
@@ -182,11 +171,7 @@ class CreateWorkSpaceState {
     String? latitude,
     String? longitude,
 
-    int? activeCategoryIndex,
-    List<CategoryModel>? categoryList,
-    List<CategoryModel>? mainSubCategoryList,
-    String? activeSubCategoryIndex,
-    List<CategoryModel>? subCategoryList,
+    String? activeCategoryId,
     String? selectedCategoryName,
 
     List<CountryModel>? countryList,
@@ -194,7 +179,6 @@ class CreateWorkSpaceState {
     List<CityModel>? cityList,
   }) {
     return CreateWorkSpaceState(
-      selectedCategoryName: selectedCategoryName ?? this.selectedCategoryName,
       phoneBorder: phoneBorder ?? this.phoneBorder,
       emailBorder: emailBorder ?? this.emailBorder,
       phoneNumber1: phoneNumber1 ?? this.phoneNumber1,
@@ -225,12 +209,8 @@ class CreateWorkSpaceState {
       latitude: latitude ?? this.latitude,
       longitude: longitude ?? this.longitude,
 
-      activeCategoryIndex: activeCategoryIndex ?? this.activeCategoryIndex,
-      categoryList: categoryList ?? this.categoryList,
-      mainSubCategoryList: mainSubCategoryList ?? this.mainSubCategoryList,
-      activeSubCategoryIndex:
-          activeSubCategoryIndex ?? this.activeSubCategoryIndex,
-      subCategoryList: subCategoryList ?? this.subCategoryList,
+      selectedCategoryName: selectedCategoryName ?? this.selectedCategoryName,
+      activeCategoryId: activeCategoryId ?? this.activeCategoryId,
 
       countryList: countryList ?? this.countryList,
       provinceList: provinceList ?? this.provinceList,

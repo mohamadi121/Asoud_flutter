@@ -12,6 +12,7 @@ class CustomTextField extends StatefulWidget {
     this.maxLine = 1,
     this.maxLength,
     this.color = Colora.scaffold,
+    this.padding = const EdgeInsets.symmetric(horizontal: 8.0),
     this.hintStyle = const TextStyle(color: Colora.borderTag, fontSize: 13),
     this.style,
     this.align = TextAlign.start,
@@ -43,6 +44,7 @@ class CustomTextField extends StatefulWidget {
   final String? labelText;
   final String? prefixText;
   final TextStyle? prefixStyle;
+  final EdgeInsets? padding;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -83,7 +85,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: widget.padding!,
       child: ValueListenableBuilder<Color>(
         valueListenable: borderColorNotifier,
         builder: (context, borderColor, child) {
