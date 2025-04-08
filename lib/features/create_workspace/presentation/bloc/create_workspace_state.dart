@@ -1,6 +1,7 @@
 part of 'create_workspace_bloc.dart';
 
 class CreateWorkSpaceState {
+  final String? marketId;
   final String businessId;
   final String name;
   final String description;
@@ -30,7 +31,7 @@ class CreateWorkSpaceState {
 
   //third view
   final String country;
-  final int city;
+  final String city;
   final String state;
   final String address;
   final String zipCode;
@@ -45,6 +46,7 @@ class CreateWorkSpaceState {
   final List<CityModel> cityList;
 
   const CreateWorkSpaceState({
+    required this.marketId,
     required this.phoneBorder,
     required this.emailBorder,
     required this.phoneNumber1,
@@ -85,6 +87,7 @@ class CreateWorkSpaceState {
 
   factory CreateWorkSpaceState.initial() {
     return CreateWorkSpaceState(
+      marketId: "",
       phoneBorder: Colora.borderTag,
       emailBorder: Colora.borderTag,
       phoneNumber1: '',
@@ -124,7 +127,7 @@ class CreateWorkSpaceState {
       marketType: 'shop',
       error: '',
       country: '',
-      city: 0,
+      city: "",
       state: '',
       address: '',
       zipCode: '',
@@ -141,6 +144,7 @@ class CreateWorkSpaceState {
   }
 
   CreateWorkSpaceState copyWith({
+    String? marketId,
     String? phoneNumber1,
     String? phoneNumber2,
     String? telephone,
@@ -164,7 +168,7 @@ class CreateWorkSpaceState {
     Color? phoneBorder,
     Color? emailBorder,
     String? country,
-    int? city,
+    String? city,
     String? state,
     String? address,
     String? zipCode,
@@ -179,6 +183,7 @@ class CreateWorkSpaceState {
     List<CityModel>? cityList,
   }) {
     return CreateWorkSpaceState(
+      marketId: marketId ?? this.marketId,
       phoneBorder: phoneBorder ?? this.phoneBorder,
       emailBorder: emailBorder ?? this.emailBorder,
       phoneNumber1: phoneNumber1 ?? this.phoneNumber1,

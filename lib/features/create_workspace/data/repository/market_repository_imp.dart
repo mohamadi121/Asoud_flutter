@@ -1,9 +1,10 @@
+import 'package:asood/features/create_workspace/data/model/market_contact.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:asood/core/models/theme_model.dart';
 import 'package:asood/features/create_workspace/data/data_source/market_api_service.dart';
 import 'package:asood/features/create_workspace/domain/repository/market_repository.dart';
-import 'package:asood/features/vendor/data/model/market_contact_model.dart';
+
 import 'package:asood/features/vendor/data/model/market_location_model.dart';
 
 class MarketRepositoryImp implements MarketRepository {

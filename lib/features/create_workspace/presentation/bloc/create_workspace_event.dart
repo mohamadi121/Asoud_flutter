@@ -25,7 +25,7 @@ class CreateMarket extends CreateWorkSpaceEvent {
 
 //second View Event
 class MarketContact extends CreateWorkSpaceEvent {
-  final int marketId;
+  final String marketId;
   final String phoneNumber1;
   final String phoneNumber2;
   final String telephone;
@@ -54,10 +54,10 @@ class MarketContact extends CreateWorkSpaceEvent {
 
 //third View Event
 class MarketLocation extends CreateWorkSpaceEvent {
-  final int marketId;
+  final String marketId;
   // final String country;
   // final String state;
-  final int city;
+  final String city;
   final String latitude;
   final String longitude;
   final String postalCode;
@@ -76,9 +76,9 @@ class MarketLocation extends CreateWorkSpaceEvent {
 }
 
 //change tabview
-class ChangeTabView extends CreateWorkSpaceEvent {
+class ChangeWorkspaceTabView extends CreateWorkSpaceEvent {
   final int activeTabIndex;
-  const ChangeTabView({required this.activeTabIndex});
+  const ChangeWorkspaceTabView({required this.activeTabIndex});
 }
 
 //set market type
@@ -101,15 +101,6 @@ class ChangeSelectedCategory extends CreateWorkSpaceEvent {
     required this.selectedCategoryName,
     required this.activeCategoryIndex,
   });
-}
-
-//validate required text fields
-class Validator extends CreateWorkSpaceEvent {
-  final String phoneNumber1;
-
-  final String email;
-
-  const Validator({required this.phoneNumber1, required this.email});
 }
 
 class CalPrice extends CreateWorkSpaceEvent {}

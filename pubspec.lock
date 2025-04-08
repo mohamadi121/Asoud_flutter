@@ -813,6 +813,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.0"
+  pars_validator:
+    dependency: "direct main"
+    description:
+      name: pars_validator
+      sha256: da2ea64ae70241c6bb8eb9be320ea3cad264c54eaaf9c98268210d0381f1d90f
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.9"
   path:
     dependency: transitive
     description:

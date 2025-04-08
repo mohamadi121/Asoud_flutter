@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:asood/features/create_workspace/data/model/market_contact.dart';
+import 'package:asood/features/create_workspace/data/model/marketbase_model.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -8,9 +11,9 @@ import 'package:asood/core/http_client/api_status.dart';
 
 import 'package:asood/features/create_workspace/domain/repository/market_repository.dart';
 import 'package:asood/features/create_workspace/domain/repository/region_repository.dart';
-import 'package:asood/features/job_managment/data/model/category_model.dart';
+
 import 'package:asood/features/vendor/data/model/country_model.dart';
-import 'package:asood/features/vendor/data/model/market_contact_model.dart';
+
 import 'package:asood/features/vendor/data/model/market_location_model.dart';
 import 'package:asood/features/vendor/data/model/work_hours_model.dart';
 
@@ -26,7 +29,7 @@ class CreateWorkSpaceBloc
   CreateWorkSpaceBloc(this.marketRepo, this.regionRepo)
     : super(CreateWorkSpaceState.initial()) {
     //on ChangeTabView change active index
-    on<ChangeTabView>((event, emit) {
+    on<ChangeWorkspaceTabView>((event, emit) {
       emit(state.copyWith(activeTabIndex: event.activeTabIndex));
     });
 
@@ -59,11 +62,17 @@ class CreateWorkSpaceBloc
         );
 
         if (res is Success) {
+          final initList = res.response as Map<String, dynamic>;
+          print("--------------------------");
+          print(initList);
+          MarketBaseModel marketBaseModel = MarketBaseModel.fromJson(initList);
+          print("_____________________________");
+          print(marketBaseModel.businessId);
           emit(
             state.copyWith(
               activeTabIndex: 1,
-              marketType: "shop",
               status: CWSStatus.success,
+              marketId: marketBaseModel.market,
             ),
           );
         } else {
@@ -75,6 +84,7 @@ class CreateWorkSpaceBloc
           );
         }
       } catch (e) {
+        print(e);
         emit(state.copyWith(status: CWSStatus.failure));
       }
     });
@@ -83,18 +93,6 @@ class CreateWorkSpaceBloc
       emit(state.copyWith(hasWorkTime: event.hasWorkTime));
       // ignore: avoid_print
       print(state.hasWorkTime);
-    });
-    on<Validator>((event, emit) {
-      if (event.phoneNumber1.isEmpty) {
-        emit(state.copyWith(phoneBorder: Colors.red));
-      } else {
-        emit(state.copyWith(phoneBorder: Colora.borderTag));
-      }
-      if (event.email.isEmpty) {
-        emit(state.copyWith(emailBorder: Colors.red));
-      } else {
-        emit(state.copyWith(emailBorder: Colora.borderTag));
-      }
     });
 
     on<MarketContact>(_setMarketContact);
@@ -148,14 +146,15 @@ class CreateWorkSpaceBloc
       fax: event.fax,
       email: event.email,
       websiteUrl: event.websiteUrl,
-      instagramId: event.instagramId,
-      telegramId: event.telegramId,
+      messengerIds: MessengerIds(
+        instagram: event.instagramId,
+        telegram: event.telegramId,
+      ),
     );
     try {
       var res = await marketRepo.createMarketContact(marketContact);
       if (res is Success) {
-        emit(state.copyWith(status: CWSStatus.success));
-        add(const ChangeTabView(activeTabIndex: 2));
+        emit(state.copyWith(status: CWSStatus.success, activeTabIndex: 2));
       } else {
         emit(
           state.copyWith(

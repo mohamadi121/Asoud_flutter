@@ -1,4 +1,6 @@
 import 'package:asood/core/http_client/api_status.dart';
+import 'package:asood/features/create_workspace/presentation/screen/tab_screens/contacts_info.dart';
+import 'package:asood/features/create_workspace/presentation/screen/tab_screens/location_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,34 +28,34 @@ class _CreateWorkSpaceScreenState extends State<CreateWorkSpaceScreen>
     super.initState();
     _tabController = TabController(length: 3, vsync: this)
       ..addListener(_onTabChanged);
-    _restoreProgress();
+    // _restoreProgress();
   }
 
-  void _restoreProgress() async {
-    final marketId = await SecureStorage.readSecureStorage('market_id');
-    final tabIndex = await SecureStorage.readSecureStorage(
-      'marketActiveTabIndex',
-    );
+  // void _restoreProgress() async {
+  //   final marketId = await SecureStorage.readSecureStorage('market_id');
+  //   final tabIndex = await SecureStorage.readSecureStorage(
+  //     'marketActiveTabIndex',
+  //   );
 
-    if (marketId != 'ND' && tabIndex != 'ND') {
-      final index = int.tryParse(tabIndex);
-      if (index != null) {
-        _activeTabIndex = index;
-        if (mounted) {
-          context.read<CreateWorkSpaceBloc>().add(
-            ChangeTabView(activeTabIndex: index),
-          );
-        }
-      }
-    }
-  }
+  //   if (marketId != 'ND' && tabIndex != 'ND') {
+  //     final index = int.tryParse(tabIndex);
+  //     if (index != null) {
+  //       _activeTabIndex = index;
+  //       if (mounted) {
+  //         context.read<CreateWorkSpaceBloc>().add(
+  //           ChangeWorkspaceTabView(activeTabIndex: index),
+  //         );
+  //       }
+  //     }
+  //   }
+  // }
 
   void _onTabChanged() {
     final newIndex = _tabController.index;
     if (newIndex != _activeTabIndex) {
       _activeTabIndex = newIndex;
       context.read<CreateWorkSpaceBloc>().add(
-        ChangeTabView(activeTabIndex: newIndex),
+        ChangeWorkspaceTabView(activeTabIndex: newIndex),
       );
     }
   }
@@ -98,8 +100,8 @@ class _CreateWorkSpaceScreenState extends State<CreateWorkSpaceScreen>
                             physics: const NeverScrollableScrollPhysics(),
                             children: [
                               BasicInfo(bloc: bloc),
-                              BasicInfo(bloc: bloc),
-                              BasicInfo(bloc: bloc),
+                              ContactsInfo(bloc: bloc),
+                              LocationInfo(bloc: bloc),
                             ],
                           ),
                         ),

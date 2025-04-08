@@ -6,6 +6,7 @@ import 'package:asood/core/router/app_routers.dart';
 import 'package:asood/features/create_workspace/presentation/bloc/create_workspace_bloc.dart';
 import 'package:asood/features/create_workspace/presentation/widgets/simple_title.dart';
 import 'package:asood/features/job_managment/presentation/bloc/jobmanagment_bloc.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,14 +27,12 @@ class BasicInfo extends StatefulWidget {
 
 class _BasicInfoState extends State<BasicInfo> {
   final _formKey = GlobalKey<FormState>();
-  String selectedValue = '';
+
   final TextEditingController name = TextEditingController();
   final TextEditingController businessId = TextEditingController();
   final TextEditingController description = TextEditingController();
   final TextEditingController slogan = TextEditingController();
   final TextEditingController idCode = TextEditingController();
-
-  String selectedCategoryId = "0";
 
   bool isInProcess = false;
 
@@ -47,39 +46,46 @@ class _BasicInfoState extends State<BasicInfo> {
     // description.text = widget.bloc.state.description;
     // slogan.text = widget.bloc.state.slogan;
     // selectedValue = widget.bloc.state.marketType;
-    inProcess();
+    // inProcess();
+
     //idCode.text =  widget.bloc.state.idCode;
-  }
-
-  void inProcess() async {
-    String tabIndex = await SecureStorage.readSecureStorage('market_id');
-    String marketId = await SecureStorage.readSecureStorage(
-      'marketActiveTabIndex',
+    widget.bloc.add(ChangeWorkspaceTabView(activeTabIndex: 0));
+    widget.bloc.add(
+      ChangeSelectedCategory(
+        selectedCategoryName: 'انتخاب شغل',
+        activeCategoryIndex: "",
+      ),
     );
-
-    if (tabIndex != 'ND' && marketId != 'ND') {
-      isInProcess = true;
-    } else {
-      isInProcess = false;
-      print('object');
-    }
   }
 
-  submit(CreateWorkSpaceBloc bloc) {
-    if (_formKey.currentState!.validate() && bloc.state.marketType.isNotEmpty) {
-      // bloc.state.activeCategoryId >= 0) {
-      bloc.add(
+  // void inProcess() async {
+  //   String tabIndex = await SecureStorage.readSecureStorage('market_id');
+  //   String marketId = await SecureStorage.readSecureStorage(
+  //     'marketActiveTabIndex',
+  //   );
+
+  //   if (tabIndex != 'ND' && marketId != 'ND') {
+  //     isInProcess = true;
+  //   } else {
+  //     isInProcess = false;
+  //     print('object');
+  //   }
+  // }
+
+  submit() {
+    if (_formKey.currentState!.validate() &&
+        widget.bloc.state.marketType.isNotEmpty &&
+        widget.bloc.state.activeCategoryId != "") {
+      widget.bloc.add(
         CreateMarket(
           businessId: businessId.text,
           name: name.text,
           description: description.text,
           slogan: slogan.text,
-          marketType: selectedValue,
-          subCategory: selectedCategoryId,
+          marketType: widget.bloc.state.marketType,
+          subCategory: widget.bloc.state.activeCategoryId,
         ),
       );
-
-      // bloc.add(const ChangeCategoryIndex(activeCategoryIndex: -1));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -95,8 +101,7 @@ class _BasicInfoState extends State<BasicInfo> {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = BlocProvider.of<CreateWorkSpaceBloc>(context);
-    bool isMarketTypeShop = bloc.state.marketType == "shop";
+    bool isMarketTypeShop = widget.bloc.state.marketType == "shop";
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: Dimensions.khorisontal),
       child: SingleChildScrollView(
@@ -316,7 +321,7 @@ class _BasicInfoState extends State<BasicInfo> {
                                           : null,
                                 )
                                 : CustomButton(
-                                  onPress: () => submit(bloc),
+                                  onPress: () => submit(),
                                   text:
                                       BlocProvider.of<CreateWorkSpaceBloc>(
                                                 context,

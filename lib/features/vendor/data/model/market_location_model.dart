@@ -1,6 +1,6 @@
 class MarketLocationModel {
-  int? market;
-  int? city;
+  String? market;
+  String? city;
   String? address;
   String? zipCode;
   String? latitude;

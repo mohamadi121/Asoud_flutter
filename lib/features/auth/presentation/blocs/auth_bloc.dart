@@ -50,7 +50,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       var res = await authRepository.verifyCode(event.phone, event.otp);
       if (res is Success) {
-        print(res.response);
         var json = res.response as Map<String, dynamic>;
 
         SecureStorage.writeSecureStorage('token', json["token"]);

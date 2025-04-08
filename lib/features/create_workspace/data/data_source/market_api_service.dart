@@ -1,3 +1,4 @@
+import 'package:asood/features/create_workspace/data/model/market_contact.dart';
 import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -5,7 +6,7 @@ import 'package:asood/core/constants/endpoints.dart';
 import 'package:asood/core/http_client/api_client.dart';
 import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/core/models/theme_model.dart';
-import 'package:asood/features/vendor/data/model/market_contact_model.dart';
+
 import 'package:asood/features/vendor/data/model/market_location_model.dart';
 
 class MarketApiService {
@@ -29,7 +30,6 @@ class MarketApiService {
       "sub_category": subCategory,
       "slogan": slogan,
     };
-
     try {
       Response res = await dioClient.postData(
         Endpoints.ownerCreateMarket,
@@ -51,12 +51,15 @@ class MarketApiService {
       "fax": marketContact.fax,
       "email": marketContact.email,
       "website_url": marketContact.websiteUrl,
-      "instagram_id": marketContact.instagramId,
-      "telegram_id": marketContact.telegramId,
+
+      "telegram_id": marketContact.messengerIds.telegram,
     };
 
     try {
-      Response res = await dioClient.postData('contact/create/', body);
+      Response res = await dioClient.postData(
+        Endpoints.ownerCreateMarketContect,
+        body,
+      );
       return apiStatus(res);
     } catch (e) {
       return customApiStatus();

@@ -23,8 +23,9 @@ class Endpoints {
   static String subCategoryList = 'category/sub/list/';
 
   /// market
-  static String ownerMarket = '${baseUrl}owner/market/';
-  static String ownerCreateMarket = 'create/';
+  static String ownerMarket = 'owner/market/';
+  static String ownerCreateMarket = 'owner/market/create/';
+  static String ownerCreateMarketContect = 'owner/market/contact/create/';
 
   /// region
   static String countryList = 'region/country/list/';
