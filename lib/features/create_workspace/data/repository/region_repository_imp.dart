@@ -6,7 +6,7 @@ class RegionRepositoryImp implements RegionRepository {
   RegionRepositoryImp(this.regionApiServices);
 
   @override
-  Future getCityList(int provinceId) async {
+  Future getCityList(String provinceId) async {
     return await regionApiServices.getCityList(provinceId);
   }
 
@@ -16,7 +16,7 @@ class RegionRepositoryImp implements RegionRepository {
   }
 
   @override
-  Future getProvinceList(int countryId) async {
+  Future getProvinceList(String countryId) async {
     return await regionApiServices.getProvinceList(countryId);
   }
 }

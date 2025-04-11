@@ -8,6 +8,7 @@ import 'package:asood/features/create_workspace/presentation/widgets/simple_titl
 import 'package:asood/features/job_managment/presentation/bloc/jobmanagment_bloc.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:asood/core/constants/constants.dart';
@@ -178,6 +179,12 @@ class _BasicInfoState extends State<BasicInfo> {
                       isRequired: true,
                       text: isMarketTypeShop ? "شناسه کسب و کار" : "شناسه شرکت",
                       validator: Validators.simpleFieldEmpty,
+                      keyboardType: TextInputType.visiblePassword,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'[a-zA-Z0-9\s]'),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 7),
                     CustomTextField(
@@ -242,11 +249,6 @@ class _BasicInfoState extends State<BasicInfo> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        // text: selectedCategoryName,
-                        // color: Colors.white,
-                        // textColor: Colora.primaryColor,
-                        // height: Dimensions.height * 0.05,
-                        // fontWeight: FontWeight.bold,
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -269,22 +271,6 @@ class _BasicInfoState extends State<BasicInfo> {
                                         description.text.isNotEmpty &&
                                         slogan.text.isNotEmpty &&
                                         idCode.text.isNotEmpty) {
-                                      // bloc.add(
-                                      //   const ChangeCategoryIndex(
-                                      //     activeCategoryIndex: -1,
-                                      //   ),
-                                      // );
-                                      // bloc.add(CreateMarket(
-                                      //   businessId: businessId.text,
-                                      //   name: name.text,
-                                      //   description: description.text,
-                                      //   slogan: slogan.text,
-                                      //   marketType: selectedValue,
-                                      //   subCategory: 1,
-                                      // ));
-                                      // bloc.add(
-                                      //   const ChangeTabView(activeTabIndex: 1),
-                                      // );
                                     } else {
                                       if (!context.mounted) return;
                                       showSnackBar(

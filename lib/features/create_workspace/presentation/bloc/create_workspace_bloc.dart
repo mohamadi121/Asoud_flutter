@@ -97,7 +97,27 @@ class CreateWorkSpaceBloc
 
     on<MarketContact>(_setMarketContact);
 
-    on<MarketLocation>(_setMarketLocation);
+    on<SaveMarketLocationEvent>(_setMarketLocation);
+    on<ChangeLocDataEvent>((event, emit) {
+      print("-----------------");
+      print(event.province);
+      print(event.provinceId);
+      emit(
+        state.copyWith(
+          city: event.city,
+          cityId: event.cityId,
+          country: event.country,
+          countryId: event.countryId,
+          province: event.province,
+          provinceId: event.provinceId,
+
+          address: event.workAddress,
+          postalCode: event.postalCode,
+          latitude: event.latitude,
+          longitude: event.longitude,
+        ),
+      );
+    });
 
     on<CalPrice>(_calPrice);
 
@@ -168,32 +188,23 @@ class CreateWorkSpaceBloc
 
   //market location
   _setMarketLocation(
-    MarketLocation event,
+    SaveMarketLocationEvent event,
     Emitter<CreateWorkSpaceState> emit,
   ) async {
-    emit(
-      state.copyWith(
-        status: CWSStatus.loading,
-        city: event.city,
-        address: event.workAddress,
-        zipCode: event.postalCode,
-        latitude: event.latitude,
-        longitude: event.longitude,
-      ),
-    );
+    emit(state.copyWith(status: CWSStatus.loading));
     MarketLocationModel marketLocation = MarketLocationModel(
-      market: event.marketId,
-      address: event.workAddress,
-      city: event.city,
-      zipCode: event.postalCode,
-      latitude: event.latitude,
-      longitude: event.longitude,
+      market: state.marketId,
+      address: state.address,
+      city: state.city,
+      zipCode: state.postalCode,
+      latitude: state.latitude,
+      longitude: state.longitude,
     );
 
     try {
       var res = await marketRepo.createMarketLocation(marketLocation);
       if (res is Success) {
-        var json = jsonDecode(res.response.toString());
+        print(json);
         emit(state.copyWith(status: CWSStatus.success));
       } else {
         emit(
@@ -251,11 +262,11 @@ class CreateWorkSpaceBloc
     emit(state.copyWith(status: CWSStatus.loading));
     try {
       final res = await regionRepo.getCountryList();
+
       if (res is Success) {
-        final json = jsonDecode(res.response.toString());
-        final initList = json['data'] as List;
-        final countryList =
-            initList.map((e) => CountryModel.fromJson(e)).toList();
+        var resp = res.response as List;
+        final countryList = resp.map((e) => CountryModel.fromJson(e)).toList();
+
         emit(
           state.copyWith(status: CWSStatus.success, countryList: countryList),
         );
@@ -273,10 +284,9 @@ class CreateWorkSpaceBloc
     try {
       final res = await regionRepo.getProvinceList(event.countryId);
       if (res is Success) {
-        final json = jsonDecode(res.response.toString());
-        final initList = json['data'] as List;
-        final provinceList =
-            initList.map((e) => ProvinceModel.fromJson(e)).toList();
+        var resp = res.response as List;
+        final provinceList = resp.map((e) => CountryModel.fromJson(e)).toList();
+
         emit(
           state.copyWith(status: CWSStatus.success, provinceList: provinceList),
         );
@@ -294,9 +304,9 @@ class CreateWorkSpaceBloc
     try {
       final res = await regionRepo.getCityList(event.provinceId);
       if (res is Success) {
-        final json = jsonDecode(res.response.toString());
-        final initList = json['data'] as List;
-        final cityList = initList.map((e) => CityModel.fromJson(e)).toList();
+        var resp = res.response as List;
+        final cityList = resp.map((e) => CountryModel.fromJson(e)).toList();
+
         emit(state.copyWith(status: CWSStatus.success, cityList: cityList));
       } else {
         emit(state.copyWith(status: CWSStatus.failure));

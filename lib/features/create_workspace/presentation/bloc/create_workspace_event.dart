@@ -53,25 +53,34 @@ class MarketContact extends CreateWorkSpaceEvent {
 }
 
 //third View Event
-class MarketLocation extends CreateWorkSpaceEvent {
-  final String marketId;
-  // final String country;
-  // final String state;
-  final String city;
-  final String latitude;
-  final String longitude;
-  final String postalCode;
-  final String workAddress;
+class SaveMarketLocationEvent extends CreateWorkSpaceEvent {
+  const SaveMarketLocationEvent();
+}
 
-  const MarketLocation({
-    required this.marketId,
-    required this.workAddress,
-    // required this.country,
-    // required this.state,
-    required this.city,
-    required this.latitude,
-    required this.longitude,
-    required this.postalCode,
+// change locationInfo
+class ChangeLocDataEvent extends CreateWorkSpaceEvent {
+  final String? country;
+  final String? countryId;
+  final String? province;
+  final String? provinceId;
+  final String? city;
+  final String? cityId;
+  final String? latitude;
+  final String? longitude;
+  final String? postalCode;
+  final String? workAddress;
+
+  const ChangeLocDataEvent({
+    this.country,
+    this.countryId,
+    this.cityId,
+    this.workAddress,
+    this.province,
+    this.provinceId,
+    this.city,
+    this.latitude,
+    this.longitude,
+    this.postalCode,
   });
 }
 
@@ -116,11 +125,11 @@ class PayPrice extends CreateWorkSpaceEvent {}
 class LoadCountry extends CreateWorkSpaceEvent {}
 
 class LoadProvince extends CreateWorkSpaceEvent {
-  final int countryId;
+  final String countryId;
   const LoadProvince({required this.countryId});
 }
 
 class LoadCity extends CreateWorkSpaceEvent {
-  final int provinceId;
+  final String provinceId;
   const LoadCity({required this.provinceId});
 }

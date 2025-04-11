@@ -1,6 +1,6 @@
+import 'package:asood/core/constants/constants.dart';
 import 'package:flutter/material.dart';
-
-import '../constants/constants.dart';
+import 'package:flutter/services.dart';
 
 class CustomTextField extends StatefulWidget {
   const CustomTextField({
@@ -24,6 +24,7 @@ class CustomTextField extends StatefulWidget {
     this.prefixText,
     this.prefixStyle,
     this.validator,
+    this.inputFormatters, // ✅ اضافه شده
   });
 
   final TextEditingController controller;
@@ -40,11 +41,12 @@ class CustomTextField extends StatefulWidget {
   final TextAlign align;
   final Icon? prefixIcon;
   final Icon? suffixIcon;
-  final String? Function(String?)? validator; // اصلاح تعریف ولیداتور
+  final String? Function(String?)? validator;
   final String? labelText;
   final String? prefixText;
   final TextStyle? prefixStyle;
   final EdgeInsets? padding;
+  final List<TextInputFormatter>? inputFormatters; // ✅ اضافه شده
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -91,13 +93,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
         builder: (context, borderColor, child) {
           return TextFormField(
             maxLength: widget.maxLength,
-
             textDirection: TextDirection.rtl,
             controller: widget.controller,
             keyboardType: widget.keyboardType,
             textInputAction: TextInputAction.next,
             focusNode: _focusNode,
             validator: widget.validator,
+            inputFormatters: widget.inputFormatters, // ✅ اضافه شده
             style:
                 widget.style ??
                 TextStyle(

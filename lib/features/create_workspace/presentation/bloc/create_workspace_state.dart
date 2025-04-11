@@ -31,10 +31,13 @@ class CreateWorkSpaceState {
 
   //third view
   final String country;
+  final String countryId;
   final String city;
-  final String state;
+  final String cityId;
+  final String province;
+  final String provinceId;
   final String address;
-  final String zipCode;
+  final String postalCode;
   final String latitude;
   final String longitude;
 
@@ -42,8 +45,8 @@ class CreateWorkSpaceState {
   final String selectedCategoryName;
 
   final List<CountryModel> countryList;
-  final List<ProvinceModel> provinceList;
-  final List<CityModel> cityList;
+  final List<CountryModel> provinceList;
+  final List<CountryModel> cityList;
 
   const CreateWorkSpaceState({
     required this.marketId,
@@ -69,11 +72,15 @@ class CreateWorkSpaceState {
     required this.message,
     required this.error,
     required this.activeTabIndex,
+
     required this.country,
+    required this.countryId,
     required this.city,
-    required this.state,
+    required this.cityId,
+    required this.province,
+    required this.provinceId,
     required this.address,
-    required this.zipCode,
+    required this.postalCode,
     required this.latitude,
     required this.longitude,
 
@@ -127,10 +134,13 @@ class CreateWorkSpaceState {
       marketType: 'shop',
       error: '',
       country: '',
+      countryId: '',
       city: "",
-      state: '',
+      cityId: "",
+      province: '',
+      provinceId: '',
       address: '',
-      zipCode: '',
+      postalCode: '',
       latitude: '',
       longitude: '',
 
@@ -167,11 +177,15 @@ class CreateWorkSpaceState {
     int? activeTabIndex,
     Color? phoneBorder,
     Color? emailBorder,
+
     String? country,
+    String? countryId,
     String? city,
-    String? state,
+    String? cityId,
+    String? province,
+    String? provinceId,
     String? address,
-    String? zipCode,
+    String? postalCode,
     String? latitude,
     String? longitude,
 
@@ -179,8 +193,8 @@ class CreateWorkSpaceState {
     String? selectedCategoryName,
 
     List<CountryModel>? countryList,
-    List<ProvinceModel>? provinceList,
-    List<CityModel>? cityList,
+    List<CountryModel>? provinceList,
+    List<CountryModel>? cityList,
   }) {
     return CreateWorkSpaceState(
       marketId: marketId ?? this.marketId,
@@ -207,10 +221,13 @@ class CreateWorkSpaceState {
       hasWorkTime: hasWorkTime ?? this.hasWorkTime,
       activeTabIndex: activeTabIndex ?? this.activeTabIndex,
       country: country ?? this.country,
+      countryId: countryId ?? this.countryId,
       city: city ?? this.city,
-      state: state ?? this.state,
+      cityId: cityId ?? this.cityId,
+      province: province ?? this.province,
+      provinceId: provinceId ?? this.provinceId,
       address: address ?? this.address,
-      zipCode: zipCode ?? this.zipCode,
+      postalCode: postalCode ?? this.postalCode,
       latitude: latitude ?? this.latitude,
       longitude: longitude ?? this.longitude,
 
