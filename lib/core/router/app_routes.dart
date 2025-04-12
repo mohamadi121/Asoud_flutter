@@ -1,6 +1,6 @@
 part of './app_routers.dart';
 
-abstract class Routes {
+abstract class AppRoutes {
   static const splash = "/splash";
   static const login = "/login";
   static const otp = "/otp";
@@ -17,7 +17,7 @@ abstract class Routes {
   static const inquiryResponse = "/inquiry_response";
   static const submitFeeInquiry = "/submit_fee_inquiry";
   static const ordersLists = "/orders";
-  static const store = "/store";
+  static const storeScreen = "/store_screen";
   static const editStore = "/edit_store";
   static const editStoreInfo = "/edit_store_info";
   static const storeInfo = "/store_info";
@@ -30,7 +30,10 @@ abstract class Routes {
   static const fontColorSettings = "/font_color_settings";
   static const jobManagement = "/job_management";
   static const addProduct = "/add_product";
+  static const product = "/product";
   static const multiViewSlider = "/multiview_slider";
   static const panelConfig = "/panel_config";
   static const panelInbox = "/panel_inbox";
+  static const createBusinessCard = "/create_business_card";
+  static const bankCardList = "/bank_card_list";
 }

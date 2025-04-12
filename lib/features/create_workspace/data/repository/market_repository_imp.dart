@@ -57,7 +57,7 @@ class MarketRepositoryImp implements MarketRepository {
   }
 
   @override
-  Future uploadMarketLogo(XFile imagesFile, int marketId) async {
+  Future uploadMarketLogo(XFile imagesFile, String marketId) async {
     return await marketApiService.uploadMarketLogo(imagesFile, marketId);
   }
 

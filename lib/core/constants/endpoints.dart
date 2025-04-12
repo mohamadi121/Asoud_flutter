@@ -24,6 +24,7 @@ class Endpoints {
 
   /// market
   static String ownerMarket = 'owner/market/';
+  static String ownerMarketList = 'owner/market/list/';
   static String ownerCreateMarket = 'owner/market/create/';
   static String ownerCreateMarketContect = 'owner/market/contact/create/';
 

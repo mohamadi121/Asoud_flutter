@@ -1,12 +1,10 @@
-//part 'market_model.g.dart';
-
 import 'package:asood/core/models/theme_model.dart';
 
 class MarketModel {
-  int? id;
+  String? id;
   String? businessId;
   String? name;
-  int? subCategory;
+  String? subCategory;
   String? subCategoryTitle;
   String? status;
   bool? isPaid;

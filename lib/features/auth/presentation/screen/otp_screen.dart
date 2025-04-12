@@ -28,7 +28,7 @@ class OtpScreen extends StatelessWidget {
               child: BlocConsumer<AuthBloc, AuthState>(
                 listener: (context, state) {
                   if (state.status == AuthStatus.success) {
-                    context.go(Routes.vendorHome);
+                    context.go(AppRoutes.vendorHome);
                   } else if (state.status == AuthStatus.error) {
                     print(state.error);
                     _showToast(

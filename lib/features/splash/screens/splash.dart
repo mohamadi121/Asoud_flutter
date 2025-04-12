@@ -16,10 +16,10 @@ class SplashScreen extends StatelessWidget {
     return BlocListener<SplashBloc, SplashState>(
       listener: (context, state) {
         if (state.status == SplashStatus.exist) {
-          context.go(Routes.vendorHome);
+          context.go(AppRoutes.vendorHome);
           // // Navigator.pushReplacementNamed(context, VendorHomeScreen.routeName);
         } else if (state.status == SplashStatus.notExist) {
-          context.go(Routes.login);
+          context.go(AppRoutes.login);
         }
       },
       child: Scaffold(

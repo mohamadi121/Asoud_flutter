@@ -1,5 +1,3 @@
-import 'package:asood/features/create_workspace/presentation/bloc/create_workspace_bloc.dart';
-import 'package:asood/features/job_managment/presentation/bloc/jobmanagment_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +6,16 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:asood/core/constants/constants.dart';
 import 'package:asood/core/router/app_routers.dart';
 import 'package:asood/features/auth/presentation/blocs/auth_bloc.dart';
+import 'package:asood/features/business_card/presentation/bloc/map_bloc.dart';
+import 'package:asood/features/create_workspace/presentation/bloc/create_workspace_bloc.dart';
+import 'package:asood/features/job_managment/presentation/bloc/jobmanagment_bloc.dart';
+import 'package:asood/features/market/presentation/blocs/add_product/add_product_bloc.dart';
+import 'package:asood/features/market/presentation/blocs/bloc/market_bloc.dart';
+import 'package:asood/features/market/presentation/blocs/comment/comment_bloc.dart';
+import 'package:asood/features/market/presentation/blocs/theme/theme_bloc.dart';
 import 'package:asood/features/splash/blocs/splash_bloc.dart';
+import 'package:asood/features/vendor/presentation/bloc/vendor/vendor_bloc.dart';
+import 'package:asood/features/vendor/presentation/bloc/workspace/workspace_bloc.dart';
 import 'package:asood/locator.dart';
 
 void main() async {
@@ -36,6 +43,13 @@ class Asood extends StatelessWidget {
         BlocProvider(create: (context) => locator<AuthBloc>()),
         BlocProvider(create: (context) => locator<CreateWorkSpaceBloc>()),
         BlocProvider(create: (context) => locator<JobmanagmentBloc>()),
+        BlocProvider(create: (context) => locator<VendorBloc>()),
+        BlocProvider(create: (context) => locator<WorkspaceBloc>()),
+        BlocProvider(create: (context) => locator<AddProductBloc>()),
+        BlocProvider(create: (context) => locator<ThemeBloc>()),
+        BlocProvider(create: (context) => locator<CommentBloc>()),
+        BlocProvider(create: (context) => locator<MarketBloc>()),
+        BlocProvider(create: (context) => locator<MapBloc>()),
       ],
       child: MaterialApp.router(
         builder: (context, child) {

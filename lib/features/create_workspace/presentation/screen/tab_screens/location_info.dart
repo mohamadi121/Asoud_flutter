@@ -404,7 +404,7 @@ class _LocationInfoState extends State<LocationInfo> {
                                                         Navigator.pop(context);
 
                                                         context.push(
-                                                          Routes.store,
+                                                          AppRoutes.storeScreen,
                                                         );
 
                                                         widget.bloc.add(
@@ -596,8 +596,8 @@ class _LocationInfoState extends State<LocationInfo> {
                                                                     CustomButton(
                                                                       onPress: () {
                                                                         context.push(
-                                                                          Routes
-                                                                              .store,
+                                                                          AppRoutes
+                                                                              .storeScreen,
                                                                         );
                                                                         /*        Navigator.push(
                                                                                   context,

@@ -17,27 +17,27 @@ class MenuDialog extends StatelessWidget {
             _buildMenuItem(
               context,
               title: "خانه",
-              onTap: () => context.push(Routes.vendorHome, extra: "home"),
+              onTap: () => context.push(AppRoutes.vendorHome, extra: "home"),
             ),
             _buildMenuItem(
               context,
               title: "لیست صفحات",
-              onTap: () => context.push(Routes.screenLists),
+              onTap: () => context.push(AppRoutes.screenLists),
             ),
             _buildMenuItem(
               context,
               title: "داشبورد فروشنده",
-              onTap: () => context.push(Routes.vendorDashboard),
+              onTap: () => context.push(AppRoutes.vendorDashboard),
             ),
             _buildMenuItem(
               context,
               title: "داشبورد خریدار",
-              onTap: () => context.push(Routes.customerDashboard),
+              onTap: () => context.push(AppRoutes.customerDashboard),
             ),
             _buildMenuItem(
               context,
               title: "تنظیمات",
-              onTap: () => context.push(Routes.settings),
+              onTap: () => context.push(AppRoutes.settings),
             ),
             const MenuItem(title: "درباره ما"), // بدون action
             _buildMenuItem(

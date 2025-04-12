@@ -25,7 +25,7 @@ class ProfileMenuDialog extends StatelessWidget {
           _buildMenuItem(
             context,
             label: 'پروفایل',
-            onTap: () => context.push(Routes.vendorProfile),
+            onTap: () => context.push(AppRoutes.vendorProfile),
           ),
           _buildMenuItem(
             context,
@@ -39,7 +39,7 @@ class ProfileMenuDialog extends StatelessWidget {
             label: 'خروج از حساب کاربری',
             onTap: () {
               SecureStorage.deleteSecureStorage(Keys.token);
-              context.go(Routes.login);
+              context.go(AppRoutes.login);
             },
           ),
           _buildMenuItem(

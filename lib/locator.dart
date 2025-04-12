@@ -1,3 +1,6 @@
+import 'package:asood/features/business_card/presentation/bloc/map_bloc.dart';
+import 'package:asood/features/customer/presentation/blocs/customer/customer_bloc.dart';
+import 'package:asood/features/customer/presentation/blocs/profile/profile_bloc.dart';
 import 'package:asood/features/job_managment/data/data_source/category_api_service.dart';
 import 'package:asood/features/create_workspace/data/data_source/market_api_service.dart';
 import 'package:asood/features/create_workspace/data/data_source/region_api_services.dart';
@@ -10,6 +13,16 @@ import 'package:asood/features/create_workspace/domain/repository/region_reposit
 import 'package:asood/features/create_workspace/presentation/bloc/create_workspace_bloc.dart';
 import 'package:asood/features/job_managment/domain/repository/category_repository.dart';
 import 'package:asood/features/job_managment/presentation/bloc/jobmanagment_bloc.dart';
+import 'package:asood/features/market/data/data_source/product_api_service.dart';
+import 'package:asood/features/market/data/repository/product_repository_imp.dart';
+import 'package:asood/features/market/domain/repository/product_repository.dart';
+import 'package:asood/features/market/presentation/blocs/add_product/add_product_bloc.dart';
+import 'package:asood/features/market/presentation/blocs/bloc/market_bloc.dart';
+import 'package:asood/features/market/presentation/blocs/comment/comment_bloc.dart';
+import 'package:asood/features/market/presentation/blocs/theme/theme_bloc.dart';
+import 'package:asood/features/product/blocs/product_bloc.dart';
+import 'package:asood/features/vendor/presentation/bloc/vendor/vendor_bloc.dart';
+import 'package:asood/features/vendor/presentation/bloc/workspace/workspace_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 import 'package:asood/core/constants/endpoints.dart';
@@ -41,6 +54,9 @@ locatorSetup() async {
   locator.registerFactory(
     () => RegionApiServices(dioClient: locator<DioClient>()),
   );
+  locator.registerFactory(
+    () => ProductApiService(dioClient: locator<DioClient>()),
+  );
 
   /// Repositories
   locator.registerLazySingleton<AuthRepository>(
@@ -55,9 +71,11 @@ locatorSetup() async {
   locator.registerLazySingleton<RegionRepository>(
     () => RegionRepositoryImp(locator<RegionApiServices>()),
   );
+  locator.registerLazySingleton<ProductRepository>(
+    () => ProductRepositoryImp(locator<ProductApiService>()),
+  );
 
   /// BLOCs
-
   locator.registerFactory(() => SplashBloc());
 
   locator.registerFactory(
@@ -73,4 +91,14 @@ locatorSetup() async {
   locator.registerFactory(
     () => JobmanagmentBloc(locator<CategoryRepository>()),
   );
+  locator.registerFactory(() => VendorBloc(locator<MarketRepository>()));
+  locator.registerFactory(() => WorkspaceBloc(locator<MarketRepository>()));
+  locator.registerFactory(() => AddProductBloc(locator<ProductRepository>()));
+  locator.registerFactory(() => ThemeBloc());
+  locator.registerFactory(() => CommentBloc());
+  locator.registerFactory(() => MarketBloc());
+  locator.registerFactory(() => MapBloc());
+  locator.registerFactory(() => ProfileBloc());
+  locator.registerFactory(() => CustomerBloc());
+  locator.registerFactory(() => ProductBloc());
 }

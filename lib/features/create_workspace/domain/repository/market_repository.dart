@@ -27,7 +27,7 @@ abstract class MarketRepository {
 
   Future<dynamic> getMarketSliders(marketId);
 
-  Future<dynamic> uploadMarketLogo(XFile imagesFile, int marketId);
+  Future<dynamic> uploadMarketLogo(XFile imagesFile, String marketId);
 
   Future<dynamic> deleteMarketLogo(marketId);
 

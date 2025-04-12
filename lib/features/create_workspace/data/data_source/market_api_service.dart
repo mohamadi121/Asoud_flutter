@@ -88,7 +88,8 @@ class MarketApiService {
   // Get market list
   Future getMarketList() async {
     try {
-      Response res = await dioClient.getData('list/');
+      Response res = await dioClient.getData(Endpoints.ownerMarketList);
+
       return apiStatus(res);
     } catch (e) {
       return customApiStatus();

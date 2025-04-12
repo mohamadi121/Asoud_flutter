@@ -43,7 +43,7 @@ class LoginScreen extends StatelessWidget {
         child: Stack(
           fit: StackFit.expand,
           children: [
-            Assets.images.login.image(fit: BoxFit.cover),
+            Assets.images.login.image(fit: BoxFit.fill),
 
             /// لوگو
             Positioned(
@@ -60,7 +60,7 @@ class LoginScreen extends StatelessWidget {
             BlocConsumer<AuthBloc, AuthState>(
               listener: (context, state) {
                 if (state.status == AuthStatus.success && state.termStatus) {
-                  context.go(Routes.otp);
+                  context.go(AppRoutes.otp);
                 } else if (state.status == AuthStatus.error) {
                   _showSnackBar(context, "کد ارسال نشد");
                   debugPrint(state.error);

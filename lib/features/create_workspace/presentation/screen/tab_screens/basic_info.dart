@@ -236,7 +236,7 @@ class _BasicInfoState extends State<BasicInfo> {
                       ),
                       child: MaterialButton(
                         onPressed: () {
-                          context.push(Routes.jobManagement);
+                          context.push(AppRoutes.jobManagement);
                           context.read<JobmanagmentBloc>().add(LoadCategory());
                         },
                         child: Text(

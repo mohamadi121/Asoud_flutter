@@ -1,4 +1,8 @@
+import 'package:asood/core/router/app_routers.dart';
+import 'package:asood/features/bank_card/screens/bank_card_list.dart';
+import 'package:asood/features/business_card/presentation/screens/create_business_card.dart';
 import 'package:asood/features/create_workspace/presentation/screen/create_workspace.dart';
+import 'package:asood/features/vendor/presentation/screen/stores_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:asood/core/constants/constants.dart';
@@ -6,53 +10,51 @@ import 'package:asood/core/widgets/appbar/default_appbar.dart';
 import 'package:asood/features/vendor/presentation/widgets/dashboard_carousel.dart';
 import 'package:asood/features/vendor/presentation/widgets/item_box_with_title.dart';
 import 'package:asood/features/vendor/presentation/widgets/simple_itembox.dart';
+import 'package:go_router/go_router.dart';
 
 Map dummyData = {
   "firstMenu": [
     {
       "title": "ایجاد دفتر کار",
       "image": Container(),
-      "page": const CreateWorkSpaceScreen(),
+      "page": AppRoutes.createWorkSpace,
     },
     {"title": "کسب درآمد از آسود", "image": Container()},
     {
       "title": "کارت ویزیت",
       "image": Container(),
-      // "page": const CreateBusinessCard(),
+      "page": AppRoutes.createBusinessCard,
     },
     {
       "title": "استعلام بها",
       "image": Container(),
-      // "page": const StoresScreen(),
+      "page": AppRoutes.storeScreen,
     },
     {"title": "ثبت آگهی", "image": Container()},
     {"title": "بازاریاب", "image": Container()},
   ],
   "secondMenu": [
     {
-      "title": "امور مالی", "image": Container(),
-      // "page": const BankCardList()
+      "title": "امور مالی",
+      "image": Container(),
+      "page": AppRoutes.bankCardList,
     },
     {
       "title": "رهیابی خرید",
       "image": Container(),
-      // "page": const CustomerDashboardScreen(),
+      "page": AppRoutes.customerDashboard,
     },
     {
       "title": "رهیابی فروش",
       "image": Container(),
-      // "page": const VendorDashboardScreen(),
+      "page": AppRoutes.vendorDashboard,
     },
     {
       "title": "اشتراک گذاری",
       "image": const Icon(Icons.share, size: 60, color: Colors.white),
-      // "page": const ProductScreen(),
+      "page": AppRoutes.product,
     },
-    {
-      "title": "پیام کوتاه",
-      "image": Container(),
-      // "page": const PanelInboxScreen(),
-    },
+    {"title": "پیام کوتاه", "image": Container(), "page": AppRoutes.panelInbox},
     {"title": "علاقه مندی", "image": Container()},
     {"title": "راهنما", "image": Container()},
     {"title": "پشتیبانی", "image": Container()},
@@ -232,15 +234,7 @@ class DashboardAdditionalWidget extends StatelessWidget {
                     (index) => FittedBox(
                       child: ItemBoxTitle(
                         onTap: () {
-                          // context.router.push(dummyData["secondMenu"][index]["page"]);
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder:
-                                  (context) =>
-                                      dummyData["secondMenu"][index]["page"],
-                            ),
-                          );
+                          context.push(dummyData["secondMenu"][index]["page"]);
                         },
                         title: dummyData["secondMenu"][index]["title"],
                         child: dummyData["secondMenu"][index]["image"],
@@ -308,14 +302,7 @@ class DashboardServicesWidget extends StatelessWidget {
                     dummyData["firstMenu"].length,
                     (index) => SimpleItemBox(
                       onTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder:
-                                (context) =>
-                                    dummyData["firstMenu"][index]["page"],
-                          ),
-                        );
+                        context.push(dummyData["firstMenu"][index]["page"]);
                       },
                       title: dummyData["firstMenu"][index]["title"],
                       child: dummyData["firstMenu"][index]["image"],

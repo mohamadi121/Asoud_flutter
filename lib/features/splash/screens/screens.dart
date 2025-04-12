@@ -60,7 +60,7 @@ class VendorScreens extends StatelessWidget {
           children: [
             CustomButton(
               onPress: () {
-                context.push(Routes.vendorDashboard);
+                context.push(AppRoutes.vendorDashboard);
                 /*        Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -73,7 +73,7 @@ class VendorScreens extends StatelessWidget {
             const SizedBox(height: 10),
             CustomButton(
               onPress: () {
-                context.push(Routes.vendorProfile);
+                context.push(AppRoutes.vendorProfile);
                 /*   Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -109,7 +109,7 @@ class CustomerScreens extends StatelessWidget {
                   builder: (context) => const CustomerDashboardScreen(),
                 ),
               ); */
-                context.push(Routes.customerDashboard);
+                context.push(AppRoutes.customerDashboard);
               },
               text: "داشبورد خریدار",
             ),
@@ -139,7 +139,7 @@ class InquiryScreens extends StatelessWidget {
                     builder: (context) => const InquiryRequestsScreen(),
                   ),
                 ); */
-                context.push(Routes.inquiryRequests);
+                context.push(AppRoutes.inquiryRequests);
               },
               text: "لیست استعلام",
               textColor: Colors.white,
@@ -153,7 +153,7 @@ class InquiryScreens extends StatelessWidget {
                     builder: (context) => const FeeInquiryScreen(),
                   ),
                 ); */
-                context.push(Routes.feeInquiry);
+                context.push(AppRoutes.feeInquiry);
               },
               text: "استعلام بها",
               textColor: Colors.white,
@@ -167,7 +167,7 @@ class InquiryScreens extends StatelessWidget {
                     builder: (context) => const OrdersListScreen(),
                   ),
                 ); */
-                context.push(Routes.ordersLists);
+                context.push(AppRoutes.ordersLists);
               },
               text: "لیست سفارشات",
               textColor: Colors.white,
@@ -182,7 +182,7 @@ class InquiryScreens extends StatelessWidget {
                   ),
                 ); */
 
-                context.push(Routes.submitFeeInquiry);
+                context.push(AppRoutes.submitFeeInquiry);
               },
               text: "ثبت استعلام بها",
               textColor: Colors.white,
@@ -197,7 +197,7 @@ class InquiryScreens extends StatelessWidget {
                   ),
                 ); */
 
-                context.push(Routes.inquiryDetails);
+                context.push(AppRoutes.inquiryDetails);
               },
               text: "صورت استعلام",
               textColor: Colors.white,
@@ -212,7 +212,7 @@ class InquiryScreens extends StatelessWidget {
                   ),
                 ); */
 
-                context.push(Routes.inquiryResponse);
+                context.push(AppRoutes.inquiryResponse);
               },
               text: "پاسخ به استعلام بها",
               textColor: Colors.white,
@@ -244,7 +244,7 @@ class OrderScreens extends StatelessWidget {
                   ),
                 ); */
 
-                context.push(Routes.ordersLists);
+                context.push(AppRoutes.ordersLists);
               },
               text: "لیست سفارشات",
               textColor: Colors.white,
@@ -277,7 +277,7 @@ class PanelScreens extends StatelessWidget {
                   ),
                 ); */
 
-                context.push(Routes.panelInbox);
+                context.push(AppRoutes.panelInbox);
               },
               text: "صندوق پیام",
               textColor: Colors.white,
@@ -291,7 +291,7 @@ class PanelScreens extends StatelessWidget {
                       builder: (context) => const PanelConfigScreen(),
                     )); */
 
-                context.push(Routes.panelConfig);
+                context.push(AppRoutes.panelConfig);
               },
               text: "تنظیمات",
             ),
