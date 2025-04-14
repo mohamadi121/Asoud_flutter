@@ -58,9 +58,7 @@ class WorkspaceBloc extends Bloc<WorkspaceEvent, WorkspaceState> {
     try {
       final res = await marketRepo.getMarketList();
       if (res is Success) {
-        final json = res.response;
-        print(json);
-
+        print(res.response);
         final initList = res.response as List;
         final storesList =
             initList.map((e) => MarketModel.fromJson(e)).toList();

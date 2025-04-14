@@ -12,10 +12,12 @@ class CreateMarket extends CreateWorkSpaceEvent {
   final String description;
   final String subCategory;
   final String slogan;
+  final String idCode;
 
   const CreateMarket({
     required this.marketType,
     required this.businessId,
+    required this.idCode,
     required this.name,
     required this.description,
     required this.subCategory,

@@ -1,4 +1,3 @@
-import 'package:asood/core/helper/secure_storage.dart';
 import 'package:asood/core/helper/snack_bar_util.dart';
 import 'package:asood/core/helper/validators.dart';
 import 'package:asood/core/http_client/api_status.dart';
@@ -26,7 +25,10 @@ class BasicInfo extends StatefulWidget {
   State<BasicInfo> createState() => _BasicInfoState();
 }
 
-class _BasicInfoState extends State<BasicInfo> {
+class _BasicInfoState extends State<BasicInfo>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController name = TextEditingController();
@@ -36,20 +38,13 @@ class _BasicInfoState extends State<BasicInfo> {
   final TextEditingController idCode = TextEditingController();
 
   bool isInProcess = false;
-
+  String selectedCat = "";
   late CreateWorkSpaceBloc catBloc;
 
   @override
   void initState() {
     super.initState();
-    // name.text = widget.bloc.state.name;
-    // businessId.text = widget.bloc.state.businessId;
-    // description.text = widget.bloc.state.description;
-    // slogan.text = widget.bloc.state.slogan;
-    // selectedValue = widget.bloc.state.marketType;
-    // inProcess();
 
-    //idCode.text =  widget.bloc.state.idCode;
     widget.bloc.add(ChangeWorkspaceTabView(activeTabIndex: 0));
     widget.bloc.add(
       ChangeSelectedCategory(
@@ -83,6 +78,7 @@ class _BasicInfoState extends State<BasicInfo> {
           name: name.text,
           description: description.text,
           slogan: slogan.text,
+          idCode: idCode.text,
           marketType: widget.bloc.state.marketType,
           subCategory: widget.bloc.state.activeCategoryId,
         ),
@@ -102,6 +98,7 @@ class _BasicInfoState extends State<BasicInfo> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     bool isMarketTypeShop = widget.bloc.state.marketType == "shop";
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: Dimensions.khorisontal),
@@ -226,30 +223,35 @@ class _BasicInfoState extends State<BasicInfo> {
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      margin: const EdgeInsets.symmetric(horizontal: 8.0),
-                      width: Dimensions.width,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(Dimensions.twenty),
-                        color: Colora.scaffold,
-                      ),
-                      child: MaterialButton(
-                        onPressed: () {
-                          context.push(AppRoutes.jobManagement);
-                          context.read<JobmanagmentBloc>().add(LoadCategory());
-                        },
-                        child: Text(
-                          context
-                              .read<CreateWorkSpaceBloc>()
-                              .state
-                              .selectedCategoryName,
-                          style: const TextStyle(
-                            color: Colora.primaryColor,
-                            fontWeight: FontWeight.bold,
+                    BlocBuilder<CreateWorkSpaceBloc, CreateWorkSpaceState>(
+                      builder: (context, state) {
+                        return Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                          width: Dimensions.width,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(
+                              Dimensions.twenty,
+                            ),
+                            color: Colora.scaffold,
                           ),
-                        ),
-                      ),
+                          child: MaterialButton(
+                            onPressed: () {
+                              context.push(AppRoutes.jobManagement);
+                              context.read<JobmanagmentBloc>().add(
+                                LoadCategory(),
+                              );
+                            },
+                            child: Text(
+                              state.selectedCategoryName,
+                              style: const TextStyle(
+                                color: Colora.primaryColor,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        );
+                      },
                     ),
                     const SizedBox(height: 10),
                     Align(
@@ -260,12 +262,6 @@ class _BasicInfoState extends State<BasicInfo> {
                             isInProcess
                                 ? CustomButton(
                                   onPress: () async {
-                                    await SecureStorage.deleteSecureStorage(
-                                      'market_id',
-                                    );
-                                    await SecureStorage.deleteSecureStorage(
-                                      'marketActiveTabIndex',
-                                    );
                                     if (businessId.text.isNotEmpty &&
                                         name.text.isNotEmpty &&
                                         description.text.isNotEmpty &&

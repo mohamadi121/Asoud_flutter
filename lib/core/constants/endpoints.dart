@@ -36,4 +36,7 @@ class Endpoints {
 
   /// this needs {{provinceID}}
   static String cityList = 'region/city/list/';
+
+  /// inquiry
+  static String inquiry = 'region/city/list/';
 }

@@ -113,6 +113,9 @@ class _SubTabState extends State<SubTab> {
                       onItemTap: (index) {
                         CategoryModel selectedCategory =
                             state.subCategoryList[index];
+                        print("_______________________");
+                        print(selectedCategory.id);
+                        print(selectedCategory.title);
                         bloc.add(
                           ChangeCategoryIndex(
                             activeCategoryIndex: selectedCategory.id!,

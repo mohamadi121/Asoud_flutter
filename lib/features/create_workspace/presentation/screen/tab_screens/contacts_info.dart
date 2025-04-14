@@ -19,7 +19,10 @@ class ContactsInfo extends StatefulWidget {
   State<ContactsInfo> createState() => _ContactsInfoState();
 }
 
-class _ContactsInfoState extends State<ContactsInfo> {
+class _ContactsInfoState extends State<ContactsInfo>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
   TextEditingController phone1Controller = TextEditingController();
   TextEditingController phone2Controller = TextEditingController();
   TextEditingController phoneNumberController = TextEditingController();
@@ -84,6 +87,7 @@ class _ContactsInfoState extends State<ContactsInfo> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: Dimensions.khorisontal),
       child: Container(

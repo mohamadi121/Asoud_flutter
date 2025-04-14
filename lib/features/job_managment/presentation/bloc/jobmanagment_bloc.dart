@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/features/job_managment/data/model/category_model.dart';
 import 'package:asood/features/job_managment/domain/repository/category_repository.dart';
