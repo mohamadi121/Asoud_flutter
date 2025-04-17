@@ -22,8 +22,7 @@ class CreateWorkSpaceState {
   final String fax;
   final String email;
   final String websiteUrl;
-  final String instagramId;
-  final String telegramId;
+  final MessengerIds messengerIds;
   final bool hasWorkTime;
   final WorkHours workHours;
 
@@ -60,8 +59,7 @@ class CreateWorkSpaceState {
     required this.fax,
     required this.email,
     required this.websiteUrl,
-    required this.instagramId,
-    required this.telegramId,
+    required this.messengerIds,
     required this.workHours,
     required this.businessId,
     required this.name,
@@ -107,8 +105,7 @@ class CreateWorkSpaceState {
       fax: '',
       email: '',
       websiteUrl: '',
-      instagramId: '',
-      telegramId: '',
+      messengerIds: MessengerIds(),
       workHours: WorkHours(
         fromSat: '',
         toSat: '',
@@ -166,8 +163,7 @@ class CreateWorkSpaceState {
     String? fax,
     String? email,
     String? websiteUrl,
-    String? instagramId,
-    String? telegramId,
+    MessengerIds? messengerIds,
     WorkHours? workHours,
     String? name,
     String? description,
@@ -211,8 +207,7 @@ class CreateWorkSpaceState {
       fax: fax ?? this.fax,
       email: email ?? this.email,
       websiteUrl: websiteUrl ?? this.websiteUrl,
-      instagramId: instagramId ?? this.instagramId,
-      telegramId: telegramId ?? this.telegramId,
+      messengerIds: messengerIds ?? this.messengerIds,
       workHours: workHours ?? this.workHours,
       businessId: businessId ?? this.businessId,
       name: name ?? this.name,

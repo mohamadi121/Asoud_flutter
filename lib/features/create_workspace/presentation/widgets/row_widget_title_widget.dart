@@ -11,7 +11,23 @@ class RowWidgetTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [Text(title, style: ATextStyle.lightBlue18), widget],
+      children: [
+        SizedBox(
+          width: 70,
+          child: Text(
+            title,
+
+            style: ATextStyle.lightBlue16,
+            textAlign: TextAlign.justify,
+          ),
+        ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: widget,
+          ),
+        ),
+      ],
     );
   }
 }

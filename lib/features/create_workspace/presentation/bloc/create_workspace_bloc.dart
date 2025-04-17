@@ -33,6 +33,10 @@ class CreateWorkSpaceBloc
       emit(state.copyWith(activeTabIndex: event.activeTabIndex));
     });
 
+    on<UpdateMessengerIds>((event, emit) {
+      emit(state.copyWith(messengerIds: event.messengerIds));
+    });
+
     //set market type
     on<SetMarketType>((event, emit) {
       emit(state.copyWith(marketType: event.marketType));
@@ -154,8 +158,7 @@ class CreateWorkSpaceBloc
         fax: event.fax,
         email: event.email,
         websiteUrl: event.websiteUrl,
-        instagramId: event.instagramId,
-        telegramId: event.telegramId,
+        messengerIds: event.messengerIds,
       ),
     );
     MarketContactModel marketContact = MarketContactModel(
@@ -166,10 +169,7 @@ class CreateWorkSpaceBloc
       fax: event.fax,
       email: event.email,
       websiteUrl: event.websiteUrl,
-      messengerIds: MessengerIds(
-        instagram: event.instagramId,
-        telegram: event.telegramId,
-      ),
+      messengerIds: event.messengerIds,
     );
     try {
       var res = await marketRepo.createMarketContact(marketContact);

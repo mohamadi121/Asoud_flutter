@@ -51,8 +51,21 @@ class MessengerIds {
   final String? whatsapp;
   final String? instagram;
   final String? eita;
+  final String? igap;
+  final String? bale;
+  final String? soroush;
+  final String? rubika;
 
-  MessengerIds({this.telegram, this.whatsapp, this.instagram, this.eita});
+  MessengerIds({
+    this.telegram,
+    this.whatsapp,
+    this.instagram,
+    this.eita,
+    this.bale,
+    this.igap,
+    this.rubika,
+    this.soroush,
+  });
 
   factory MessengerIds.fromJson(Map<String, dynamic> json) {
     return MessengerIds(
@@ -60,15 +73,86 @@ class MessengerIds {
       whatsapp: json['whatsapp'] ?? "",
       instagram: json['instagram'] ?? "",
       eita: json['eita'] ?? "",
+      bale: json['bale'] ?? "",
+      igap: json['igap'] ?? "",
+      rubika: json['rubika'] ?? "",
+      soroush: json['soroush'] ?? "",
     );
   }
-
+  factory MessengerIds.fromAnotherModel(MessengerIds newMess) {
+    return MessengerIds(
+      telegram: newMess.telegram,
+      eita: newMess.eita,
+      instagram: newMess.instagram,
+      whatsapp: newMess.whatsapp,
+      bale: newMess.bale,
+      igap: newMess.igap,
+      rubika: newMess.rubika,
+      soroush: newMess.soroush,
+    );
+  }
   Map<String, dynamic> toJson() {
     return {
       'telegram': telegram,
       'whatsapp': whatsapp,
       'eita': eita,
       'instagram': instagram,
+      'soroush': soroush,
+      'rubika': rubika,
+      'igap': igap,
+      'bale': bale,
     };
+  }
+}
+
+extension MessengerIdsCopy on MessengerIds {
+  MessengerIds copyWith({
+    String? telegram,
+    String? whatsapp,
+    String? instagram,
+    String? eita,
+    final String? igap,
+    final String? bale,
+    final String? soroush,
+    final String? rubika,
+  }) {
+    return MessengerIds(
+      telegram: telegram ?? this.telegram,
+      whatsapp: whatsapp ?? this.whatsapp,
+      instagram: instagram ?? this.instagram,
+      eita: eita ?? this.eita,
+      bale: bale ?? this.bale,
+      igap: igap ?? this.igap,
+      rubika: rubika ?? this.rubika,
+      soroush: soroush ?? this.soroush,
+    );
+  }
+}
+
+extension MessengerIdsExtension on MessengerIds {
+  MessengerIds copyWithByKey(String key, String value) {
+    final Map<String, String?> updated = {
+      'telegram': telegram,
+      'whatsapp': whatsapp,
+      'instagram': instagram,
+      'eita': eita,
+      'soroush': soroush,
+      'rubika': rubika,
+      'igap': igap,
+      'bale': bale,
+    };
+
+    updated[key] = value; // مقدار جدید رو جایگزین کن
+
+    return MessengerIds(
+      telegram: updated['telegram'],
+      whatsapp: updated['whatsapp'],
+      instagram: updated['instagram'],
+      eita: updated['eita'],
+      bale: updated['bale'],
+      igap: updated['igap'],
+      rubika: updated['rubika'],
+      soroush: updated['soroush'],
+    );
   }
 }

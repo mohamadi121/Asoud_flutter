@@ -34,8 +34,7 @@ class MarketContact extends CreateWorkSpaceEvent {
   final String fax;
   final String email;
   final String websiteUrl;
-  final String instagramId;
-  final String telegramId;
+  final MessengerIds messengerIds;
   // final bool hasWorkTime;
   // final WorkHours workHours;
 
@@ -47,16 +46,20 @@ class MarketContact extends CreateWorkSpaceEvent {
     required this.fax,
     required this.email,
     required this.websiteUrl,
-    required this.instagramId,
-    required this.telegramId,
-    // required this.hasWorkTime,
-    // required this.workHours,
+    required this.messengerIds,
   });
 }
 
 //third View Event
 class SaveMarketLocationEvent extends CreateWorkSpaceEvent {
   const SaveMarketLocationEvent();
+}
+
+/// update user social ids
+class UpdateMessengerIds extends CreateWorkSpaceEvent {
+  final MessengerIds messengerIds;
+
+  UpdateMessengerIds(this.messengerIds);
 }
 
 // change locationInfo

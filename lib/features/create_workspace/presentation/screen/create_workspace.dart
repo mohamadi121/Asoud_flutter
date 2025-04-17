@@ -1,14 +1,16 @@
-import 'package:asood/core/http_client/api_status.dart';
-import 'package:asood/features/create_workspace/presentation/screen/tab_screens/contacts_info.dart';
-import 'package:asood/features/create_workspace/presentation/screen/tab_screens/location_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:asood/core/constants/constants.dart';
 import 'package:asood/core/helper/snack_bar_util.dart';
+import 'package:asood/core/http_client/api_status.dart';
+import 'package:asood/core/router/app_routers.dart';
 import 'package:asood/core/widgets/appbar/default_appbar.dart';
 import 'package:asood/features/create_workspace/presentation/bloc/create_workspace_bloc.dart';
 import 'package:asood/features/create_workspace/presentation/screen/tab_screens/basic_info.dart';
+import 'package:asood/features/create_workspace/presentation/screen/tab_screens/contacts_info.dart';
+import 'package:asood/features/create_workspace/presentation/screen/tab_screens/location_info.dart';
 
 class CreateWorkSpaceScreen extends StatefulWidget {
   const CreateWorkSpaceScreen({super.key});
@@ -27,27 +29,7 @@ class _CreateWorkSpaceScreenState extends State<CreateWorkSpaceScreen>
     super.initState();
     _tabController = TabController(length: 3, vsync: this)
       ..addListener(_onTabChanged);
-    // _restoreProgress();
   }
-
-  // void _restoreProgress() async {
-  //   final marketId = await SecureStorage.readSecureStorage('market_id');
-  //   final tabIndex = await SecureStorage.readSecureStorage(
-  //     'marketActiveTabIndex',
-  //   );
-
-  //   if (marketId != 'ND' && tabIndex != 'ND') {
-  //     final index = int.tryParse(tabIndex);
-  //     if (index != null) {
-  //       _activeTabIndex = index;
-  //       if (mounted) {
-  //         context.read<CreateWorkSpaceBloc>().add(
-  //           ChangeWorkspaceTabView(activeTabIndex: index),
-  //         );
-  //       }
-  //     }
-  //   }
-  // }
 
   void _onTabChanged() {
     final newIndex = _tabController.index;
@@ -65,52 +47,71 @@ class _CreateWorkSpaceScreenState extends State<CreateWorkSpaceScreen>
     super.dispose();
   }
 
+  /// on back button if user presses to get pre tab
+  void onBack(BuildContext context) {
+    var bloc = context.read<CreateWorkSpaceBloc>();
+    int index = bloc.state.activeTabIndex;
+    if (index > 0) {
+      bloc.add(ChangeWorkspaceTabView(activeTabIndex: index - 1));
+    } else if (index == 0) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        context.pushReplacement(AppRoutes.vendorHome);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<CreateWorkSpaceBloc>();
 
-    return Container(
-      color: Colora.primaryColor,
-      child: SafeArea(
-        child: Scaffold(
-          body: BlocConsumer<CreateWorkSpaceBloc, CreateWorkSpaceState>(
-            listener: (context, state) {
-              if (_tabController.index != state.activeTabIndex) {
-                _tabController.index = state.activeTabIndex;
-              }
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (didPop, result) {
+        onBack(context);
+      },
+      child: Container(
+        color: Colora.primaryColor,
+        child: SafeArea(
+          child: Scaffold(
+            body: BlocConsumer<CreateWorkSpaceBloc, CreateWorkSpaceState>(
+              listener: (context, state) {
+                if (_tabController.index != state.activeTabIndex) {
+                  _tabController.index = state.activeTabIndex;
+                }
 
-              if (state.status == CWSStatus.failure) {
-                showSnackBar(context, "مشکلی پیش آمده مجددا تلاش کنید");
-              }
-            },
-            builder: (context, state) {
-              return Stack(
-                children: [
-                  SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        // Appbar Space
-                        const SizedBox(height: 80),
-                        _buildTabBar(state),
-                        SizedBox(
-                          height: Dimensions.height * 0.795,
-                          child: TabBarView(
-                            controller: _tabController,
-                            physics: const NeverScrollableScrollPhysics(),
-                            children: [
-                              BasicInfo(bloc: bloc),
-                              ContactsInfo(bloc: bloc),
-                              LocationInfo(bloc: bloc),
-                            ],
+                if (state.status == CWSStatus.failure) {
+                  showSnackBar(context, "مشکلی پیش آمده مجددا تلاش کنید");
+                }
+              },
+              builder: (context, state) {
+                return Stack(
+                  children: [
+                    SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          // Appbar Space
+                          const SizedBox(height: 100),
+                          _buildTabBar(state),
+                          SizedBox(
+                            height: Dimensions.height * 0.795,
+                            child: TabBarView(
+                              controller: _tabController,
+                              physics: const NeverScrollableScrollPhysics(),
+                              children: [
+                                BasicInfo(bloc: bloc),
+                                ContactsInfo(bloc: bloc),
+                                LocationInfo(bloc: bloc),
+                              ],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  const NewAppBar(title: 'ثبت دفتر کار'),
-                ],
-              );
-            },
+                    const NewAppBar(title: 'ثبت دفتر کار'),
+                  ],
+                );
+              },
+            ),
           ),
         ),
       ),
