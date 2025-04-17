@@ -1,12 +1,21 @@
+import 'package:asood/core/models/market_model.dart';
 import 'package:asood/features/bank_card/screens/bank_card_list.dart';
 import 'package:asood/features/business_card/presentation/screens/create_business_card.dart';
 import 'package:asood/features/create_workspace/presentation/screen/create_workspace.dart';
 import 'package:asood/features/customer/presentation/screens/customer_dashboard_screen.dart';
 import 'package:asood/features/job_managment/presentation/screen/job_managment.dart';
+import 'package:asood/features/market/presentation/screens/edit_store_screen.dart';
+import 'package:asood/features/market/presentation/screens/store_detail_screen.dart';
+import 'package:asood/features/market/presentation/screens/store_info.dart';
+import 'package:asood/features/market/presentation/widgets/themes_screen.dart';
 import 'package:asood/features/panel/screens/panel_config_screen.dart';
 import 'package:asood/features/panel/screens/panel_inbox_screen.dart';
 import 'package:asood/features/product/screens/product_screen.dart';
+import 'package:asood/features/store_setting_screens/color_setting_screen/color_setting_screen.dart';
+import 'package:asood/features/store_setting_screens/font-txtColor_setting_screen/font_color_setting_screen.dart';
+import 'package:asood/features/store_setting_screens/takhfif_setting_screen/takhfif_screen.dart';
 import 'package:asood/features/vendor/presentation/screen/stores_screen.dart';
+
 import 'package:asood/features/vendor/presentation/screen/vendor_home.dart';
 import 'package:go_router/go_router.dart';
 
@@ -48,7 +57,25 @@ class AppRouter {
         builder: (context, state) => JobManagementScreen(),
       ),
       GoRoute(
-        path: AppRoutes.storeScreen,
+        path: AppRoutes.storeDetail,
+        builder: (context, state) {
+          final market = state.extra as MarketModel;
+          return StoreDetailScreen(market: market);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.editStore,
+        builder: (context, state) {
+          final market = state.extra as MarketModel;
+          return EditStoreScreen(market: market);
+        },
+      ),
+      GoRoute(
+        path: AppRoutes.storeInfo,
+        builder: (context, state) => StoreInfoScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.store,
         builder: (context, state) => StoreScreen(),
       ),
       GoRoute(
@@ -78,6 +105,22 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.panelInbox,
         builder: (context, state) => PanelInboxScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.multiViewSlider,
+        builder: (context, state) => MultiViewSliderScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.takhfif,
+        builder: (context, state) => TakhfifScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.fontColorSettings,
+        builder: (context, state) => FontColorSettingScreen(),
+      ),
+      GoRoute(
+        path: AppRoutes.colorSettings,
+        builder: (context, state) => ColorSettingScreen(),
       ),
     ],
   );

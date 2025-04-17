@@ -131,52 +131,46 @@ class _ScrollableButtonListState extends State<ScrollableButtonList> {
     return Scaffold(
       body: SizedBox(
         height: 50,
-        child: Expanded(
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: buttonTitles.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(
-                  vertical: 5,
-                  horizontal: 3.0,
-                ),
-                child: ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      selectedIndex = index;
-                    });
-                  },
-                  style: ButtonStyle(
-                    backgroundColor:
-                        selectedIndex == index
-                            ? WidgetStateProperty.all(Colora.primaryColor)
-                            : WidgetStateProperty.all(Colors.white),
-                    shadowColor: WidgetStateProperty.all(Colors.transparent),
-                    elevation: WidgetStateProperty.all(0), // Remove box shadow
-                    shape: WidgetStateProperty.all(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25.0),
-                        side: const BorderSide(
-                          color:
-                              Colora.primaryColor, // Specify the border color
-                        ),
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: buttonTitles.length,
+          itemBuilder: (context, index) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 3.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    selectedIndex = index;
+                  });
+                },
+                style: ButtonStyle(
+                  backgroundColor:
+                      selectedIndex == index
+                          ? WidgetStateProperty.all(Colora.primaryColor)
+                          : WidgetStateProperty.all(Colors.white),
+                  shadowColor: WidgetStateProperty.all(Colors.transparent),
+                  elevation: WidgetStateProperty.all(0), // Remove box shadow
+                  shape: WidgetStateProperty.all(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      side: const BorderSide(
+                        color: Colora.primaryColor, // Specify the border color
                       ),
                     ),
                   ),
-                  child: Text(
-                    buttonTitles[index],
-                    style: TextStyle(
-                      color:
-                          selectedIndex == index
-                              ? Colors.white
-                              : Colora.primaryColor,
-                    ),
+                ),
+                child: Text(
+                  buttonTitles[index],
+                  style: TextStyle(
+                    color:
+                        selectedIndex == index
+                            ? Colors.white
+                            : Colora.primaryColor,
                   ),
                 ),
-              );
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
     );

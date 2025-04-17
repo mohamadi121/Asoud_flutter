@@ -22,11 +22,7 @@ Map dummyData = {
       "image": Container(),
       "page": AppRoutes.createBusinessCard,
     },
-    {
-      "title": "استعلام بها",
-      "image": Container(),
-      "page": AppRoutes.storeScreen,
-    },
+    {"title": "استعلام بها", "image": Container(), "page": AppRoutes.store},
     {"title": "ثبت آگهی", "image": Container()},
     {"title": "بازاریاب", "image": Container()},
   ],

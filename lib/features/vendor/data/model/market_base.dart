@@ -1,29 +1,19 @@
 import 'dart:convert';
 import 'package:hive/hive.dart';
 
-part 'market_base.g.dart';
-
-@HiveType(typeId: 1)
 class MarketBaseModel extends HiveObject {
-  @HiveField(0)
   int? id;
 
-  @HiveField(1)
   final String marketType;
 
-  @HiveField(2)
   final String businessId;
 
-  @HiveField(3)
   final String name;
 
-  @HiveField(4)
   final String description;
 
-  @HiveField(5)
   final int subCategory;
 
-  @HiveField(6)
   final String slogan;
 
   MarketBaseModel({

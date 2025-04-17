@@ -1,37 +1,24 @@
 import 'package:hive/hive.dart';
 
-part 'market_contact_model.g.dart';
-
-@HiveType(typeId: 2) // typeId باید یکتا باشد
 class MarketContactModel extends HiveObject {
-  @HiveField(0)
-  int? id; // در Hive مقدار id باید مدیریت شود
+  int? id;
 
-  @HiveField(1)
   int? market;
 
-  @HiveField(2)
   String? firstMobileNumber;
 
-  @HiveField(3)
   String? secondMobileNumber;
 
-  @HiveField(4)
   String? telephone;
 
-  @HiveField(5)
   String? fax;
 
-  @HiveField(6)
   String? email;
 
-  @HiveField(7)
   String? websiteUrl;
 
-  @HiveField(8)
   String? instagramId;
 
-  @HiveField(9)
   String? telegramId;
 
   MarketContactModel({

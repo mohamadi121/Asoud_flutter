@@ -78,7 +78,7 @@ void paymentDialog(BuildContext context) {
                 onPress: () {
                   Navigator.pop(context);
 
-                  context.push(AppRoutes.storeScreen);
+                  context.push(AppRoutes.storeDetail);
                   context.read<CreateWorkSpaceBloc>().add(
                     ChangeWorkspaceTabView(activeTabIndex: 0),
                   );
@@ -195,13 +195,9 @@ void paymentDialog(BuildContext context) {
                             children: [
                               CustomButton(
                                 onPress: () {
-                                  context.push(AppRoutes.storeScreen);
-                                  /*        Navigator.push(
-                                                                                  context,
-                                                                                  MaterialPageRoute(
-                                                                                      builder:
-                                                                                          (context) =>
-                                                                                              const StoresScreen())); */
+                                  context.pushReplacement(
+                                    AppRoutes.storeDetail,
+                                  );
                                 },
                                 text: "پرداخت",
                                 width: 120,

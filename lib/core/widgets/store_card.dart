@@ -364,17 +364,9 @@ class _StoreCardState extends State<StoreCard> {
                             width: 110,
                             onPress: () {
                               context.push(
-                                AppRoutes.storeScreen,
+                                AppRoutes.storeDetail,
                                 extra: widget.market,
                               );
-                              /*   Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => StoreScreen(
-                                market: widget.market,
-                              ),
-                            ),
-                          ); */
                             },
                             text: "پیش نمایش",
                           ),
@@ -383,15 +375,10 @@ class _StoreCardState extends State<StoreCard> {
                           CustomButton(
                             width: 110,
                             onPress: () {
-                              // context.router
-                              //     .push(EditStoreRoute(market: widget.market));
-                              /*   Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  EditStoreScreen(market: widget.market),
-                            ),
-                          ); */
+                              context.push(
+                                AppRoutes.editStore,
+                                extra: widget.market,
+                              );
                             },
                             text: "نمایش",
                           ),

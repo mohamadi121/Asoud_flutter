@@ -298,7 +298,7 @@ class _LocationInfoState extends State<LocationInfo> {
                                                     CustomButton(
                                                       onPress: () {
                                                         context.push(
-                                                          AppRoutes.storeScreen,
+                                                          AppRoutes.storeDetail,
                                                         );
                                                         /*   Navigator.push(
                                                             context,

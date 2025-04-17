@@ -17,7 +17,9 @@ abstract class AppRoutes {
   static const inquiryResponse = "/inquiry_response";
   static const submitFeeInquiry = "/submit_fee_inquiry";
   static const ordersLists = "/orders";
-  static const storeScreen = "/store_screen";
+  static const storeDetail = "/store_screen";
+
+  static const store = "/store";
   static const editStore = "/edit_store";
   static const editStoreInfo = "/edit_store_info";
   static const storeInfo = "/store_info";

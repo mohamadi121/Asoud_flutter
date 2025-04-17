@@ -115,35 +115,36 @@ class _LocationInfoState extends State<LocationInfo> {
                                 context,
                                 "لطفا ابتدا کشور را انتخاب کنید",
                               );
-                            } else if (state.status == CWSStatus.success &&
-                                state.provinceList.isNotEmpty) {
-                              LocationDialog.showLocationSelector(
-                                title: "استان",
-                                context: context,
-                                onLoad: () {
-                                  bloc.add(
-                                    ChangeLocDataEvent(
-                                      province: "",
-                                      provinceId: "",
-                                    ),
-                                  );
-                                  widget.bloc.add(
-                                    LoadProvince(countryId: state.countryId),
-                                  );
-                                },
-                                items: bloc.state.provinceList,
-                                getName: (item) => item.name ?? '',
-                                getId: (item) => item.id,
-
-                                onSelect: (item) {
-                                  bloc.add(
-                                    ChangeLocDataEvent(
-                                      province: item.name!,
-                                      provinceId: item.id!,
-                                    ),
-                                  );
-                                },
+                            } else if (state.status == CWSStatus.success) {
+                              widget.bloc.add(
+                                LoadProvince(countryId: state.countryId),
                               );
+                              if (state.provinceList.isNotEmpty) {
+                                LocationDialog.showLocationSelector(
+                                  title: "استان",
+                                  context: context,
+                                  onLoad: () {
+                                    bloc.add(
+                                      ChangeLocDataEvent(
+                                        province: "",
+                                        provinceId: "",
+                                      ),
+                                    );
+                                  },
+                                  items: bloc.state.provinceList,
+                                  getName: (item) => item.name ?? '',
+                                  getId: (item) => item.id,
+
+                                  onSelect: (item) {
+                                    bloc.add(
+                                      ChangeLocDataEvent(
+                                        province: item.name!,
+                                        provinceId: item.id!,
+                                      ),
+                                    );
+                                  },
+                                );
+                              }
                             }
                           },
                           width: Dimensions.width * 0.88,
@@ -164,31 +165,32 @@ class _LocationInfoState extends State<LocationInfo> {
                                 context,
                                 "لطفا ابتدا استان را انتخاب کنید",
                               );
-                            } else if (state.status == CWSStatus.success &&
-                                state.cityList.isNotEmpty) {
-                              LocationDialog.showLocationSelector(
-                                title: "شهر",
-                                context: context,
-                                onLoad: () {
-                                  bloc.add(
-                                    ChangeLocDataEvent(city: "", cityId: ""),
-                                  );
-                                  widget.bloc.add(
-                                    LoadCity(provinceId: state.provinceId),
-                                  );
-                                },
-                                items: bloc.state.cityList,
-                                getName: (item) => item.name ?? '',
-                                getId: (item) => item.id,
-                                onSelect: (item) {
-                                  bloc.add(
-                                    ChangeLocDataEvent(
-                                      city: item.name!,
-                                      cityId: item.id!,
-                                    ),
-                                  );
-                                },
+                            } else if (state.status == CWSStatus.success) {
+                              widget.bloc.add(
+                                LoadCity(provinceId: state.provinceId),
                               );
+                              if (state.cityList.isNotEmpty) {
+                                LocationDialog.showLocationSelector(
+                                  title: "شهر",
+                                  context: context,
+                                  onLoad: () {
+                                    bloc.add(
+                                      ChangeLocDataEvent(city: "", cityId: ""),
+                                    );
+                                  },
+                                  items: bloc.state.cityList,
+                                  getName: (item) => item.name ?? '',
+                                  getId: (item) => item.id,
+                                  onSelect: (item) {
+                                    bloc.add(
+                                      ChangeLocDataEvent(
+                                        city: item.name!,
+                                        cityId: item.id!,
+                                      ),
+                                    );
+                                  },
+                                );
+                              }
                             }
                           },
                           width: Dimensions.width * 0.88,

@@ -23,10 +23,21 @@ class Endpoints {
   static String subCategoryList = 'category/sub/list/';
 
   /// market
+
+  static String baseMarket = 'owner/market';
   static String ownerMarket = 'owner/market/';
-  static String ownerMarketList = 'owner/market/list/';
-  static String ownerCreateMarket = 'owner/market/create/';
-  static String ownerCreateMarketContect = 'owner/market/contact/create/';
+  static String ownerMarketList = '$baseMarket/list/';
+  static String ownerCreateMarket = '$baseMarket/create/';
+  static String ownerCreateMarketContect = '$baseMarket/contact/create/';
+  static String ownerSlider = '$baseMarket/slider';
+  static String ownerDeleteBg = '$baseMarket/background';
+  static String ownerTheme = '$baseMarket/theme';
+  static String ownerCommentList = '$baseMarket/comment/list';
+  static String ownerBackground = '$baseMarket/background';
+  static String ownerLogo = '$baseMarket/logo';
+  static String ownerQueue = '$baseMarket/queue';
+  static String ownerInactive = '$baseMarket/inactive';
+  static String ownerLocationCreate = '$baseMarket/location/create/';
 
   /// region
   static String countryList = 'region/country/list/';

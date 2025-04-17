@@ -130,10 +130,10 @@ class VendorBloc extends Bloc<VendorEvent, VendorState> {
     try {
       final res = await marketRepository.getMarketSliders(event.marketId);
       if (res is Success) {
-        final json = jsonDecode(res.response.toString());
-        final initList = json['data'] as List;
-        final sliderList =
-            initList.map((e) => SliderModel.fromJson(e)).toList();
+        print(res.response);
+        var resp = res.response as List;
+        final sliderList = resp.map((e) => SliderModel.fromJson(e)).toList();
+
         emit(state.copyWith(status: CWSStatus.success, sliderList: sliderList));
       } else {
         emit(state.copyWith(status: CWSStatus.failure));
@@ -290,10 +290,8 @@ class VendorBloc extends Bloc<VendorEvent, VendorState> {
     try {
       final res = await marketRepository.getMarketComments(event.marketId);
       if (res is Success) {
-        final json = jsonDecode(res.response.toString());
-        final initList = json['data'] as List;
-        final commentList =
-            initList.map((e) => CommentModel.fromJson(e)).toList();
+        var resp = res.response as List;
+        final commentList = resp.map((e) => CommentModel.fromJson(e)).toList();
         emit(
           state.copyWith(
             commentStatus: CWSStatus.success,

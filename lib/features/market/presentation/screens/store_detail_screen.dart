@@ -23,15 +23,15 @@ import 'package:asood/features/market/presentation/widgets/comment_messagebox_wi
 import 'package:asood/features/market/presentation/widgets/store_appbar.dart';
 import 'package:asood/features/market/presentation/widgets/themes_screen.dart';
 
-class StoreScreen extends StatefulWidget {
-  const StoreScreen({super.key, required this.market});
+class StoreDetailScreen extends StatefulWidget {
+  const StoreDetailScreen({super.key, required this.market});
   final MarketModel market;
 
   @override
-  State<StoreScreen> createState() => _StoreScreenState();
+  State<StoreDetailScreen> createState() => _StoreDetailScreenState();
 }
 
-class _StoreScreenState extends State<StoreScreen> {
+class _StoreDetailScreenState extends State<StoreDetailScreen> {
   late VendorBloc bloc;
   late MarketBloc marketBloc;
 
