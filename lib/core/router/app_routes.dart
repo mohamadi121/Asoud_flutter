@@ -19,8 +19,8 @@ abstract class AppRoutes {
   static const ordersLists = "/orders";
   static const storeDetail = "/store_screen";
 
-  static const store = "/store";
-  static const editStore = "/edit_store";
+  static const markets = "/markets";
+  static const editMarket = "/edit_market";
   static const editStoreInfo = "/edit_store_info";
   static const storeInfo = "/store_info";
   static const shoppingCart = "/shopping_cart";

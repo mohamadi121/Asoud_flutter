@@ -78,7 +78,7 @@ void paymentDialog(BuildContext context) {
                 onPress: () {
                   Navigator.pop(context);
 
-                  context.push(AppRoutes.storeDetail);
+                  context.push(AppRoutes.markets);
                   context.read<CreateWorkSpaceBloc>().add(
                     ChangeWorkspaceTabView(activeTabIndex: 0),
                   );

@@ -92,7 +92,7 @@ class MarketRepositoryImp implements MarketRepository {
   }
 
   @override
-  Future setMarketTheme(int marketId, ThemeModel themeModel) async {
+  Future setMarketTheme(String marketId, ThemeModel themeModel) async {
     return await marketApiService.setMarketTheme(marketId, themeModel);
   }
 

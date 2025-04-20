@@ -4,11 +4,11 @@ import 'package:bloc/bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 
-part 'map_event.dart';
-part 'map_state.dart';
+part 'business_event.dart';
+part 'business_state.dart';
 
-class MapBloc extends Bloc<LocationEvent, LocationState> {
-  MapBloc() : super(LocationState.initial()) {
+class BusinessBloc extends Bloc<BusinessEvent, BusinessState> {
+  BusinessBloc() : super(BusinessState.initial()) {
     on<DetermineCurrentPosition>(_onDetermineCurrentPosition);
     on<UpdateSelectedLocation>(_onUpdateSelectedLocation);
     on<SaveLocation>(_onSaveLocation);
@@ -21,7 +21,7 @@ class MapBloc extends Bloc<LocationEvent, LocationState> {
   // error, it updates the state with status error and the error message.
   Future<void> _onDetermineCurrentPosition(
     DetermineCurrentPosition event,
-    Emitter<LocationState> emit,
+    Emitter<BusinessState> emit,
   ) async {
     emit(state.copyWith(status: CWSStatus.loading));
     try {
@@ -39,7 +39,7 @@ class MapBloc extends Bloc<LocationEvent, LocationState> {
 
   void _onUpdateSelectedLocation(
     UpdateSelectedLocation event,
-    Emitter<LocationState> emit,
+    Emitter<BusinessState> emit,
   ) {
     emit(
       state.copyWith(
@@ -52,7 +52,7 @@ class MapBloc extends Bloc<LocationEvent, LocationState> {
 
   Future<void> _onSaveLocation(
     SaveLocation event,
-    Emitter<LocationState> emit,
+    Emitter<BusinessState> emit,
   ) async {
     if (state.status == CWSStatus.loading) {
       final loadedState = state;
@@ -71,7 +71,7 @@ class MapBloc extends Bloc<LocationEvent, LocationState> {
 
   Future<void> _onReadSavedLocation(
     ReadSavedLocation event,
-    Emitter<LocationState> emit,
+    Emitter<BusinessState> emit,
   ) async {
     emit(state.copyWith(status: CWSStatus.loading));
     try {

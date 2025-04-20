@@ -246,7 +246,7 @@ class MarketApiService {
   }
 
   // Set market theme
-  Future setMarketTheme(int marketId, ThemeModel themeModel) async {
+  Future setMarketTheme(String marketId, ThemeModel themeModel) async {
     var body = {
       "color": themeModel.color,
       "background_color": themeModel.backgroundColor,

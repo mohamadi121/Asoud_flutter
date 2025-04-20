@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 
 import '../widgets/store_appbar.dart';
 
-class EditStoreScreen extends StatelessWidget {
-  const EditStoreScreen({super.key, required this.market});
+class EditMarketScreen extends StatelessWidget {
+  const EditMarketScreen({super.key, required this.market});
   final MarketModel market;
 
   @override

@@ -92,7 +92,7 @@ class SelectFontFamily extends VendorEvent {
 
 //----------------- theme ------------------
 class SelectTheme extends VendorEvent {
-  final int marketId;
+  final String marketId;
   final String? color;
   final String? backgroundColor;
   final String? secondaryColor;

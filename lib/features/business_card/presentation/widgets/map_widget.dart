@@ -1,5 +1,5 @@
 import 'package:asood/core/http_client/api_status.dart';
-import 'package:asood/features/business_card/presentation/bloc/map_bloc.dart';
+import 'package:asood/features/business_card/presentation/bloc/business_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -13,7 +13,7 @@ class LocationPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: BlocBuilder<MapBloc, LocationState>(
+      body: BlocBuilder<BusinessBloc, BusinessState>(
         builder: (context, state) {
           if (state.status == CWSStatus.loading) {
             return const CircularProgressIndicator();
@@ -31,7 +31,7 @@ class LocationPicker extends StatelessWidget {
   }
 
   Widget _buildMap(LatLng selectedLocation, BuildContext context, state) {
-    final locationBloc = context.read<MapBloc>();
+    final locationBloc = context.read<BusinessBloc>();
     return ClipRRect(
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(20),

@@ -1,7 +1,7 @@
-part of 'map_bloc.dart';
+part of 'business_bloc.dart';
 
-class LocationState {
-  const LocationState({
+class BusinessState {
+  const BusinessState({
     required this.status,
     required this.location,
     required this.isSelected,
@@ -13,8 +13,8 @@ class LocationState {
   final bool isSelected;
   final String message;
 
-  factory LocationState.initial() {
-    return const LocationState(
+  factory BusinessState.initial() {
+    return const BusinessState(
       status: CWSStatus.initial,
       location: LatLng(0, 0),
       isSelected: false,
@@ -22,13 +22,13 @@ class LocationState {
     );
   }
 
-  LocationState copyWith({
+  BusinessState copyWith({
     CWSStatus? status,
     LatLng? location,
     bool? isSelected,
     String? message,
   }) {
-    return LocationState(
+    return BusinessState(
       status: status ?? this.status,
 
       location: location ?? this.location,

@@ -43,7 +43,7 @@ abstract class MarketRepository {
 
   Future<dynamic> deleteMarketSlider(sliderId);
 
-  Future<dynamic> setMarketTheme(int marketId, ThemeModel themeModel);
+  Future<dynamic> setMarketTheme(String marketId, ThemeModel themeModel);
 
   Future<dynamic> getMarketComments(marketId);
 }

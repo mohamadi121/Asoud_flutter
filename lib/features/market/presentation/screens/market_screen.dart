@@ -10,14 +10,15 @@ import 'package:asood/core/widgets/order_card_widget.dart';
 import 'package:asood/core/widgets/store_card.dart';
 import 'package:asood/features/vendor/presentation/bloc/workspace/workspace_bloc.dart';
 
-class StoreScreen extends StatefulWidget {
-  const StoreScreen({super.key});
+/// این صفحه برای نمایش تمام فروشگاه های کاربر است
+class MarketsScreen extends StatefulWidget {
+  const MarketsScreen({super.key});
 
   @override
-  State<StoreScreen> createState() => _StoreScreenState();
+  State<MarketsScreen> createState() => _MarketsScreenState();
 }
 
-class _StoreScreenState extends State<StoreScreen>
+class _MarketsScreenState extends State<MarketsScreen>
     with SingleTickerProviderStateMixin {
   late WorkspaceBloc bloc;
 
