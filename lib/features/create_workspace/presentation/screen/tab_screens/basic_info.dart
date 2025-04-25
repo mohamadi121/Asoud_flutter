@@ -48,24 +48,10 @@ class _BasicInfoState extends State<BasicInfo>
     catBloc.add(
       ChangeSelectedCategory(
         selectedCategoryName: 'انتخاب شغل',
-        activeCategoryIndex: "",
+        activeCategoryId: "",
       ),
     );
   }
-
-  // void inProcess() async {
-  //   String tabIndex = await SecureStorage.readSecureStorage('market_id');
-  //   String marketId = await SecureStorage.readSecureStorage(
-  //     'marketActiveTabIndex',
-  //   );
-
-  //   if (tabIndex != 'ND' && marketId != 'ND') {
-  //     isInProcess = true;
-  //   } else {
-  //     isInProcess = false;
-  //     print('object');
-  //   }
-  // }
 
   submit() {
     if (_formKey.currentState!.validate() &&
@@ -237,8 +223,15 @@ class _BasicInfoState extends State<BasicInfo>
                           child: MaterialButton(
                             onPressed: () {
                               context.push(AppRoutes.jobManagement);
-                              context.read<JobmanagmentBloc>().add(
-                                LoadCategory(),
+
+                              JobmanagmentState jobState =
+                                  context.read<JobmanagmentBloc>().state;
+                              context.read<CreateWorkSpaceBloc>().add(
+                                ChangeSelectedCategory(
+                                  selectedCategoryName:
+                                      jobState.selectedCategoryName,
+                                  activeCategoryId: jobState.activeCategoryId,
+                                ),
                               );
                             },
                             child: Text(

@@ -10,12 +10,15 @@ class JobmanagmentBloc extends Bloc<JobmanagmentEvent, JobmanagmentState> {
   CategoryRepository categoryRepository;
   JobmanagmentBloc(this.categoryRepository)
     : super(JobmanagmentState.initial()) {
+    on<ResetJobManagmentBloc>((event, emit) {
+      emit(JobmanagmentState.initial());
+    });
     on<ChangeTabView>((event, emit) {
       emit(state.copyWith(activeTabIndex: event.activeTabIndex));
     });
     //category
     on<ChangeCategoryIndex>((event, emit) {
-      emit(state.copyWith(activeCategoryIndex: event.activeCategoryIndex));
+      emit(state.copyWith(activeCategoryId: event.activeCategoryId));
     });
     on<ChangeSelectedCategoryName>((event, emit) {
       emit(state.copyWith(selectedCategoryName: event.selectedCat));

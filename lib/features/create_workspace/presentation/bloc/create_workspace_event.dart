@@ -110,10 +110,10 @@ class ChangeHasWorkTime extends CreateWorkSpaceEvent {
 //change selected category
 class ChangeSelectedCategory extends CreateWorkSpaceEvent {
   final String selectedCategoryName;
-  final String activeCategoryIndex;
+  final String activeCategoryId;
   const ChangeSelectedCategory({
     required this.selectedCategoryName,
-    required this.activeCategoryIndex,
+    required this.activeCategoryId,
   });
 }
 

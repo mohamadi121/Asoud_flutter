@@ -112,7 +112,7 @@ class _GroupTabState extends State<GroupTab> {
                             state.categoryList[index];
                         bloc.add(
                           ChangeCategoryIndex(
-                            activeCategoryIndex: selectedCategory.id!,
+                            activeCategoryId: selectedCategory.id!,
                           ),
                         );
                         bloc.add(ChangeTabView(activeTabIndex: 1));

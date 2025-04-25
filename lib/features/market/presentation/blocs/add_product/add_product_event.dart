@@ -22,17 +22,51 @@ class SetIsRequirementEvent extends AddProductEvent {
   const SetIsRequirementEvent({required this.isRequirement});
 }
 
+class SetCategoryEvent extends AddProductEvent {
+  final String selectedCategoryName;
+  final String selectedCategoryId;
+
+  const SetCategoryEvent({
+    required this.selectedCategoryName,
+    required this.selectedCategoryId,
+  });
+}
+
 class AddTagsEvent extends AddProductEvent {
   final String tag;
 
   const AddTagsEvent({required this.tag});
 }
 
-class ProductPriceStockEvent extends AddProductEvent {
-  final bool? price;
-  final bool? stock;
+class AddKeywordsEvent extends AddProductEvent {
+  final String keyword;
 
-  const ProductPriceStockEvent({this.price, this.stock});
+  const AddKeywordsEvent({required this.keyword});
+}
+
+class RemoveKeywordsEvent extends AddProductEvent {
+  final String keyword;
+
+  const RemoveKeywordsEvent({required this.keyword});
+}
+
+class ChangeProductStockEvent extends AddProductEvent {
+  final int stock;
+
+  const ChangeProductStockEvent({required this.stock});
+}
+
+class ChangeProductPriceEvent extends AddProductEvent {
+  final int price;
+
+  const ChangeProductPriceEvent({required this.price});
+}
+
+class ProductPriceStockEvent extends AddProductEvent {
+  final bool? priceEnable;
+  final bool? stockEnable;
+
+  const ProductPriceStockEvent({this.priceEnable, this.stockEnable});
 }
 
 class DiscountTypeEvent extends AddProductEvent {

@@ -132,7 +132,7 @@ class CreateWorkSpaceBloc
     on<ChangeSelectedCategory>((event, emit) {
       emit(
         state.copyWith(
-          activeCategoryId: event.activeCategoryIndex,
+          activeCategoryId: event.activeCategoryId,
           selectedCategoryName: event.selectedCategoryName,
         ),
       );

@@ -38,7 +38,7 @@ class ActiveBroadcastWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                  value: false,
+                  value: state.isRequirement,
                   onChanged: (newValue) {
                     context.read<AddProductBloc>().add(
                       SetIsRequirementEvent(

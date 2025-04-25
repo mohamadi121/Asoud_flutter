@@ -10,10 +10,16 @@ class AddProductState {
   final bool isMarketer;
   final bool isRequirement;
 
-  final List<String> tags;
+  final String selectedCategoryName;
+  final String selectedCategoryId;
 
-  final bool productStock;
-  final bool productPrice;
+  final List<String> tags;
+  final List<String> keywords;
+
+  final int productStock;
+  final bool productStockEnable;
+  final int productPrice;
+  final bool productPriceEnable;
 
   final int discountType;
 
@@ -36,10 +42,16 @@ class AddProductState {
     required this.isMarketer,
     required this.isRequirement,
 
+    required this.selectedCategoryName,
+    required this.selectedCategoryId,
+
     required this.tags,
+    required this.keywords,
 
     required this.productStock,
+    required this.productStockEnable,
     required this.productPrice,
+    required this.productPriceEnable,
 
     required this.discountType,
 
@@ -64,10 +76,16 @@ class AddProductState {
       isMarketer: false,
       isRequirement: false,
 
-      tags: [],
+      selectedCategoryName: '',
+      selectedCategoryId: '',
 
-      productStock: false,
-      productPrice: false,
+      tags: [],
+      keywords: [],
+
+      productStock: 0,
+      productStockEnable: false,
+      productPrice: 0,
+      productPriceEnable: false,
 
       discountType: -1,
 
@@ -92,10 +110,16 @@ class AddProductState {
     bool? isMarketer,
     bool? isRequirement,
 
-    List<String>? tags,
+    String? selectedCategoryName,
+    String? selectedCategoryId,
 
-    bool? productStock,
-    bool? productPrice,
+    List<String>? tags,
+    List<String>? keywords,
+
+    int? productStock,
+    bool? productStockEnable,
+    int? productPrice,
+    bool? productPriceEnable,
 
     int? discountType,
 
@@ -118,10 +142,16 @@ class AddProductState {
       isMarketer: isMarketer ?? this.isMarketer,
       isRequirement: isRequirement ?? this.isRequirement,
 
+      selectedCategoryName: selectedCategoryName ?? this.selectedCategoryName,
+      selectedCategoryId: selectedCategoryId ?? this.selectedCategoryId,
+
       tags: tags ?? this.tags,
+      keywords: keywords ?? this.keywords,
 
       productStock: productStock ?? this.productStock,
+      productStockEnable: productStockEnable ?? this.productStockEnable,
       productPrice: productPrice ?? this.productPrice,
+      productPriceEnable: productPriceEnable ?? this.productPriceEnable,
 
       discountType: discountType ?? this.discountType,
 

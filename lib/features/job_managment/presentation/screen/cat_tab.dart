@@ -57,7 +57,7 @@ class _CatTabState extends State<CatTab> {
                             state.mainSubCategoryList[index];
                         bloc.add(
                           ChangeCategoryIndex(
-                            activeCategoryIndex: selectedCategory.id!,
+                            activeCategoryId: selectedCategory.id!,
                           ),
                         );
                         bloc.add(ChangeTabView(activeTabIndex: 2));

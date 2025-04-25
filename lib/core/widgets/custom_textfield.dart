@@ -25,7 +25,7 @@ class CustomTextField extends StatefulWidget {
     this.prefixStyle,
     this.validator,
     this.inputFormatters,
-    this.enabled = true, // ✅ اضافه شد
+    this.enabled = true,
   });
 
   final TextEditingController controller;
@@ -48,7 +48,7 @@ class CustomTextField extends StatefulWidget {
   final TextStyle? prefixStyle;
   final EdgeInsets? padding;
   final List<TextInputFormatter>? inputFormatters;
-  final bool enabled; // ✅ اضافه شد
+  final bool enabled;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -102,7 +102,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             focusNode: _focusNode,
             validator: widget.validator,
             inputFormatters: widget.inputFormatters,
-            enabled: widget.enabled, // ✅ اضافه شد
+            enabled: widget.enabled,
             style:
                 widget.style ??
                 TextStyle(

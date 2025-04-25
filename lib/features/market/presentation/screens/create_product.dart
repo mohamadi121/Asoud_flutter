@@ -1,14 +1,19 @@
-import 'package:asood/core/http_client/api_status.dart';
-import 'package:asood/core/widgets/appbar/default_appbar.dart';
-import 'package:asood/features/market/presentation/widgets/create_product/active_broadcast_widget.dart';
-import 'package:asood/features/market/presentation/widgets/create_product/product_type_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:asood/core/constants/constants.dart';
+import 'package:asood/core/http_client/api_status.dart';
+import 'package:asood/core/router/app_routers.dart';
+import 'package:asood/core/widgets/appbar/default_appbar.dart';
 import 'package:asood/core/widgets/custom_textfield.dart';
+import 'package:asood/features/job_managment/presentation/bloc/jobmanagment_bloc.dart';
 import 'package:asood/features/market/presentation/blocs/add_product/add_product_bloc.dart';
+import 'package:asood/features/market/presentation/widgets/create_product/active_broadcast_widget.dart';
+import 'package:asood/features/market/presentation/widgets/create_product/keyword_builder_widget.dart';
+import 'package:asood/features/market/presentation/widgets/create_product/product_type_widget.dart';
+import 'package:asood/features/market/presentation/widgets/create_product/stock_widget.dart';
 
 class CreateProduct extends StatefulWidget {
   const CreateProduct({super.key, required this.marketId});
@@ -25,9 +30,6 @@ class _CreateProductState extends State<CreateProduct> {
   final TextEditingController name = TextEditingController();
   final TextEditingController description = TextEditingController();
   final TextEditingController technicalDescription = TextEditingController();
-
-  final TextEditingController stock = TextEditingController();
-  final TextEditingController price = TextEditingController();
 
   final TextEditingController tagSearch = TextEditingController();
 
@@ -82,7 +84,8 @@ class _CreateProductState extends State<CreateProduct> {
                           children: [
                             SizedBox(height: Dimensions.height * 0.13),
 
-                            // select product or service
+                            // select produ
+                            //ct or service
                             ProductTypeWidget(),
 
                             //is marketer
@@ -143,9 +146,23 @@ class _CreateProductState extends State<CreateProduct> {
                                       borderRadius: BorderRadius.circular(30),
                                     ),
                                     child: MaterialButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        context.push(AppRoutes.jobManagement);
+                                        JobmanagmentState jobState =
+                                            context
+                                                .read<JobmanagmentBloc>()
+                                                .state;
+                                        SetCategoryEvent(
+                                          selectedCategoryName:
+                                              jobState.selectedCategoryName,
+                                          selectedCategoryId:
+                                              jobState.activeCategoryId,
+                                        );
+                                      },
                                       child: Text(
-                                        'انتخاب دسته بندی',
+                                        state.selectedCategoryName != ''
+                                            ? state.selectedCategoryName
+                                            : 'انتخاب دسته بندی',
                                         style: TextStyle(
                                           color: Colora.primaryColor,
                                           fontSize: Dimensions.width * 0.034,
@@ -157,298 +174,16 @@ class _CreateProductState extends State<CreateProduct> {
 
                                   SizedBox(height: Dimensions.height * 0.01),
 
-                                  //tag
-                                  Container(
-                                    width: Dimensions.width,
-                                    margin: EdgeInsets.symmetric(
-                                      horizontal: Dimensions.width * 0.02,
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: Dimensions.width * 0.06,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colora.scaffold,
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Expanded(
-                                              child: TextField(
-                                                controller: tagSearch,
-                                                decoration: const InputDecoration(
-                                                  isDense: true,
-                                                  contentPadding:
-                                                      EdgeInsets.symmetric(
-                                                        horizontal: 0,
-                                                        vertical: 5,
-                                                      ),
-                                                  enabledBorder:
-                                                      UnderlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color:
-                                                              Colora
-                                                                  .primaryColor,
-                                                          width: 1,
-                                                        ),
-                                                      ),
-                                                  focusedBorder:
-                                                      UnderlineInputBorder(
-                                                        borderSide: BorderSide(
-                                                          color:
-                                                              Colora
-                                                                  .primaryColor,
-                                                          width: 2,
-                                                        ),
-                                                      ),
-                                                ),
-                                              ),
-                                            ),
-                                            Container(
-                                              margin: EdgeInsets.symmetric(
-                                                vertical:
-                                                    Dimensions.height * 0.01,
-                                              ),
-                                              decoration: BoxDecoration(
-                                                color: Colora.primaryColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(30),
-                                              ),
-                                              padding: EdgeInsets.symmetric(
-                                                vertical:
-                                                    Dimensions.height * 0.01,
-                                                horizontal:
-                                                    Dimensions.width * 0.03,
-                                              ),
-                                              child: InkWell(
-                                                onTap: () {},
-                                                child: FittedBox(
-                                                  fit: BoxFit.scaleDown,
-                                                  child: Text(
-                                                    'افزودن به کلمات',
-                                                    style: TextStyle(
-                                                      color: Colora.scaffold,
-                                                      fontSize:
-                                                          Dimensions.width *
-                                                          0.033,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height:
-                                              state.tags.isEmpty
-                                                  ? 0
-                                                  : Dimensions.height * 0.06,
-                                          child: ListView.builder(
-                                            shrinkWrap: true,
-                                            itemCount: state.tags.length,
-                                            scrollDirection: Axis.horizontal,
-                                            itemBuilder:
-                                                (context, index) => Container(
-                                                  margin: EdgeInsets.symmetric(
-                                                    vertical:
-                                                        Dimensions.height *
-                                                        0.01,
-                                                    horizontal:
-                                                        Dimensions.width * 0.01,
-                                                  ),
-                                                  decoration: BoxDecoration(
-                                                    color: Colora.primaryColor,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                          30,
-                                                        ),
-                                                  ),
-                                                  child: MaterialButton(
-                                                    onPressed: () {},
-                                                    child: Text(
-                                                      'کلمه کلیدی',
-                                                      style: TextStyle(
-                                                        color: Colora.scaffold,
-                                                        fontSize:
-                                                            Dimensions.width *
-                                                            0.03,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  //keywords
+                                  KeywordBuilderWidget(),
 
                                   SizedBox(height: Dimensions.height * 0.01),
 
                                   //stock
-                                  Container(
-                                    width: Dimensions.width,
-                                    height: Dimensions.height * 0.06,
-                                    margin: EdgeInsets.symmetric(
-                                      horizontal: Dimensions.width * 0.02,
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: Dimensions.width * 0.06,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colora.scaffold,
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'موجودی : ',
-                                          style: TextStyle(
-                                            color: Colora.primaryColor,
-                                            fontSize: Dimensions.width * 0.035,
-                                          ),
-                                        ),
-                                        if (state.productStock) ...[
-                                          Container(
-                                            width: Dimensions.width * 0.35,
-                                            padding: EdgeInsets.only(
-                                              bottom: Dimensions.height * 0.0,
-                                            ),
-                                            child: TextField(
-                                              controller: stock,
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              textAlign: TextAlign.center,
-                                              style: const TextStyle(
-                                                color: Colora.primaryColor,
-                                              ),
-                                              decoration: const InputDecoration(
-                                                isDense: true,
-                                                contentPadding:
-                                                    EdgeInsets.symmetric(
-                                                      horizontal: 0,
-                                                      vertical: 0,
-                                                    ),
-                                                enabledBorder:
-                                                    UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            Colora.primaryColor,
-                                                        width: 1,
-                                                      ),
-                                                    ),
-                                                focusedBorder:
-                                                    UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            Colora.primaryColor,
-                                                        width: 2,
-                                                      ),
-                                                    ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                        CupertinoSwitch(
-                                          activeTrackColor: Colora.primaryColor,
-                                          value: state.productStock,
-                                          onChanged: (value) {
-                                            bloc.add(
-                                              ProductPriceStockEvent(
-                                                stock: !state.productStock,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-
+                                  StockWidget(),
                                   SizedBox(height: Dimensions.height * 0.01),
 
                                   //price
-                                  Container(
-                                    width: Dimensions.width,
-                                    height: Dimensions.height * 0.06,
-                                    margin: EdgeInsets.symmetric(
-                                      horizontal: Dimensions.width * 0.02,
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: Dimensions.width * 0.06,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: Colora.scaffold,
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'قیمت فروش : ',
-                                          style: TextStyle(
-                                            color: Colora.primaryColor,
-                                            fontSize: Dimensions.width * 0.035,
-                                          ),
-                                        ),
-                                        if (state.productPrice) ...[
-                                          Container(
-                                            width: Dimensions.width * 0.35,
-                                            padding: EdgeInsets.only(
-                                              bottom: Dimensions.height * 0.0,
-                                            ),
-                                            child: TextField(
-                                              controller: price,
-                                              keyboardType:
-                                                  TextInputType.number,
-                                              textAlign: TextAlign.center,
-                                              style: const TextStyle(
-                                                color: Colora.primaryColor,
-                                              ),
-                                              decoration: const InputDecoration(
-                                                isDense: true,
-                                                contentPadding:
-                                                    EdgeInsets.symmetric(
-                                                      horizontal: 0,
-                                                      vertical: 0,
-                                                    ),
-                                                enabledBorder:
-                                                    UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            Colora.primaryColor,
-                                                        width: 1,
-                                                      ),
-                                                    ),
-                                                focusedBorder:
-                                                    UnderlineInputBorder(
-                                                      borderSide: BorderSide(
-                                                        color:
-                                                            Colora.primaryColor,
-                                                        width: 2,
-                                                      ),
-                                                    ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                        CupertinoSwitch(
-                                          activeTrackColor: Colora.primaryColor,
-                                          value: state.productPrice,
-                                          onChanged: (value) {
-                                            bloc.add(
-                                              ProductPriceStockEvent(
-                                                price: !state.productPrice,
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-
                                   SizedBox(height: Dimensions.height * 0.01),
 
                                   //discount
@@ -2498,13 +2233,19 @@ class _CreateProductState extends State<CreateProduct> {
                                                 technicalDetail:
                                                     technicalDescription.text,
                                                 stock:
-                                                    stock.text.isEmpty
+                                                    state.productStock == 0
                                                         ? 0
-                                                        : int.parse(stock.text),
+                                                        : int.parse(
+                                                          state.productStock
+                                                              .toString(),
+                                                        ),
                                                 price:
-                                                    price.text.isEmpty
+                                                    state.productPrice == 0
                                                         ? 0
-                                                        : int.parse(price.text),
+                                                        : int.parse(
+                                                          state.productPrice
+                                                              .toString(),
+                                                        ),
                                                 // requiredProduct:0,
                                                 // giftProduct:0,
                                                 isMarketer: state.isMarketer,
@@ -2514,15 +2255,6 @@ class _CreateProductState extends State<CreateProduct> {
                                                     state.productSalePrice,
                                               ),
                                             );
-                                            // print(widget.marketId);
-                                            // print(name.text);
-                                            // print(description.text);
-                                            // print(technicalDescription.text);
-                                            // print(stock.text);
-                                            // print(price.text);
-                                            // print(state.isMarketer);
-                                            // print(state.productSaleType);
-                                            // print(state.productSalePrice);
                                           }
                                         },
                                         child:

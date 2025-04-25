@@ -63,13 +63,13 @@ class _SubTabState extends State<SubTab> {
                             state.subCategoryList[index];
                         bloc.add(
                           ChangeCategoryIndex(
-                            activeCategoryIndex: selectedCategory.id!,
+                            activeCategoryId: selectedCategory.id!,
                           ),
                         );
                         context.read<CreateWorkSpaceBloc>().add(
                           ChangeSelectedCategory(
                             selectedCategoryName: selectedCategory.title!,
-                            activeCategoryIndex: selectedCategory.id!,
+                            activeCategoryId: selectedCategory.id!,
                           ),
                         );
                         context.pop();

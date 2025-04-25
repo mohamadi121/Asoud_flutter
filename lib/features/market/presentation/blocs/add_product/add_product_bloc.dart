@@ -14,12 +14,22 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     on<AddProductEvent>((event, emit) {});
 
     on<ProductTypeEvent>(_changeProductType);
+
     on<SetIsMarketerEvent>(_changeMarketerType);
     on<SetIsRequirementEvent>(_changeIsRequirementType);
+
+    on<SetCategoryEvent>(_changeCategory);
+
     on<ProductPriceStockEvent>(_changeProductPriceStockExtra);
+    on<ChangeProductStockEvent>(_changeProductStock);
+
     on<DiscountTypeEvent>(_changeDiscountType);
     on<ProductExtraEvent>(_changeProductExtra);
     on<ProductTagSaleEvent>(_changeProductTgSale);
+
+    on<AddTagsEvent>(_addTags);
+    on<AddKeywordsEvent>(_addKeywords);
+    on<RemoveKeywordsEvent>(_removeKeywords);
 
     on<AddNewProductEvent>(_addNewProduct);
   }
@@ -40,11 +50,32 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     emit(state.copyWith(isRequirement: event.isRequirement));
   }
 
+  _changeCategory(SetCategoryEvent event, Emitter<AddProductState> emit) {
+    emit(
+      state.copyWith(
+        selectedCategoryName: event.selectedCategoryName,
+        selectedCategoryId: event.selectedCategoryId,
+      ),
+    );
+  }
+
+  _changeProductStock(
+    ChangeProductStockEvent event,
+    Emitter<AddProductState> emit,
+  ) {
+    emit(state.copyWith(productStock: event.stock));
+  }
+
   _changeProductPriceStockExtra(
     ProductPriceStockEvent event,
     Emitter<AddProductState> emit,
   ) {
-    emit(state.copyWith(productStock: event.stock, productPrice: event.price));
+    emit(
+      state.copyWith(
+        productStockEnable: event.stockEnable,
+        productPriceEnable: event.priceEnable,
+      ),
+    );
   }
 
   _changeDiscountType(DiscountTypeEvent event, Emitter<AddProductState> emit) {
@@ -65,6 +96,25 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
         productPosition: event.position,
         productSaleType: event.saleType,
         productSalePrice: event.sendPrice,
+      ),
+    );
+  }
+
+  _addTags(AddTagsEvent event, Emitter<AddProductState> emit) {
+    emit(state.copyWith(tags: [...state.tags, event.tag]));
+  }
+
+  _addKeywords(AddKeywordsEvent event, Emitter<AddProductState> emit) {
+    emit(state.copyWith(keywords: [...state.keywords, event.keyword]));
+  }
+
+  _removeKeywords(RemoveKeywordsEvent event, Emitter<AddProductState> emit) {
+    emit(
+      state.copyWith(
+        keywords:
+            state.keywords
+                .where((element) => element != event.keyword)
+                .toList(),
       ),
     );
   }
@@ -102,10 +152,10 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
             discountType: -1,
             isMarketer: false,
             productGift: false,
-            productPrice: false,
+            productPrice: 0,
             productPosition: '',
             productTag: '',
-            productStock: false,
+            productStock: 0,
             status: CWSStatus.success,
           ),
         );
