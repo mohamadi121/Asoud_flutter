@@ -1,3 +1,4 @@
+import 'package:asood/core/constants/endpoints.dart';
 import 'package:asood/core/http_client/api_status.dart';
 import 'package:dio/dio.dart';
 
@@ -33,9 +34,11 @@ class ProductApiService {
 
   // create product
   Future createProduct(ProductModel product) async {
-    var uri = 'product/user/create/';
     try {
-      Response res = await dioClient.postData(uri, product.toJson());
+      Response res = await dioClient.postData(
+        Endpoints.createProduct,
+        product.toJson(),
+      );
       return apiStatus(res);
     } catch (e) {
       return customApiStatus();
@@ -44,9 +47,10 @@ class ProductApiService {
 
   //get product comments
   Future getProductComments(productId) async {
-    var uri = ' comment/user/product/$productId';
     try {
-      Response res = await dioClient.getData(uri);
+      Response res = await dioClient.getData(
+        '${Endpoints.productCommentById}/$productId/',
+      );
       return apiStatus(res);
     } catch (e) {
       return customApiStatus();

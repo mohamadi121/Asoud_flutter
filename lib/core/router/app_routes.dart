@@ -31,7 +31,7 @@ abstract class AppRoutes {
   static const colorSettings = "/color_settings";
   static const fontColorSettings = "/font_color_settings";
   static const jobManagement = "/job_management";
-  static const addProduct = "/add_product";
+  static const createProduct = "/create_product";
   static const product = "/product";
   static const multiViewSlider = "/multiview_slider";
   static const panelConfig = "/panel_config";

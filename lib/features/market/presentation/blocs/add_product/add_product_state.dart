@@ -1,13 +1,14 @@
 part of 'add_product_bloc.dart';
 
-enum AddProductStatus { initial, loading, success, failure }
+enum ProductType { good, service }
 
 class AddProductState {
-  final AddProductStatus status;
+  final CWSStatus status;
 
-  final bool productType;
+  final ProductType productType;
 
   final bool isMarketer;
+  final bool isRequirement;
 
   final List<String> tags;
 
@@ -33,6 +34,7 @@ class AddProductState {
     required this.productType,
 
     required this.isMarketer,
+    required this.isRequirement,
 
     required this.tags,
 
@@ -55,11 +57,12 @@ class AddProductState {
 
   factory AddProductState.initial() {
     return const AddProductState(
-      status: AddProductStatus.initial,
+      status: CWSStatus.initial,
 
-      productType: true,
+      productType: ProductType.good,
 
       isMarketer: false,
+      isRequirement: false,
 
       tags: [],
 
@@ -82,11 +85,12 @@ class AddProductState {
   }
 
   AddProductState copyWith({
-    AddProductStatus? status,
+    CWSStatus? status,
 
-    bool? productType,
+    ProductType? productType,
 
     bool? isMarketer,
+    bool? isRequirement,
 
     List<String>? tags,
 
@@ -112,6 +116,7 @@ class AddProductState {
       productType: productType ?? this.productType,
 
       isMarketer: isMarketer ?? this.isMarketer,
+      isRequirement: isRequirement ?? this.isRequirement,
 
       tags: tags ?? this.tags,
 

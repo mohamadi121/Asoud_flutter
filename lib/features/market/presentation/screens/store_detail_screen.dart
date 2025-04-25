@@ -1268,7 +1268,7 @@ productView(String marketId, styleState, MarketBloc marketBloc) {
   Widget templateWidget(int template) {
     switch (template) {
       case 0:
-        return buildProductGridView0(isSelected: true, marketId: marketId);
+        return buildProductGridView0(isSelected: true);
       case 1:
         return buildProductGridView1();
       case 2:

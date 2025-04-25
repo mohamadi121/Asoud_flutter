@@ -5,15 +5,21 @@ sealed class AddProductEvent {
 }
 
 class ProductTypeEvent extends AddProductEvent {
-  final bool type;
+  final ProductType type;
 
   const ProductTypeEvent({required this.type});
 }
 
-class IsMarketerEvent extends AddProductEvent {
+class SetIsMarketerEvent extends AddProductEvent {
   final bool isMarketer;
 
-  const IsMarketerEvent({required this.isMarketer});
+  const SetIsMarketerEvent({required this.isMarketer});
+}
+
+class SetIsRequirementEvent extends AddProductEvent {
+  final bool isRequirement;
+
+  const SetIsRequirementEvent({required this.isRequirement});
 }
 
 class AddTagsEvent extends AddProductEvent {

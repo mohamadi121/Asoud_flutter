@@ -23,7 +23,6 @@ class Endpoints {
   static String subCategoryList = 'category/sub/list/';
 
   /// market
-
   static String baseMarket = 'owner/market';
   static String ownerMarket = 'owner/market/';
   static String ownerMarketList = '$baseMarket/list/';
@@ -38,6 +37,13 @@ class Endpoints {
   static String ownerQueue = '$baseMarket/queue';
   static String ownerInactive = '$baseMarket/inactive';
   static String ownerLocationCreate = '$baseMarket/location/create/';
+
+  /// Product
+  // owner
+  static String baseProduct = 'owner/product';
+  static String createProduct = '$baseProduct/create/';
+  //user
+  static String productCommentById = 'user/product/comment/list/';
 
   /// region
   static String countryList = 'region/country/list/';

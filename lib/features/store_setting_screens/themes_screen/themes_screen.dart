@@ -1,6 +1,6 @@
 import 'package:asood/core/constants/constants.dart';
 import 'package:asood/features/market/presentation/blocs/bloc/market_bloc.dart';
-import 'package:asood/features/market/presentation/screens/add_product.dart';
+import 'package:asood/features/market/presentation/screens/create_product.dart';
 import 'package:asood/features/vendor/presentation/bloc/vendor/vendor_bloc.dart';
 
 import 'package:flutter/material.dart';
@@ -380,7 +380,8 @@ Widget buildProductGridView0({isSelected = false, String marketId = ""}) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AddProduct(marketId: marketId),
+                          builder:
+                              (context) => CreateProduct(marketId: marketId),
                         ),
                       );
                     }

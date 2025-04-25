@@ -6,7 +6,7 @@ import 'package:asood/features/chat/screens/chat_list.dart';
 import 'package:asood/features/create_workspace/presentation/screen/create_workspace.dart';
 import 'package:asood/features/customer/presentation/screens/customer_dashboard_screen.dart';
 import 'package:asood/features/job_managment/presentation/screen/job_managment.dart';
-import 'package:asood/features/market/presentation/screens/add_product.dart';
+import 'package:asood/features/market/presentation/screens/create_product.dart';
 import 'package:asood/features/market/presentation/screens/edit_market_screen.dart';
 import 'package:asood/features/market/presentation/screens/store_detail_screen.dart';
 import 'package:asood/features/market/presentation/screens/store_info.dart';
@@ -86,12 +86,13 @@ class AppRouter {
         builder: (context, state) => const ShoppingCartPage(),
       ),
       GoRoute(
-        path: AppRoutes.addProduct,
+        path: AppRoutes.createProduct,
         builder: (context, state) {
           final marketId = state.extra as String;
-          return AddProduct(marketId: marketId);
+          return CreateProduct(marketId: marketId);
         },
       ),
+
       GoRoute(
         path: AppRoutes.markets,
         builder: (context, state) => MarketsScreen(),

@@ -98,7 +98,7 @@ class _CreateWorkSpaceScreenState extends State<CreateWorkSpaceScreen>
                               controller: _tabController,
                               physics: const NeverScrollableScrollPhysics(),
                               children: [
-                                BasicInfo(bloc: bloc),
+                                BasicInfo(),
                                 ContactsInfo(bloc: bloc),
                                 LocationInfo(bloc: bloc),
                               ],

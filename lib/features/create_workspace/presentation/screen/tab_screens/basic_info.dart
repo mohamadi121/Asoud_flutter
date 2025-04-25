@@ -18,8 +18,7 @@ import 'package:asood/core/widgets/radio_button.dart';
 import 'package:go_router/go_router.dart';
 
 class BasicInfo extends StatefulWidget {
-  final CreateWorkSpaceBloc bloc;
-  const BasicInfo({required this.bloc, super.key});
+  const BasicInfo({super.key});
 
   @override
   State<BasicInfo> createState() => _BasicInfoState();
@@ -44,9 +43,9 @@ class _BasicInfoState extends State<BasicInfo>
   @override
   void initState() {
     super.initState();
-
-    widget.bloc.add(ChangeWorkspaceTabView(activeTabIndex: 0));
-    widget.bloc.add(
+    catBloc = context.read<CreateWorkSpaceBloc>();
+    catBloc.add(ChangeWorkspaceTabView(activeTabIndex: 0));
+    catBloc.add(
       ChangeSelectedCategory(
         selectedCategoryName: 'انتخاب شغل',
         activeCategoryIndex: "",
@@ -70,17 +69,17 @@ class _BasicInfoState extends State<BasicInfo>
 
   submit() {
     if (_formKey.currentState!.validate() &&
-        widget.bloc.state.marketType.isNotEmpty &&
-        widget.bloc.state.activeCategoryId != "") {
-      widget.bloc.add(
+        catBloc.state.marketType.isNotEmpty &&
+        catBloc.state.activeCategoryId != "") {
+      catBloc.add(
         CreateMarket(
           businessId: businessId.text,
           name: name.text,
           description: description.text,
           slogan: slogan.text,
           idCode: idCode.text,
-          marketType: widget.bloc.state.marketType,
-          subCategory: widget.bloc.state.activeCategoryId,
+          marketType: catBloc.state.marketType,
+          subCategory: catBloc.state.activeCategoryId,
         ),
       );
     } else {
@@ -99,7 +98,7 @@ class _BasicInfoState extends State<BasicInfo>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    bool isMarketTypeShop = widget.bloc.state.marketType == "shop";
+    bool isMarketTypeShop = catBloc.state.marketType == "shop";
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: Dimensions.khorisontal),
       child: SingleChildScrollView(

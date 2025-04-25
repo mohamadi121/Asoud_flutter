@@ -1,4 +1,7 @@
+import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/core/widgets/appbar/default_appbar.dart';
+import 'package:asood/features/market/presentation/widgets/create_product/active_broadcast_widget.dart';
+import 'package:asood/features/market/presentation/widgets/create_product/product_type_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,16 +10,16 @@ import 'package:asood/core/constants/constants.dart';
 import 'package:asood/core/widgets/custom_textfield.dart';
 import 'package:asood/features/market/presentation/blocs/add_product/add_product_bloc.dart';
 
-class AddProduct extends StatefulWidget {
-  const AddProduct({super.key, required this.marketId});
+class CreateProduct extends StatefulWidget {
+  const CreateProduct({super.key, required this.marketId});
 
   final String marketId;
 
   @override
-  State<AddProduct> createState() => _AddProductState();
+  State<CreateProduct> createState() => _CreateProductState();
 }
 
-class _AddProductState extends State<AddProduct> {
+class _CreateProductState extends State<CreateProduct> {
   late AddProductBloc bloc;
 
   final TextEditingController name = TextEditingController();
@@ -42,7 +45,7 @@ class _AddProductState extends State<AddProduct> {
       child: SafeArea(
         child: BlocConsumer<AddProductBloc, AddProductState>(
           listener: (context, state) {
-            if (state.status == AddProductStatus.success) {
+            if (state.status == CWSStatus.success) {
               Navigator.pop(context);
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -54,7 +57,7 @@ class _AddProductState extends State<AddProduct> {
                 ),
               );
             }
-            if (state.status == AddProductStatus.failure) {
+            if (state.status == CWSStatus.failure) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   backgroundColor: Colora.borderAvatar,
@@ -80,195 +83,10 @@ class _AddProductState extends State<AddProduct> {
                             SizedBox(height: Dimensions.height * 0.13),
 
                             // select product or service
-                            Container(
-                              height: Dimensions.height * 0.06,
-                              decoration: BoxDecoration(
-                                color: Colora.primaryColor,
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              margin: EdgeInsets.symmetric(
-                                horizontal: Dimensions.width * 0.1,
-                              ),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: Dimensions.width * 0.05,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  //product
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 5.0),
-                                    child: Text(
-                                      'کالا و محصول',
-                                      style: TextStyle(
-                                        color: Colora.scaffold,
-                                        fontSize: Dimensions.width * 0.035,
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: RadioListTile(
-                                      visualDensity: const VisualDensity(
-                                        horizontal:
-                                            VisualDensity.minimumDensity,
-                                        vertical: VisualDensity.minimumDensity,
-                                      ),
-                                      materialTapTargetSize:
-                                          MaterialTapTargetSize.shrinkWrap,
-                                      controlAffinity:
-                                          ListTileControlAffinity.trailing,
-                                      contentPadding: EdgeInsets.zero,
-                                      dense: true,
-                                      fillColor: WidgetStateProperty.all(
-                                        Colora.scaffold,
-                                      ),
-                                      value: true,
-                                      groupValue: state.productType,
-                                      onChanged: (value) {
-                                        bloc.add(
-                                          const ProductTypeEvent(type: true),
-                                        );
-                                      },
-                                    ),
-                                  ),
-
-                                  //service
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 5.0),
-                                    child: Text(
-                                      'خدمات',
-                                      style: TextStyle(
-                                        color: Colora.scaffold,
-                                        fontSize: Dimensions.width * 0.035,
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: RadioListTile(
-                                      controlAffinity:
-                                          ListTileControlAffinity.trailing,
-                                      contentPadding: EdgeInsets.zero,
-                                      dense: false,
-                                      visualDensity: const VisualDensity(
-                                        horizontal:
-                                            VisualDensity.minimumDensity,
-                                        vertical: VisualDensity.minimumDensity,
-                                      ),
-                                      fillColor: WidgetStateProperty.all(
-                                        Colora.scaffold,
-                                      ),
-                                      value: false,
-                                      groupValue: state.productType,
-                                      onChanged: (value) {
-                                        bloc.add(
-                                          const ProductTypeEvent(type: false),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            ProductTypeWidget(),
 
                             //is marketer
-                            Container(
-                              height: Dimensions.height * 0.07,
-                              decoration: BoxDecoration(
-                                color: Colora.lightBlue,
-                                borderRadius: BorderRadius.circular(30),
-                              ),
-                              margin: EdgeInsets.symmetric(
-                                vertical: Dimensions.height * 0.02,
-                              ),
-                              padding: EdgeInsets.symmetric(
-                                horizontal: Dimensions.width * 0.05,
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    width: Dimensions.width * 0.4,
-                                    child: CheckboxListTile(
-                                      title: Padding(
-                                        padding: const EdgeInsets.only(
-                                          top: 5.0,
-                                        ),
-                                        child: FittedBox(
-                                          fit: BoxFit.scaleDown,
-                                          child: Text(
-                                            'نمایش در نیازمندی',
-                                            style: TextStyle(
-                                              color: Colora.scaffold,
-                                              fontSize:
-                                                  Dimensions.width * 0.035,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      value: false,
-                                      onChanged: (newValue) {
-                                        setState(() {
-                                          // checkedValue = newValue;
-                                        });
-                                      },
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      side: const BorderSide(
-                                        color: Colora.scaffold,
-                                      ),
-                                      fillColor: WidgetStateProperty.all(
-                                        Colora.scaffold,
-                                      ),
-                                      activeColor: Colora.scaffold,
-                                      checkColor: Colora.primaryColor,
-                                      contentPadding: EdgeInsets.zero,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: Dimensions.width * 0.4,
-                                    child: CheckboxListTile(
-                                      title: Padding(
-                                        padding: const EdgeInsets.only(
-                                          top: 5.0,
-                                        ),
-                                        child: FittedBox(
-                                          fit: BoxFit.scaleDown,
-                                          child: Text(
-                                            'نیاز به بازاریابی ویژه',
-                                            style: TextStyle(
-                                              color: Colora.scaffold,
-                                              fontSize:
-                                                  Dimensions.width * 0.035,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      value: state.isMarketer,
-                                      onChanged: (newValue) {
-                                        bloc.add(
-                                          IsMarketerEvent(
-                                            isMarketer: !state.isMarketer,
-                                          ),
-                                        );
-                                      },
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      side: const BorderSide(
-                                        color: Colora.scaffold,
-                                      ),
-                                      activeColor: Colora.scaffold,
-                                      fillColor: WidgetStateProperty.all(
-                                        Colora.scaffold,
-                                      ),
-                                      checkColor: Colora.primaryColor,
-                                      contentPadding: EdgeInsets.zero,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            ActiveBroadcastWidget(),
 
                             Container(
                               width: Dimensions.width,
@@ -2708,8 +2526,7 @@ class _AddProductState extends State<AddProduct> {
                                           }
                                         },
                                         child:
-                                            state.status ==
-                                                    AddProductStatus.loading
+                                            state.status == CWSStatus.loading
                                                 ? const CircularProgressIndicator(
                                                   color: Colora.primaryColor,
                                                 )

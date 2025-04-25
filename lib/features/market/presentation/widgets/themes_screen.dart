@@ -1,11 +1,13 @@
-import 'package:asood/features/vendor/presentation/bloc/vendor/vendor_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 
 import 'package:asood/core/constants/constants.dart';
+import 'package:asood/core/router/app_routers.dart';
 import 'package:asood/features/market/presentation/blocs/bloc/market_bloc.dart';
-import 'package:asood/features/market/presentation/screens/add_product.dart';
+import 'package:asood/features/market/presentation/screens/create_product.dart';
+import 'package:asood/features/vendor/presentation/bloc/vendor/vendor_bloc.dart';
 
 class MultiViewSliderScreen extends StatefulWidget {
   const MultiViewSliderScreen({super.key});
@@ -207,6 +209,10 @@ Widget buildProductGridView0({isSelected = false, String marketId = ""}) {
                           onTap: () {
                             if (isSelected == true) {
                               print('2');
+                              context.push(
+                                AppRoutes.createProduct,
+                                extra: marketId,
+                              );
                             }
                           },
 
@@ -380,7 +386,8 @@ Widget buildProductGridView0({isSelected = false, String marketId = ""}) {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AddProduct(marketId: marketId),
+                          builder:
+                              (context) => CreateProduct(marketId: marketId),
                         ),
                       );
                     }

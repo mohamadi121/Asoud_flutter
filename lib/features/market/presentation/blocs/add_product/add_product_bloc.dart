@@ -14,7 +14,8 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     on<AddProductEvent>((event, emit) {});
 
     on<ProductTypeEvent>(_changeProductType);
-    on<IsMarketerEvent>(_changeMarketerType);
+    on<SetIsMarketerEvent>(_changeMarketerType);
+    on<SetIsRequirementEvent>(_changeIsRequirementType);
     on<ProductPriceStockEvent>(_changeProductPriceStockExtra);
     on<DiscountTypeEvent>(_changeDiscountType);
     on<ProductExtraEvent>(_changeProductExtra);
@@ -24,11 +25,19 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
   }
 
   _changeProductType(ProductTypeEvent event, Emitter<AddProductState> emit) {
+    print(event.type);
     emit(state.copyWith(productType: event.type));
   }
 
-  _changeMarketerType(IsMarketerEvent event, Emitter<AddProductState> emit) {
+  _changeMarketerType(SetIsMarketerEvent event, Emitter<AddProductState> emit) {
     emit(state.copyWith(isMarketer: event.isMarketer));
+  }
+
+  _changeIsRequirementType(
+    SetIsRequirementEvent event,
+    Emitter<AddProductState> emit,
+  ) {
+    emit(state.copyWith(isRequirement: event.isRequirement));
   }
 
   _changeProductPriceStockExtra(
@@ -64,7 +73,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     AddNewProductEvent event,
     Emitter<AddProductState> emit,
   ) async {
-    emit(state.copyWith(status: AddProductStatus.loading));
+    emit(state.copyWith(status: CWSStatus.loading));
     ProductModel product = ProductModel(
       market: event.market,
       name: event.name,
@@ -89,7 +98,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
             productSalePrice: '',
             productSaleType: '',
             productExtra: false,
-            productType: false,
+            productType: ProductType.good,
             discountType: -1,
             isMarketer: false,
             productGift: false,
@@ -97,21 +106,21 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
             productPosition: '',
             productTag: '',
             productStock: false,
-            status: AddProductStatus.success,
+            status: CWSStatus.success,
           ),
         );
       } else {
-        emit(state.copyWith(status: AddProductStatus.failure));
+        emit(state.copyWith(status: CWSStatus.failure));
         if (kDebugMode) {
           print('add product error is ${res.error.toString()}');
         }
       }
     } catch (e) {
-      emit(state.copyWith(status: AddProductStatus.failure));
+      emit(state.copyWith(status: CWSStatus.failure));
       if (kDebugMode) {
         print('add product error is $e');
       }
     }
-    emit(state.copyWith(status: AddProductStatus.initial));
+    emit(state.copyWith(status: CWSStatus.initial));
   }
 }
