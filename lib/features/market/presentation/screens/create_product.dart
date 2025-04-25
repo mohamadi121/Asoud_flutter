@@ -232,46 +232,57 @@ class _CreateProductState extends State<CreateProduct> {
                                                   ),
                                                 ),
                                               ),
-                                              Container(
-                                                width: Dimensions.width * 0.5,
-                                                height:
-                                                    Dimensions.height * 0.05,
-                                                margin: EdgeInsets.symmetric(
-                                                  vertical:
-                                                      Dimensions.height * 0.005,
-                                                ),
-                                                padding: EdgeInsets.symmetric(
-                                                  horizontal:
-                                                      Dimensions.width * 0.04,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  color: Colora.primaryColor,
-                                                  borderRadius:
-                                                      BorderRadius.circular(30),
-                                                ),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      'انتخاب نمایید',
-                                                      style: TextStyle(
-                                                        color: Colora.scaffold,
-                                                        fontSize:
-                                                            Dimensions.width *
-                                                            0.03,
+                                              InkWell(
+                                                onTap: () {
+                                                  context.push(
+                                                    AppRoutes.product,
+                                                  );
+                                                },
+                                                child: Container(
+                                                  width: Dimensions.width * 0.5,
+                                                  height:
+                                                      Dimensions.height * 0.05,
+                                                  margin: EdgeInsets.symmetric(
+                                                    vertical:
+                                                        Dimensions.height *
+                                                        0.005,
+                                                  ),
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal:
+                                                        Dimensions.width * 0.04,
+                                                  ),
+                                                  decoration: BoxDecoration(
+                                                    color: Colora.primaryColor,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                          30,
+                                                        ),
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    children: [
+                                                      Text(
+                                                        'انتخاب نمایید',
+                                                        style: TextStyle(
+                                                          color:
+                                                              Colora.scaffold,
+                                                          fontSize:
+                                                              Dimensions.width *
+                                                              0.03,
+                                                        ),
                                                       ),
-                                                    ),
-                                                    Icon(
-                                                      Icons
-                                                          .arrow_drop_down_rounded,
-                                                      color: Colora.scaffold,
-                                                      size:
-                                                          Dimensions.width *
-                                                          0.06,
-                                                    ),
-                                                  ],
+                                                      Icon(
+                                                        Icons
+                                                            .arrow_drop_down_rounded,
+                                                        color: Colora.scaffold,
+                                                        size:
+                                                            Dimensions.width *
+                                                            0.06,
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ],
@@ -2175,10 +2186,8 @@ class _CreateProductState extends State<CreateProduct> {
                                               Colora.primaryColor,
                                             ),
 
-                                            value:
-                                                1, // Assign a value of 1 to this option
-                                            groupValue:
-                                                '_selectedValue', // Use _selectedValue to track the selected option
+                                            value: 1,
+                                            groupValue: '_selectedValue',
                                             onChanged: (value) {
                                               setState(() {
                                                 // _selectedValue = value!; // Update _selectedValue when option 1 is selected
