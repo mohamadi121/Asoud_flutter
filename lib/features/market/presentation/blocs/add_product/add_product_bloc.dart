@@ -24,6 +24,8 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     on<ChangeProductStockEvent>(_changeProductStock);
 
     on<DiscountTypeEvent>(_changeDiscountType);
+    on<DiscountValuesEvent>(_changeDiscountValues);
+
     on<ProductExtraEvent>(_changeProductExtra);
     on<ProductTagSaleEvent>(_changeProductTgSale);
 
@@ -35,7 +37,6 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
   }
 
   _changeProductType(ProductTypeEvent event, Emitter<AddProductState> emit) {
-    print(event.type);
     emit(state.copyWith(productType: event.type));
   }
 
@@ -80,6 +81,20 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
 
   _changeDiscountType(DiscountTypeEvent event, Emitter<AddProductState> emit) {
     emit(state.copyWith(discountType: event.type));
+  }
+
+  _changeDiscountValues(
+    DiscountValuesEvent event,
+    Emitter<AddProductState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        discountPercentage: event.percentage,
+        discountPeople: event.peopleNumber,
+        discountDays: event.daysNumber,
+        discountPosition: event.position,
+      ),
+    );
   }
 
   _changeProductExtra(ProductExtraEvent event, Emitter<AddProductState> emit) {
@@ -149,11 +164,11 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
             productSaleType: '',
             productExtra: false,
             productType: ProductType.good,
-            discountType: -1,
+            discountType: DiscountType.none,
             isMarketer: false,
             productGift: false,
             productPrice: 0,
-            productPosition: '',
+            productPosition: PositionEnum.topLeft,
             productTag: '',
             productStock: 0,
             status: CWSStatus.success,

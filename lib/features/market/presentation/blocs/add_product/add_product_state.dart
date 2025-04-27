@@ -2,6 +2,10 @@ part of 'add_product_bloc.dart';
 
 enum ProductType { good, service }
 
+enum DiscountType { none, percent, timed, group }
+
+enum PositionEnum { topLeft, topRight, bottomLeft, bottomRight }
+
 class AddProductState {
   final CWSStatus status;
 
@@ -21,13 +25,17 @@ class AddProductState {
   final int productPrice;
   final bool productPriceEnable;
 
-  final int discountType;
+  final int discountPercentage;
+  final int discountPeople;
+  final int discountDays;
+  final DiscountType discountType;
+  final PositionEnum discountPosition;
 
   final bool productGift;
   final bool productExtra;
 
   final String productTag;
-  final String productPosition;
+  final PositionEnum productPosition;
 
   final String productSaleType;
   final String productSalePrice;
@@ -54,6 +62,10 @@ class AddProductState {
     required this.productPriceEnable,
 
     required this.discountType,
+    required this.discountPercentage,
+    required this.discountPeople,
+    required this.discountDays,
+    required this.discountPosition,
 
     required this.productGift,
     required this.productExtra,
@@ -87,13 +99,17 @@ class AddProductState {
       productPrice: 0,
       productPriceEnable: false,
 
-      discountType: -1,
+      discountType: DiscountType.none,
+      discountPercentage: 50,
+      discountPeople: 0,
+      discountDays: 0,
+      discountPosition: PositionEnum.topLeft,
 
       productGift: false,
       productExtra: false,
 
       productTag: '',
-      productPosition: '',
+      productPosition: PositionEnum.topLeft,
 
       productSaleType: '',
       productSalePrice: '',
@@ -121,13 +137,17 @@ class AddProductState {
     int? productPrice,
     bool? productPriceEnable,
 
-    int? discountType,
+    DiscountType? discountType,
+    int? discountPercentage,
+    int? discountPeople,
+    int? discountDays,
+    PositionEnum? discountPosition,
 
     bool? productGift,
     bool? productExtra,
 
     String? productTag,
-    String? productPosition,
+    PositionEnum? productPosition,
 
     String? productSaleType,
     String? productSalePrice,
@@ -154,6 +174,10 @@ class AddProductState {
       productPriceEnable: productPriceEnable ?? this.productPriceEnable,
 
       discountType: discountType ?? this.discountType,
+      discountPercentage: discountPercentage ?? this.discountPercentage,
+      discountPeople: discountPeople ?? this.discountPeople,
+      discountDays: discountDays ?? this.discountDays,
+      discountPosition: discountPosition ?? this.discountPosition,
 
       productGift: productGift ?? this.productGift,
       productExtra: productExtra ?? this.productExtra,
