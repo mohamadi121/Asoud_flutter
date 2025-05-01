@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:asood/core/constants/constants.dart';
 import 'package:asood/core/http_client/api_status.dart';
 
-import 'package:asood/features/create_workspace/domain/repository/market_repository.dart';
+import 'package:asood/features/create_workspace/domain/repository/create_market_repository.dart';
 import 'package:asood/features/create_workspace/domain/repository/region_repository.dart';
 
 import 'package:asood/features/vendor/data/model/country_model.dart';
@@ -22,7 +22,7 @@ part 'create_workspace_state.dart';
 
 class CreateWorkSpaceBloc
     extends Bloc<CreateWorkSpaceEvent, CreateWorkSpaceState> {
-  MarketRepository marketRepo;
+  CreateMarketRepository marketRepo;
 
   final RegionRepository regionRepo;
 
@@ -67,11 +67,9 @@ class CreateWorkSpaceBloc
 
         if (res is Success) {
           final initList = res.response as Map<String, dynamic>;
-          print("--------------------------");
-          print(initList);
+
           MarketBaseModel marketBaseModel = MarketBaseModel.fromJson(initList);
-          print("_____________________________");
-          print(marketBaseModel.businessId);
+
           emit(
             state.copyWith(
               activeTabIndex: 1,
@@ -88,7 +86,6 @@ class CreateWorkSpaceBloc
           );
         }
       } catch (e) {
-        print(e);
         emit(state.copyWith(status: CWSStatus.failure));
       }
     });
@@ -103,9 +100,6 @@ class CreateWorkSpaceBloc
 
     on<SaveMarketLocationEvent>(_setMarketLocation);
     on<ChangeLocDataEvent>((event, emit) {
-      print("-----------------");
-      print(event.province);
-      print(event.provinceId);
       emit(
         state.copyWith(
           city: event.city,
@@ -204,7 +198,6 @@ class CreateWorkSpaceBloc
     try {
       var res = await marketRepo.createMarketLocation(marketLocation);
       if (res is Success) {
-        print(json);
         emit(state.copyWith(status: CWSStatus.success));
       } else {
         emit(

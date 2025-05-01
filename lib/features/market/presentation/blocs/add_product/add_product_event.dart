@@ -90,28 +90,21 @@ class DiscountValuesEvent extends AddProductEvent {
   });
 }
 
-class ProductExtraEvent extends AddProductEvent {
-  final bool? gift;
-  final bool? extra;
-
-  const ProductExtraEvent({this.gift, this.extra});
-}
-
 class ProductTagSaleEvent extends AddProductEvent {
-  final String? tag;
+  final TagEnum? tag;
   final PositionEnum? position;
-  final String? saleType;
-  final String? sendPrice;
+  final SellTypeEnum? sellType;
+  final SendPriceEnum? sendPrice;
 
   const ProductTagSaleEvent({
     this.tag,
     this.position,
-    this.saleType,
+    this.sellType,
     this.sendPrice,
   });
 }
 
-class AddNewProductEvent extends AddProductEvent {
+class SubmitNewProductEvent extends AddProductEvent {
   final String? market;
   final String? name;
   final String? description;
@@ -121,11 +114,21 @@ class AddNewProductEvent extends AddProductEvent {
   final int? requiredProduct;
   final int? giftProduct;
   final bool? isMarketer;
-  final String? sellType;
+  final SellTypeEnum? sellType;
   final int? shipCost;
-  final String? shipCostPayType;
+  final SendPriceEnum? shipCostPayType;
+  final PublishStatusEnum? publishStatus;
+  final String? subCategory;
+  final List<String>? keywords;
+  final TagEnum? tag;
+  final PositionEnum? tagPosition;
+  final int? mainPrice;
+  final int? colleaguePrice;
+  final int? marketerPrice;
+  final int? maximumSellPrice;
+  final bool? isRequirement;
 
-  const AddNewProductEvent({
+  const SubmitNewProductEvent({
     this.market,
     this.name,
     this.description,
@@ -138,5 +141,56 @@ class AddNewProductEvent extends AddProductEvent {
     this.sellType,
     this.shipCost,
     this.shipCostPayType,
+    this.publishStatus,
+    this.subCategory,
+    this.keywords,
+    this.tag,
+    this.tagPosition,
+    this.mainPrice,
+    this.colleaguePrice,
+    this.marketerPrice,
+    this.maximumSellPrice,
+    this.isRequirement,
+  });
+}
+
+class ProductExtraEvent extends AddProductEvent {
+  final bool? gift;
+  final bool? extra;
+
+  const ProductExtraEvent({this.gift, this.extra});
+}
+
+/// load product for gift and required
+class LoadProductListEvent extends AddProductEvent {
+  final String marketId;
+  LoadProductListEvent({required this.marketId});
+}
+
+class ChangeProductGiftAndRequiredEvent extends AddProductEvent {
+  final ProductLModel? selectedProductGift;
+  final ProductLModel? selectedProductExtra;
+
+  const ChangeProductGiftAndRequiredEvent({
+    this.selectedProductGift,
+    this.selectedProductExtra,
+  });
+}
+
+class UpdatePublishStatusEvent extends AddProductEvent {
+  final PublishStatusEnum publishStatus;
+
+  const UpdatePublishStatusEvent({required this.publishStatus});
+}
+
+class UpdateProductDetailEvent extends AddProductEvent {
+  final String? productName;
+  final String? productDescription;
+  final String? productTechnicalDescription;
+
+  const UpdateProductDetailEvent({
+    this.productName,
+    this.productDescription,
+    this.productTechnicalDescription,
   });
 }

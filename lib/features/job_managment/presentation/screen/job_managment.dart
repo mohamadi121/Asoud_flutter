@@ -28,26 +28,6 @@ class _JobManagementScreenState extends State<JobManagementScreen>
     super.initState();
     _tabController = TabController(length: 3, vsync: this)
       ..addListener(_onTabChanged);
-    _restoreProgress();
-  }
-
-  void _restoreProgress() async {
-    final marketId = await SecureStorage.readSecureStorage('market_id');
-    final tabIndex = await SecureStorage.readSecureStorage(
-      'marketActiveTabIndex',
-    );
-
-    if (marketId != 'ND' && tabIndex != 'ND') {
-      final index = int.tryParse(tabIndex);
-      if (index != null) {
-        _activeTabIndex = index;
-        if (mounted) {
-          context.read<JobmanagmentBloc>().add(
-            ChangeTabView(activeTabIndex: index),
-          );
-        }
-      }
-    }
   }
 
   void _onTabChanged() {

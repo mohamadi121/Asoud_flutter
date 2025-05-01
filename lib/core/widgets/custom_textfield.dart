@@ -26,6 +26,7 @@ class CustomTextField extends StatefulWidget {
     this.validator,
     this.inputFormatters,
     this.enabled = true,
+    this.onChanged,
   });
 
   final TextEditingController controller;
@@ -49,6 +50,7 @@ class CustomTextField extends StatefulWidget {
   final EdgeInsets? padding;
   final List<TextInputFormatter>? inputFormatters;
   final bool enabled;
+  final Function(String)? onChanged;
 
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
@@ -103,6 +105,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             validator: widget.validator,
             inputFormatters: widget.inputFormatters,
             enabled: widget.enabled,
+            onChanged: widget.onChanged,
             style:
                 widget.style ??
                 TextStyle(

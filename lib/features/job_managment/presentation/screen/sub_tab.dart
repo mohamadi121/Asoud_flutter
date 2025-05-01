@@ -72,7 +72,10 @@ class _SubTabState extends State<SubTab> {
                             activeCategoryId: selectedCategory.id!,
                           ),
                         );
-                        context.pop();
+                        context.pop({
+                          'selectedCategoryName': selectedCategory.title!,
+                          'selectedCategoryId': selectedCategory.id!,
+                        });
                       },
                       categories: state.subCategoryList,
                     ),

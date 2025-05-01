@@ -5,7 +5,7 @@ import 'package:asood/core/models/theme_model.dart';
 
 import 'package:asood/features/vendor/data/model/market_location_model.dart';
 
-abstract class MarketRepository {
+abstract class CreateMarketRepository {
   Future<dynamic> createMarketBase(
     String type,
     String businessId,

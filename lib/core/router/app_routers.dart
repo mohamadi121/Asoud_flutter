@@ -94,8 +94,9 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.createProduct,
         builder: (context, state) {
-          final marketId = state.extra as String;
-          return CreateProduct(marketId: marketId);
+          final templateId = state.extra as String;
+
+          return CreateProduct(templateId: templateId);
         },
       ),
 
@@ -131,10 +132,7 @@ class AppRouter {
         path: AppRoutes.panelInbox,
         builder: (context, state) => PanelInboxScreen(),
       ),
-      GoRoute(
-        path: AppRoutes.multiViewSlider,
-        builder: (context, state) => MultiViewSliderScreen(),
-      ),
+
       GoRoute(
         path: AppRoutes.takhfif,
         builder: (context, state) => TakhfifScreen(),

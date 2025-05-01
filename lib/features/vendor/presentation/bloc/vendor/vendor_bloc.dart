@@ -4,7 +4,7 @@ import 'dart:ui';
 import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/core/models/comment_model.dart';
 import 'package:asood/core/models/theme_model.dart';
-import 'package:asood/features/create_workspace/domain/repository/market_repository.dart';
+import 'package:asood/features/create_workspace/domain/repository/create_market_repository.dart';
 import 'package:asood/features/vendor/data/model/slider_model.dart';
 
 import 'package:bloc/bloc.dart';
@@ -15,7 +15,7 @@ part 'vendor_event.dart';
 part 'vendor_state.dart';
 
 class VendorBloc extends Bloc<VendorEvent, VendorState> {
-  final MarketRepository marketRepository;
+  final CreateMarketRepository marketRepository;
 
   VendorBloc(this.marketRepository) : super(VendorState.initial()) {
     on<AddLogoEvent>(_setShopLogo);

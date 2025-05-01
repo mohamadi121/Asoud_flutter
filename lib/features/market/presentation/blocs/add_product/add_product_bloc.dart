@@ -1,4 +1,6 @@
+import 'package:asood/core/helper/enum_changer.dart';
 import 'package:asood/core/http_client/api_status.dart';
+import 'package:asood/features/market/data/model/productL_model.dart';
 import 'package:asood/features/market/data/model/product_model.dart';
 import 'package:asood/features/market/domain/repository/product_repository.dart';
 import 'package:bloc/bloc.dart';
@@ -27,13 +29,19 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     on<DiscountValuesEvent>(_changeDiscountValues);
 
     on<ProductExtraEvent>(_changeProductExtra);
+    on<LoadProductListEvent>(_loadProductList);
+    on<ChangeProductGiftAndRequiredEvent>(_changeProductRequiredGifted);
+
     on<ProductTagSaleEvent>(_changeProductTgSale);
 
     on<AddTagsEvent>(_addTags);
     on<AddKeywordsEvent>(_addKeywords);
     on<RemoveKeywordsEvent>(_removeKeywords);
 
-    on<AddNewProductEvent>(_addNewProduct);
+    on<SubmitNewProductEvent>(_submitNewProduct);
+    on<UpdatePublishStatusEvent>(_updatePublishStatus);
+
+    on<UpdateProductDetailEvent>(_updateProductDetail);
   }
 
   _changeProductType(ProductTypeEvent event, Emitter<AddProductState> emit) {
@@ -101,6 +109,18 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     emit(state.copyWith(productGift: event.gift, productExtra: event.extra));
   }
 
+  _changeProductRequiredGifted(
+    ChangeProductGiftAndRequiredEvent event,
+    Emitter<AddProductState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        selectedProductGift: event.selectedProductGift,
+        selectedProductExtra: event.selectedProductExtra,
+      ),
+    );
+  }
+
   _changeProductTgSale(
     ProductTagSaleEvent event,
     Emitter<AddProductState> emit,
@@ -109,8 +129,8 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
       state.copyWith(
         productTag: event.tag,
         productPosition: event.position,
-        productSaleType: event.saleType,
-        productSalePrice: event.sendPrice,
+        productSellType: event.sellType,
+        productSendPrice: event.sendPrice,
       ),
     );
   }
@@ -134,11 +154,51 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     );
   }
 
-  _addNewProduct(
-    AddNewProductEvent event,
+  _loadProductList(
+    LoadProductListEvent event,
+    Emitter<AddProductState> emit,
+  ) async {
+    emit(state.copyWith(giftStatus: CWSStatus.loading));
+    var res = await productRepository.productList(event.marketId);
+    if (res is Success) {
+      List<ProductLModel> product =
+          (res.response as List).map((e) => ProductLModel.fromJson(e)).toList();
+
+      emit(state.copyWith(giftStatus: CWSStatus.success, productList: product));
+    } else if (res is Failure) {
+      emit(state.copyWith(giftStatus: CWSStatus.failure));
+    }
+  }
+
+  _updatePublishStatus(
+    UpdatePublishStatusEvent event,
+    Emitter<AddProductState> emit,
+  ) {
+    emit(state.copyWith(publishStatus: event.publishStatus));
+  }
+
+  _updateProductDetail(
+    UpdateProductDetailEvent event,
+    Emitter<AddProductState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        productName: event.productName ?? state.productName,
+        productDescription:
+            event.productDescription ?? state.productDescription,
+        productTechnicalDescription:
+            event.productTechnicalDescription ??
+            state.productTechnicalDescription,
+      ),
+    );
+  }
+
+  _submitNewProduct(
+    SubmitNewProductEvent event,
     Emitter<AddProductState> emit,
   ) async {
     emit(state.copyWith(status: CWSStatus.loading));
+
     ProductModel product = ProductModel(
       market: event.market,
       name: event.name,
@@ -146,34 +206,65 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
       technicalDetail: event.technicalDetail,
       stock: event.stock,
       price: event.price,
-      requiredProduct: event.requiredProduct,
-      giftProduct: event.giftProduct,
+      requiredProduct: event.requiredProduct.toString(),
+      giftProduct: event.giftProduct.toString(),
       isMarketer: event.isMarketer,
-      sellType: event.sellType,
-      shipCost: event.shipCost,
-      shipCostPayType: event.shipCostPayType,
+      sellType: sellTypeEnumChanger(event.sellType),
+
+      /// TODO: SHOULD CHANGE THIS SHIP COST SOON FROM BACKEND
+      shipCost: 2000,
+      shipCostPayType:
+          event.shipCostPayType != null ? SendPriceEnum.market.name : "market",
+      publishStatus: publishStatusEnumChanger(event.publishStatus),
+      subCategory: event.subCategory,
+      keywords: event.keywords,
+      tag: tagEnumChanger(event.tag),
+      tagPosition: tagPositionEnumChanger(event.tagPosition),
+      mainPrice: event.mainPrice,
+      colleaguePrice: event.colleaguePrice,
+      marketerPrice: event.marketerPrice,
+      maximumSellPrice: event.maximumSellPrice,
+      isRequirement: event.isRequirement,
     );
 
     try {
-      var res = await productRepository.createProduct(product);
+      var res = await productRepository.createProductDiscount(
+        event.market,
+        state.discountPosition,
+        state.discountPercentage,
+        state.discountDays,
+      );
       if (res is Success) {
-        // var json = jsonDecode(res.response.toString());
-        emit(
-          state.copyWith(
-            productSalePrice: '',
-            productSaleType: '',
-            productExtra: false,
-            productType: ProductType.good,
-            discountType: DiscountType.none,
-            isMarketer: false,
-            productGift: false,
-            productPrice: 0,
-            productPosition: PositionEnum.topLeft,
-            productTag: '',
-            productStock: 0,
-            status: CWSStatus.success,
-          ),
-        );
+        res = await productRepository.createProduct(product);
+        if (res is Success) {
+          // var json = jsonDecode(res.response.toString());
+          emit(
+            AddProductState.initial(),
+            // state.copyWith(
+            //   productSendPrice: SendPriceEnum.market,
+            //   productSellType: SellTypeEnum.online,
+            //   productExtra: false,
+            //   productType: ProductType.good,
+            //   discountType: DiscountType.none,
+            //   isMarketer: false,
+            //   productGift: false,
+            //   productPrice: 0,
+            //   productPosition: PositionEnum.topLeft,
+            //   productTag: TagEnum.newProduct,
+            //   productStock: 0,
+            //   selectedProductExtra: null,
+            //   selectedProductGift: null,
+            //   tags: [],
+            //   keywords: [],
+            //   isRequirement: false,
+            //   publishStatus: PublishStatusEnum.published,
+            //   discountPosition: PositionEnum.topLeft,
+            //   discountPercentage: 0,
+            //   discountDays: 0,
+            //   status: CWSStatus.success,
+            // ),
+          );
+        }
       } else {
         emit(state.copyWith(status: CWSStatus.failure));
         if (kDebugMode) {

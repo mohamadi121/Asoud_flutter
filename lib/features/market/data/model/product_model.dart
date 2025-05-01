@@ -1,30 +1,36 @@
 class ProductModel {
   String? market;
+  String? type;
   String? name;
   String? description;
   String? technicalDetail;
+  String? subCategory;
+  List<String>? keywords;
   int? stock;
   int? price;
-  int? requiredProduct;
-  int? giftProduct;
+  int? mainPrice;
+  int? colleaguePrice;
+  int? marketerPrice;
+  int? maximumSellPrice;
+  String? publishStatus;
+  String? requiredProduct;
+  String? giftProduct;
   bool? isMarketer;
+  bool? isRequirement;
+  String? tag;
+  String? tagPosition;
   String? sellType;
   int? shipCost;
   String? shipCostPayType;
-  // int? subCategory;
-  // String? keywords;
-  // String? inventory;
-  // int? originalPrice;
-  // int? partnerPrice;
-  // int? unlimitedPrice;
-  // int? maximumPrice;
-  // String? label;
 
   ProductModel({
     this.market,
+    this.type,
     this.name,
     this.description,
     this.technicalDetail,
+    this.subCategory,
+    this.keywords,
     this.stock,
     this.price,
     this.requiredProduct,
@@ -33,22 +39,24 @@ class ProductModel {
     this.sellType,
     this.shipCost,
     this.shipCostPayType,
-    // this.label,
-    // this.originalPrice,
-    // this.partnerPrice,
-    // this.unlimitedPrice,
-    // this.maximumPrice,
-    // this.complementaryProduct,
-    // this.subCategory,
-    // this.keywords,
-    // this.inventory,
+    this.publishStatus,
+    this.tagPosition,
+    this.mainPrice,
+    this.colleaguePrice,
+    this.marketerPrice,
+    this.maximumSellPrice,
+    this.isRequirement,
+    this.tag,
   });
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     market = json['market'];
+    type = json['type'];
     name = json['name'];
     description = json['description'];
     technicalDetail = json['technical_detail'];
+    subCategory = json['sub_category'];
+    keywords = json['keywords'];
     stock = json['stock'];
     price = json['price'];
     giftProduct = json['gift_product'];
@@ -57,40 +65,48 @@ class ProductModel {
     sellType = json['sell_type'];
     shipCost = json['ship_cost'];
     shipCostPayType = json['ship_cost_pay_type'];
-    // label = json['label'];
-    // subCategory = json['sub_category'];
-    // keywords = json['keywords'];
-    // inventory = json['inventory'];
-    // originalPrice = json['original_price'];
-    // partnerPrice = json['partner_price'];
-    // unlimitedPrice = json['unlimited_price'];
-    // maximumPrice = json['maximum_price'];
-    // complementaryProduct = json['complementary_product'];
+    publishStatus = json['status'];
+    tagPosition = json['tag_position'];
+    mainPrice = json['main_price'];
+    colleaguePrice = json['colleague_price'];
+    marketerPrice = json['marketer_price'];
+    maximumSellPrice = json['maximum_sell_price'];
+    isRequirement = json['is_requirement'];
+    tag = json['tag'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['market'] = market;
+    data['type'] = type;
     data['name'] = name;
     data['description'] = description;
     data['technical_detail'] = technicalDetail;
+    data['sub_category'] = subCategory;
+    data['keywords'] = keywords;
     data['stock'] = stock;
     data['price'] = price;
-    data['gift_product'] = giftProduct;
-    data['required_product'] = requiredProduct;
+    data['gift_product'] = giftProduct ?? "";
+    data['required_product'] = requiredProduct ?? "";
     data['is_marketer'] = isMarketer;
     data['sell_type'] = sellType;
     data['ship_cost'] = shipCost;
     data['ship_cost_pay_type'] = shipCostPayType;
-    // data['label'] = label;
-    // data['sub_category'] = subCategory;
-    // data['keywords'] = keywords;
-    // data['inventory'] = inventory;
-    // data['original_price'] = originalPrice;
-    // data['partner_price'] = partnerPrice;
-    // data['unlimited_price'] = unlimitedPrice;
-    // data['maximum_price'] = maximumPrice;
-    // data['complementary_product'] = complementaryProduct;
+    data['status'] = publishStatus;
+    data['tag_position'] = tagPosition;
+    data['main_price'] = mainPrice;
+    if (colleaguePrice != null) {
+      data['colleague_price'] = colleaguePrice;
+    }
+    if (marketerPrice != null) {
+      data['marketer_price'] = marketerPrice;
+    }
+    if (maximumSellPrice != null) {
+      data['maximum_sell_price'] = maximumSellPrice;
+    }
+    data['is_requirement'] = isRequirement;
+    data['tag'] = tag;
+
     return data;
   }
 }

@@ -9,9 +9,9 @@ import 'package:asood/core/models/theme_model.dart';
 
 import 'package:asood/features/vendor/data/model/market_location_model.dart';
 
-class MarketApiService {
+class CreateMarketApiService {
   DioClient dioClient;
-  MarketApiService({required this.dioClient});
+  CreateMarketApiService({required this.dioClient});
 
   // Create market base
   Future createMarketBase(

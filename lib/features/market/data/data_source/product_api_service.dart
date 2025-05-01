@@ -1,5 +1,6 @@
 import 'package:asood/core/constants/endpoints.dart';
 import 'package:asood/core/http_client/api_status.dart';
+import 'package:asood/features/market/presentation/blocs/add_product/add_product_bloc.dart';
 import 'package:dio/dio.dart';
 
 import 'package:asood/core/http_client/api_client.dart';
@@ -11,10 +12,13 @@ class ProductApiService {
   ProductApiService({required this.dioClient});
 
   //get products
-  Future getProducts() async {
-    var uri = 'product/user/list/';
+  Future getProducts(marketId) async {
+    print("________________");
+    print(marketId);
     try {
-      Response res = await dioClient.getData(uri);
+      Response res = await dioClient.getData(
+        "${Endpoints.ownerProductListById}$marketId/",
+      );
       return apiStatus(res);
     } catch (e) {
       return customApiStatus();
@@ -50,6 +54,64 @@ class ProductApiService {
     try {
       Response res = await dioClient.getData(
         '${Endpoints.productCommentById}/$productId/',
+      );
+      return apiStatus(res);
+    } catch (e) {
+      return customApiStatus();
+    }
+  }
+
+  //get product comments
+  Future createProductDiscount(
+    productId,
+    PositionEnum position,
+    int percent,
+    int days,
+  ) async {
+    try {
+      Response res = await dioClient.postData(
+        '${Endpoints.createProductDiscount}/$productId/',
+        {
+          "users": [],
+          "position": position,
+          "percentage": percent,
+          "duration": days,
+        },
+      );
+      return apiStatus(res);
+    } catch (e) {
+      return customApiStatus();
+    }
+  }
+
+  Future createMarketTheme(String marketId, int order) async {
+    try {
+      Response res = await dioClient.postData(
+        "${Endpoints.ownerProductThemeCreate}$marketId/",
+        {"name": "test", "order": order},
+      );
+      return apiStatus(res);
+    } catch (e) {
+      return customApiStatus();
+    }
+  }
+
+  Future getMarketTheme(String marketId) async {
+    try {
+      Response res = await dioClient.getData(
+        "${Endpoints.ownerProductThemeList}$marketId/",
+      );
+      return apiStatus(res);
+    } catch (e) {
+      return customApiStatus();
+    }
+  }
+
+  Future updateMarketTheme(String marketId, List<String> products) async {
+    try {
+      Response res = await dioClient.putData(
+        "${Endpoints.ownerProductThemeUpdate}$marketId/",
+        {"products": products},
       );
       return apiStatus(res);
     } catch (e) {

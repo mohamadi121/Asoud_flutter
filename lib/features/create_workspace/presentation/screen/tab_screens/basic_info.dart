@@ -221,18 +221,19 @@ class _BasicInfoState extends State<BasicInfo>
                             color: Colora.scaffold,
                           ),
                           child: MaterialButton(
-                            onPressed: () {
-                              context.push(AppRoutes.jobManagement);
+                            onPressed: () async {
+                              final result = await context.push(
+                                AppRoutes.jobManagement,
+                              );
 
-                              JobmanagmentState jobState =
-                                  context.read<JobmanagmentBloc>().state;
-                              context.read<CreateWorkSpaceBloc>().add(
+                              if (result is Map<String, String>) {
                                 ChangeSelectedCategory(
                                   selectedCategoryName:
-                                      jobState.selectedCategoryName,
-                                  activeCategoryId: jobState.activeCategoryId,
-                                ),
-                              );
+                                      result['selectedCategoryName'] ?? '',
+                                  activeCategoryId:
+                                      result['selectedCategoryId'] ?? '',
+                                );
+                              }
                             },
                             child: Text(
                               state.selectedCategoryName,

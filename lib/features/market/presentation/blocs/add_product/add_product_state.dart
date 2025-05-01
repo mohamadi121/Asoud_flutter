@@ -6,8 +6,28 @@ enum DiscountType { none, percent, timed, group }
 
 enum PositionEnum { topLeft, topRight, bottomLeft, bottomRight }
 
+enum TagEnum { newProduct, specialOffer, comingSoon, none }
+
+enum SellTypeEnum { online, person, both }
+
+enum SendPriceEnum { market, customer, free }
+
+enum PublishStatusEnum {
+  draft,
+  queue,
+  notPublished,
+  published,
+  needsEditing,
+  inactive,
+}
+
 class AddProductState {
   final CWSStatus status;
+  final CWSStatus giftStatus;
+
+  final String productName;
+  final String productDescription;
+  final String productTechnicalDescription;
 
   final ProductType productType;
 
@@ -32,18 +52,28 @@ class AddProductState {
   final PositionEnum discountPosition;
 
   final bool productGift;
+  final ProductLModel? selectedProductGift;
   final bool productExtra;
+  final ProductLModel? selectedProductExtra;
+  final List<ProductLModel> productList;
 
-  final String productTag;
+  final TagEnum productTag;
   final PositionEnum productPosition;
 
-  final String productSaleType;
-  final String productSalePrice;
+  final SellTypeEnum productSellType;
+  final SendPriceEnum productSendPrice;
 
   final List productImages;
 
+  final PublishStatusEnum publishStatus;
+
   const AddProductState({
     required this.status,
+    required this.giftStatus,
+
+    required this.productName,
+    required this.productDescription,
+    required this.productTechnicalDescription,
 
     required this.productType,
 
@@ -68,20 +98,30 @@ class AddProductState {
     required this.discountPosition,
 
     required this.productGift,
+    required this.selectedProductGift,
     required this.productExtra,
+    required this.selectedProductExtra,
+    required this.productList,
 
     required this.productTag,
     required this.productPosition,
 
-    required this.productSaleType,
-    required this.productSalePrice,
+    required this.productSellType,
+    required this.productSendPrice,
 
     required this.productImages,
+
+    required this.publishStatus,
   });
 
   factory AddProductState.initial() {
     return const AddProductState(
       status: CWSStatus.initial,
+      giftStatus: CWSStatus.initial,
+
+      productName: '',
+      productDescription: '',
+      productTechnicalDescription: '',
 
       productType: ProductType.good,
 
@@ -107,19 +147,29 @@ class AddProductState {
 
       productGift: false,
       productExtra: false,
+      selectedProductGift: null,
+      selectedProductExtra: null,
+      productList: [],
 
-      productTag: '',
+      productTag: TagEnum.newProduct,
       productPosition: PositionEnum.topLeft,
 
-      productSaleType: '',
-      productSalePrice: '',
+      productSellType: SellTypeEnum.online,
+      productSendPrice: SendPriceEnum.market,
 
       productImages: [],
+
+      publishStatus: PublishStatusEnum.published,
     );
   }
 
   AddProductState copyWith({
     CWSStatus? status,
+    CWSStatus? giftStatus,
+
+    String? productName,
+    String? productDescription,
+    String? productTechnicalDescription,
 
     ProductType? productType,
 
@@ -144,18 +194,29 @@ class AddProductState {
     PositionEnum? discountPosition,
 
     bool? productGift,
+    ProductLModel? selectedProductGift,
     bool? productExtra,
+    ProductLModel? selectedProductExtra,
+    List<ProductLModel>? productList,
 
-    String? productTag,
+    TagEnum? productTag,
     PositionEnum? productPosition,
 
-    String? productSaleType,
-    String? productSalePrice,
+    SellTypeEnum? productSellType,
+    SendPriceEnum? productSendPrice,
 
     List? productImages,
+
+    PublishStatusEnum? publishStatus,
   }) {
     return AddProductState(
       status: status ?? this.status,
+      giftStatus: giftStatus ?? this.giftStatus,
+
+      productName: productName ?? this.productName,
+      productDescription: productDescription ?? this.productDescription,
+      productTechnicalDescription:
+          productTechnicalDescription ?? this.productTechnicalDescription,
 
       productType: productType ?? this.productType,
 
@@ -180,15 +241,20 @@ class AddProductState {
       discountPosition: discountPosition ?? this.discountPosition,
 
       productGift: productGift ?? this.productGift,
+      selectedProductGift: selectedProductGift ?? this.selectedProductGift,
       productExtra: productExtra ?? this.productExtra,
+      selectedProductExtra: selectedProductExtra ?? this.selectedProductExtra,
+      productList: productList ?? this.productList,
 
       productTag: productTag ?? this.productTag,
       productPosition: productPosition ?? this.productPosition,
 
-      productSaleType: productSaleType ?? this.productSaleType,
-      productSalePrice: productSalePrice ?? this.productSalePrice,
+      productSellType: productSellType ?? this.productSellType,
+      productSendPrice: productSendPrice ?? this.productSendPrice,
 
       productImages: productImages ?? this.productImages,
+
+      publishStatus: publishStatus ?? this.publishStatus,
     );
   }
 }

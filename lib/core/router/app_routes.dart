@@ -33,7 +33,6 @@ abstract class AppRoutes {
   static const jobManagement = "/job_management";
   static const createProduct = "/create_product";
   static const product = "/product";
-  static const multiViewSlider = "/multiview_slider";
   static const panelConfig = "/panel_config";
   static const panelInbox = "/panel_inbox";
   static const createBusinessCard = "/create_business_card";

@@ -56,7 +56,8 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
     // TODO: implement initState
     super.initState();
     bloc = BlocProvider.of<VendorBloc>(context);
-    marketBloc = BlocProvider.of<MarketBloc>(context);
+    marketBloc = BlocProvider.of<MarketBloc>(context)
+      ..add(LoadTemplateEvent(marketId: widget.market.id!));
     loadSlider();
     initTheme();
   }
@@ -1268,41 +1269,42 @@ productView(String marketId, styleState, MarketBloc marketBloc) {
   Widget templateWidget(int template) {
     switch (template) {
       case 0:
-        return buildProductGridView0(isSelected: true);
+        return buildProductGridView(marketId: marketId, templateIndex: 0);
       case 1:
-        return buildProductGridView1();
+        return buildProductGridView(marketId: marketId, templateIndex: 1);
       case 2:
-        return buildProductGridView2();
+        return buildProductGridView(marketId: marketId, templateIndex: 2);
       case 3:
-        return buildProductGridView3();
+        return buildProductGridView(marketId: marketId, templateIndex: 3);
       case 4:
-        return buildProductGridView4();
+        return buildProductGridView(marketId: marketId, templateIndex: 4);
       case 5:
-        return buildProductGridView5();
+        return buildProductGridView(marketId: marketId, templateIndex: 5);
       case 6:
-        return buildProductGridView6();
+        return buildProductGridView(marketId: marketId, templateIndex: 6);
       case 7:
-        return buildProductGridView7();
+        return buildProductGridView(marketId: marketId, templateIndex: 7);
       case 8:
-        return buildProductGridView8();
+        return buildProductGridView(marketId: marketId, templateIndex: 8);
       case 9:
-        return buildProductGridView9();
+        return buildProductGridView(marketId: marketId, templateIndex: 9);
       case 10:
-        return buildProductGridView10();
+        return buildProductGridView(marketId: marketId, templateIndex: 10);
       case 11:
-        return buildProductGridView11();
+        return buildProductGridView(marketId: marketId, templateIndex: 11);
       case 12:
-        return buildProductGridView12();
+        return buildProductGridView(marketId: marketId, templateIndex: 12);
       case 13:
-        return buildProductGridView13();
+        return buildProductGridView(marketId: marketId, templateIndex: 13);
       case 14:
-        return buildProductGridView14();
+        return buildProductGridView(marketId: marketId, templateIndex: 14);
       case 15:
-        return buildProductGridView15();
+        return buildProductGridView(marketId: marketId, templateIndex: 15);
       case 16:
-        return buildProductGridView16();
+        return buildProductGridView(marketId: marketId, templateIndex: 16);
       case 17:
-        return buildProductGridView17();
+        return buildProductGridView(marketId: marketId, templateIndex: 17);
+
       default:
         return const SizedBox.shrink();
     }
@@ -1387,7 +1389,7 @@ productView(String marketId, styleState, MarketBloc marketBloc) {
               SizedBox(
                 width: Dimensions.width,
                 height: Dimensions.height * 0.45,
-                child: const MultiViewSliderScreen(),
+                child: MultiViewSliderScreen(),
               ),
             ],
 
@@ -1410,7 +1412,9 @@ productView(String marketId, styleState, MarketBloc marketBloc) {
                             margin: EdgeInsets.symmetric(
                               vertical: Dimensions.height * 0.0,
                             ),
-                            child: templateWidget(state.templateList[index]),
+                            child: templateWidget(
+                              state.templateList[index].order,
+                            ),
                           ),
 
                           // SizedBox(

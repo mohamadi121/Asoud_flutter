@@ -5,10 +5,10 @@ import 'package:asood/features/job_managment/data/data_source/category_api_servi
 import 'package:asood/features/create_workspace/data/data_source/market_api_service.dart';
 import 'package:asood/features/create_workspace/data/data_source/region_api_services.dart';
 import 'package:asood/features/job_managment/data/repository/category_repository_imp.dart';
-import 'package:asood/features/create_workspace/data/repository/market_repository_imp.dart';
+import 'package:asood/features/create_workspace/data/repository/create_market_repository_imp.dart';
 import 'package:asood/features/create_workspace/data/repository/region_repository_imp.dart';
 
-import 'package:asood/features/create_workspace/domain/repository/market_repository.dart';
+import 'package:asood/features/create_workspace/domain/repository/create_market_repository.dart';
 import 'package:asood/features/create_workspace/domain/repository/region_repository.dart';
 import 'package:asood/features/create_workspace/presentation/bloc/create_workspace_bloc.dart';
 import 'package:asood/features/job_managment/domain/repository/category_repository.dart';
@@ -49,7 +49,7 @@ locatorSetup() async {
     () => CategoryApiService(dioClient: locator<DioClient>()),
   );
   locator.registerFactory(
-    () => MarketApiService(dioClient: locator<DioClient>()),
+    () => CreateMarketApiService(dioClient: locator<DioClient>()),
   );
   locator.registerFactory(
     () => RegionApiServices(dioClient: locator<DioClient>()),
@@ -65,8 +65,8 @@ locatorSetup() async {
   locator.registerLazySingleton<CategoryRepository>(
     () => CategoryRepositoryImp(locator<CategoryApiService>()),
   );
-  locator.registerLazySingleton<MarketRepository>(
-    () => MarketRepositoryImp(locator<MarketApiService>()),
+  locator.registerLazySingleton<CreateMarketRepository>(
+    () => CreateMarketRepositoryImp(locator<CreateMarketApiService>()),
   );
   locator.registerLazySingleton<RegionRepository>(
     () => RegionRepositoryImp(locator<RegionApiServices>()),
@@ -84,19 +84,23 @@ locatorSetup() async {
 
   locator.registerFactory(
     () => CreateWorkSpaceBloc(
-      locator<MarketRepository>(),
+      locator<CreateMarketRepository>(),
       locator<RegionRepository>(),
     ),
   );
   locator.registerFactory(
     () => JobmanagmentBloc(locator<CategoryRepository>()),
   );
-  locator.registerFactory(() => VendorBloc(locator<MarketRepository>()));
-  locator.registerFactory(() => WorkspaceBloc(locator<MarketRepository>()));
+  locator.registerFactory(() => VendorBloc(locator<CreateMarketRepository>()));
+  locator.registerFactory(
+    () => WorkspaceBloc(locator<CreateMarketRepository>()),
+  );
   locator.registerFactory(() => AddProductBloc(locator<ProductRepository>()));
   locator.registerFactory(() => ThemeBloc());
   locator.registerFactory(() => CommentBloc());
-  locator.registerFactory(() => MarketBloc());
+  locator.registerFactory(
+    () => MarketBloc(productRepository: locator<ProductRepository>()),
+  );
   locator.registerFactory(() => BusinessBloc());
   locator.registerFactory(() => ProfileBloc());
   locator.registerFactory(() => CustomerBloc());

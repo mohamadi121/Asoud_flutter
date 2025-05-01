@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/core/models/market_model.dart';
-import 'package:asood/features/create_workspace/domain/repository/market_repository.dart';
+import 'package:asood/features/create_workspace/domain/repository/create_market_repository.dart';
 
 import 'package:bloc/bloc.dart';
 
@@ -10,7 +10,7 @@ part 'workspace_event.dart';
 part 'workspace_state.dart';
 
 class WorkspaceBloc extends Bloc<WorkspaceEvent, WorkspaceState> {
-  final MarketRepository marketRepo;
+  final CreateMarketRepository marketRepo;
 
   WorkspaceBloc(this.marketRepo) : super(WorkspaceState.initial()) {
     on<LoadStores>(_getStores);
