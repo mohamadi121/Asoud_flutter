@@ -14,8 +14,6 @@ class ProductApiService {
 
   //get products
   Future getProducts(marketId) async {
-    print("________________");
-    print(marketId);
     try {
       Response res = await dioClient.getData(
         "${Endpoints.ownerProductListById}$marketId/",
@@ -99,7 +97,7 @@ class ProductApiService {
   Future getMarketTheme(String marketId) async {
     try {
       Response res = await dioClient.getData(
-        "${Endpoints.ownerProductThemeList}$marketId/",
+        "${Endpoints.ownerProductThemeList}$marketId/?affiliate=1",
       );
       return apiStatus(res);
     } catch (e) {

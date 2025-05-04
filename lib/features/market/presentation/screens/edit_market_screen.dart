@@ -41,21 +41,15 @@ class EditMarketScreen extends StatelessWidget {
                       icon: const Icon(Icons.edit, color: Colors.white),
                     ),
                     IconButton(
-                      onPressed: () {
-                        print("pressed");
-                      },
+                      onPressed: () {},
                       icon: const Icon(Icons.save, color: Colors.white),
                     ),
                     IconButton(
-                      onPressed: () {
-                        print("pressed");
-                      },
+                      onPressed: () {},
                       icon: const Icon(Icons.bookmark, color: Colors.white),
                     ),
                     IconButton(
-                      onPressed: () {
-                        print("pressed");
-                      },
+                      onPressed: () {},
                       icon: const Icon(Icons.share, color: Colors.white),
                     ),
                     IconButton(

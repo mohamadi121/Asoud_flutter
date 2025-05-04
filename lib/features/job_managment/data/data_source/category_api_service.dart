@@ -33,7 +33,6 @@ class CategoryApiService {
       Response res = await dioClient.getData(
         "${Endpoints.subCategoryList}$mainSubCategoryId/",
       );
-      print("______$res-------------");
 
       return apiStatus(res);
     } catch (e) {

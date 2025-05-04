@@ -55,8 +55,6 @@ class _CreateProductState extends State<CreateProduct> {
       child: SafeArea(
         child: BlocConsumer<AddProductBloc, AddProductState>(
           listener: (context, state) {
-            print("state.status");
-            print(state.status);
             if (state.status == CWSStatus.success) {
               context.pop();
               ScaffoldMessenger.of(context).showSnackBar(

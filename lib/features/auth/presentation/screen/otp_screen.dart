@@ -30,7 +30,6 @@ class OtpScreen extends StatelessWidget {
                   if (state.status == AuthStatus.success) {
                     context.go(AppRoutes.vendorHome);
                   } else if (state.status == AuthStatus.error) {
-                    print(state.error);
                     _showToast(
                       state.error == 'Pin not valid'
                           ? 'کد تایید اشتباه است'

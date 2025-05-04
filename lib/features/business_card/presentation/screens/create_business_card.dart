@@ -19,12 +19,12 @@ class _CreateBusinessCardState extends State<CreateBusinessCard> {
   // Define a variable to track the current selection
   String _selectedType = 'corporation';
   // Variable to keep track of the selected job title
-  String? _selectedJobTitle; // Variable to keep track of the selected job title
-  final List<String> _jobTitles = [
-    'Software Developer',
-    'Product Manager',
-    'Graphic Designer',
-  ];
+  // String? _selectedJobTitle; // Variable to keep track of the selected job title
+  // final List<String> _jobTitles = [
+  //   'Software Developer',
+  //   'Product Manager',
+  //   'Graphic Designer',
+  // ];
   @override
   Widget build(BuildContext context) {
     return Container(

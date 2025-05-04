@@ -183,7 +183,7 @@ class CreateMarketApiService {
       Response res = await dioClient.getData(
         "${Endpoints.ownerSlider}/$marketId/",
       );
-      print(res);
+
       return apiStatus(res);
     } catch (e) {
       return customApiStatus();

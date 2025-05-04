@@ -9,15 +9,11 @@ class RegionApiServices {
   RegionApiServices({required this.dioClient});
 
   Future getCountryList() async {
-    print("+++++++++++++++++++");
     try {
       Response res = await dioClient.getData(Endpoints.countryList);
 
-      print("+++++++++++++++++++");
-      print(res);
       return apiStatus(res);
     } catch (e) {
-      print(e);
       return customApiStatus();
     }
   }

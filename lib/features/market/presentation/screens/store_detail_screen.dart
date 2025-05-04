@@ -1077,7 +1077,7 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
                               //edit
                               InkWell(
                                 onTap: () {
-                                  print("pressed");
+                                  // print("pressed");
                                 },
                                 // padding: const EdgeInsets.all(0),
                                 child: Icon(
@@ -1090,7 +1090,7 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
                               //save
                               InkWell(
                                 onTap: () {
-                                  print("pressed");
+                                  // print("pressed");
                                 },
                                 child: Icon(
                                   Icons.save,
@@ -1101,9 +1101,7 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
 
                               //mark
                               InkWell(
-                                onTap: () {
-                                  print("pressed");
-                                },
+                                onTap: () {},
                                 child: Icon(
                                   Icons.bookmark,
                                   color: state.fontColor,
@@ -1113,9 +1111,7 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
 
                               //share
                               InkWell(
-                                onTap: () {
-                                  print("pressed");
-                                },
+                                onTap: () {},
                                 child: Icon(
                                   Icons.share,
                                   color: state.fontColor,
@@ -1125,9 +1121,7 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
 
                               //upload
                               InkWell(
-                                onTap: () {
-                                  print("pressed");
-                                },
+                                onTap: () {},
                                 child: Icon(
                                   Icons.upload_file_outlined,
                                   color: state.fontColor,
@@ -1137,9 +1131,7 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
 
                               //list
                               InkWell(
-                                onTap: () {
-                                  print("pressed");
-                                },
+                                onTap: () {},
                                 child: Icon(
                                   Icons.list_alt,
                                   color: state.fontColor,

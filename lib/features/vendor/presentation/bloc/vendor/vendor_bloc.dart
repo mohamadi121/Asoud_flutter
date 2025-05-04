@@ -134,7 +134,6 @@ class VendorBloc extends Bloc<VendorEvent, VendorState> {
     try {
       final res = await marketRepository.getMarketSliders(event.marketId);
       if (res is Success) {
-        print(res.response);
         var resp = res.response as List;
         final sliderList = resp.map((e) => SliderModel.fromJson(e)).toList();
 

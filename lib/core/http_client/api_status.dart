@@ -21,8 +21,8 @@ apiStatus(Response response) {
     var res = response.data;
 
     if (res['success'] == true) {
-      print("____________new data in api status______________");
-      print(res['data']);
+      print("__________new data in api status___________");
+      print(res);
       return Success(
         code: res['code'],
         response: res['data'],
