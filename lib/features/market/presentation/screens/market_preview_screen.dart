@@ -23,15 +23,15 @@ import 'package:asood/features/market/presentation/widgets/comment_messagebox_wi
 import 'package:asood/features/market/presentation/widgets/store_appbar.dart';
 import 'package:asood/features/market/presentation/widgets/themes_screen.dart';
 
-class StoreDetailScreen extends StatefulWidget {
-  const StoreDetailScreen({super.key, required this.market});
+class MarketPreviewScreen extends StatefulWidget {
+  const MarketPreviewScreen({super.key, required this.market});
   final MarketModel market;
 
   @override
-  State<StoreDetailScreen> createState() => _StoreDetailScreenState();
+  State<MarketPreviewScreen> createState() => _MarketPreviewScreenState();
 }
 
-class _StoreDetailScreenState extends State<StoreDetailScreen> {
+class _MarketPreviewScreenState extends State<MarketPreviewScreen> {
   late VendorBloc bloc;
   late MarketBloc marketBloc;
 
@@ -181,303 +181,6 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
   void loadSlider() {
     bloc.add(LoadSlider(marketId: widget.market.id!));
     // bloc.add(LoadComments(marketId: widget.market.id!));
-  }
-
-  void sliderImage(
-    context, {
-    bool isEditing = false,
-    String sliderId = "",
-    String currentImage = '',
-  }) {
-    String preview = '';
-    XFile? image;
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder:
-          (context) => StatefulBuilder(
-            builder: (context, setState) {
-              return AlertDialog(
-                content: SizedBox(
-                  height: Dimensions.height * 0.26,
-                  width: Dimensions.width * 0.7,
-                  child: BlocConsumer<VendorBloc, VendorState>(
-                    listener: (context, state) {
-                      if (state.sliderStatus == CWSStatus.success) {
-                        loadSlider();
-                        Navigator.pop(context);
-                      } else if (state.sliderStatus == CWSStatus.failure) {
-                        showSnackBar(context, "مشکلی پیش آمده مجددا تلاش کنید");
-                        Navigator.pop(context);
-                      }
-                    },
-                    builder: (context, state) {
-                      return Column(
-                        children: [
-                          //title
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              'عکس اسلایدر',
-                              style: TextStyle(
-                                color: Colora.primaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: Dimensions.width * 0.05,
-                              ),
-                            ),
-                          ),
-
-                          const Divider(color: Colora.primaryColor),
-
-                          //preview
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              //add
-                              Container(
-                                width: Dimensions.width * 0.4,
-                                padding: EdgeInsets.symmetric(
-                                  vertical: Dimensions.height * 0.01,
-                                ),
-                                child: AspectRatio(
-                                  aspectRatio: 16 / 9,
-                                  child: InkWell(
-                                    onTap: () async {
-                                      var maxFileSizeInBytes = 5 * 1048576;
-
-                                      final ImagePicker picker = ImagePicker();
-                                      image = await picker.pickImage(
-                                        source: ImageSource.gallery,
-                                      );
-
-                                      var imagePath =
-                                          await image!.readAsBytes();
-                                      var fileSize = imagePath.length;
-
-                                      if (fileSize <= maxFileSizeInBytes) {
-                                        setState(() {
-                                          preview = image!.path;
-                                        });
-                                      } else {
-                                        showSnackBar(
-                                          context,
-                                          "حجم عکس بیش از ۵ مگابایت است",
-                                        );
-                                      }
-                                    },
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(
-                                          color: Colora.primaryColor,
-                                          width: 2,
-                                        ),
-                                      ),
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(10),
-                                        child:
-                                            isEditing == true && preview == ''
-                                                ? CachedNetworkImage(
-                                                  imageUrl: currentImage,
-                                                  imageBuilder: (
-                                                    context,
-                                                    imageProvider,
-                                                  ) {
-                                                    return Container(
-                                                      decoration: BoxDecoration(
-                                                        image: DecorationImage(
-                                                          image: imageProvider,
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                  placeholder:
-                                                      (
-                                                        context,
-                                                        url,
-                                                      ) => Shimmer.fromColors(
-                                                        baseColor: Colors.grey
-                                                            .withOpacity(0.2),
-                                                        highlightColor: Colors
-                                                            .black
-                                                            .withOpacity(0.2),
-                                                        direction:
-                                                            ShimmerDirection
-                                                                .rtl,
-                                                        child: Container(
-                                                          decoration: BoxDecoration(
-                                                            color: Colors.grey,
-                                                            borderRadius:
-                                                                BorderRadius.circular(
-                                                                  5,
-                                                                ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                  errorWidget:
-                                                      (context, url, error) =>
-                                                          const Icon(
-                                                            Icons.error,
-                                                          ),
-                                                )
-                                                : preview == ''
-                                                ? Icon(
-                                                  Icons
-                                                      .add_photo_alternate_rounded,
-                                                  color: Colora.primaryColor,
-                                                  size: Dimensions.width * 0.1,
-                                                )
-                                                : Image.file(
-                                                  File(preview),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-
-                          //back and save
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              //save
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child:
-                                    state.sliderStatus == CWSStatus.loading
-                                        ? Container(
-                                          width: Dimensions.width * 0.3,
-                                          height: Dimensions.height * 0.042,
-                                          padding: EdgeInsets.symmetric(
-                                            vertical: Dimensions.height * 0.01,
-                                          ),
-                                          margin: EdgeInsets.only(
-                                            top: Dimensions.height * 0.02,
-                                          ),
-                                          decoration: BoxDecoration(
-                                            color: Colora.primaryColor,
-                                            borderRadius: BorderRadius.circular(
-                                              20,
-                                            ),
-                                          ),
-                                          child: const Center(
-                                            child: FittedBox(
-                                              fit: BoxFit.scaleDown,
-                                              child: CircularProgressIndicator(
-                                                color: Colora.scaffold_,
-                                              ),
-                                            ),
-                                          ),
-                                        )
-                                        : InkWell(
-                                          onTap: () async {
-                                            if (image != null) {
-                                              if (isEditing == false) {
-                                                bloc.add(
-                                                  AddSliderEvent(
-                                                    id: widget.market.id!,
-                                                    sliderImage: image!,
-                                                  ),
-                                                );
-                                              } else {
-                                                bloc.add(
-                                                  EditSliderEvent(
-                                                    id: sliderId,
-                                                    sliderImage: image!,
-                                                  ),
-                                                );
-                                              }
-                                            } else {
-                                              showSnackBar(
-                                                context,
-                                                "لطفا عکس خود را انتخاب کنید",
-                                              );
-                                            }
-                                          },
-                                          child: Container(
-                                            width: Dimensions.width * 0.3,
-                                            padding: EdgeInsets.symmetric(
-                                              vertical:
-                                                  Dimensions.height * 0.01,
-                                            ),
-                                            margin: EdgeInsets.only(
-                                              top: Dimensions.height * 0.02,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color: Colora.primaryColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                            child: Center(
-                                              child: FittedBox(
-                                                fit: BoxFit.scaleDown,
-                                                child: Text(
-                                                  isEditing == true
-                                                      ? 'ویرایش'
-                                                      : 'ذخیره',
-                                                  style: TextStyle(
-                                                    color: Colora.scaffold,
-                                                    fontSize:
-                                                        Dimensions.width *
-                                                        0.033,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                              ),
-
-                              //back
-                              state.sliderStatus == CWSStatus.loading
-                                  ? const SizedBox()
-                                  : InkWell(
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Container(
-                                      width: Dimensions.width * 0.3,
-                                      padding: EdgeInsets.symmetric(
-                                        vertical: Dimensions.height * 0.01,
-                                      ),
-                                      margin: EdgeInsets.only(
-                                        top: Dimensions.height * 0.02,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: Colora.primaryColor,
-                                        borderRadius: BorderRadius.circular(20),
-                                      ),
-                                      child: Center(
-                                        child: FittedBox(
-                                          fit: BoxFit.scaleDown,
-                                          child: Text(
-                                            'بازگشت',
-                                            style: TextStyle(
-                                              color: Colora.scaffold,
-                                              fontSize:
-                                                  Dimensions.width * 0.033,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                            ],
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ),
-              );
-            },
-          ),
-    );
   }
 
   @override
@@ -705,118 +408,6 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
                                                             fit: BoxFit.cover,
                                                           ),
                                                         ],
-
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
-                                                          children: [
-                                                            //edit
-                                                            Container(
-                                                              decoration: BoxDecoration(
-                                                                shape:
-                                                                    BoxShape
-                                                                        .circle,
-                                                                color:
-                                                                    Colora
-                                                                        .scaffold_,
-                                                                border: Border.all(
-                                                                  color:
-                                                                      state
-                                                                          .topColor,
-                                                                  width: 2,
-                                                                ),
-                                                              ),
-                                                              child: IconButton(
-                                                                onPressed: () {
-                                                                  sliderImage(
-                                                                    context,
-                                                                    sliderId:
-                                                                        state
-                                                                            .sliderList[index]
-                                                                            .id!,
-                                                                    isEditing:
-                                                                        true,
-                                                                    currentImage:
-                                                                        state
-                                                                            .sliderList[index]
-                                                                            .image
-                                                                            .toString(),
-                                                                  );
-                                                                },
-                                                                icon: Icon(
-                                                                  Icons
-                                                                      .edit_rounded,
-                                                                  color:
-                                                                      state
-                                                                          .topColor,
-                                                                  size:
-                                                                      Dimensions
-                                                                          .width *
-                                                                      0.06,
-                                                                ),
-                                                              ),
-                                                            ),
-
-                                                            SizedBox(
-                                                              width:
-                                                                  Dimensions
-                                                                      .width *
-                                                                  0.1,
-                                                            ),
-
-                                                            //remove
-                                                            Container(
-                                                              decoration: BoxDecoration(
-                                                                shape:
-                                                                    BoxShape
-                                                                        .circle,
-                                                                color:
-                                                                    Colora
-                                                                        .scaffold_,
-                                                                border: Border.all(
-                                                                  color:
-                                                                      state
-                                                                          .topColor,
-                                                                  width: 2,
-                                                                ),
-                                                              ),
-                                                              child: IconButton(
-                                                                onPressed: () {
-                                                                  bloc.add(
-                                                                    DeleteSliderEvent(
-                                                                      id:
-                                                                          state
-                                                                              .sliderList[index]
-                                                                              .id!,
-                                                                    ),
-                                                                  );
-                                                                  state
-                                                                      .sliderList
-                                                                      .removeAt(
-                                                                        index,
-                                                                      );
-                                                                  setState(() {
-                                                                    currentSliderIndex =
-                                                                        index +
-                                                                        1;
-                                                                  });
-                                                                },
-                                                                icon: Icon(
-                                                                  Icons
-                                                                      .delete_rounded,
-                                                                  color:
-                                                                      Colors
-                                                                          .redAccent,
-                                                                  size:
-                                                                      Dimensions
-                                                                          .width *
-                                                                      0.06,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
                                                       ],
                                                     ),
                                                   ),
@@ -853,12 +444,7 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
                                                         ],
                                                       ),
                                                       child: InkWell(
-                                                        onTap: () {
-                                                          sliderImage(
-                                                            context,
-                                                            isEditing: false,
-                                                          );
-                                                        },
+                                                        onTap: () {},
                                                         child: Stack(
                                                           children: [
                                                             //image
@@ -891,48 +477,6 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
                                                               // Image.asset(
                                                               //     'assets/images/logo.png'
                                                               // ),
-                                                            ),
-
-                                                            //add
-                                                            Container(
-                                                              width:
-                                                                  Dimensions
-                                                                      .width,
-                                                              decoration: BoxDecoration(
-                                                                color: Colora
-                                                                    .scaffold
-                                                                    .withOpacity(
-                                                                      0.7,
-                                                                    ),
-                                                                borderRadius:
-                                                                    BorderRadius.circular(
-                                                                      20,
-                                                                    ),
-                                                              ),
-                                                              margin: EdgeInsets.only(
-                                                                bottom:
-                                                                    Dimensions
-                                                                        .height *
-                                                                    0.01,
-                                                                left:
-                                                                    Dimensions
-                                                                        .width *
-                                                                    0.02,
-                                                              ),
-                                                              alignment:
-                                                                  Alignment
-                                                                      .bottomLeft,
-                                                              child: Icon(
-                                                                Icons
-                                                                    .add_photo_alternate_rounded,
-                                                                color:
-                                                                    state
-                                                                        .topColor,
-                                                                size:
-                                                                    Dimensions
-                                                                        .width *
-                                                                    0.1,
-                                                              ),
                                                             ),
                                                           ],
                                                         ),
@@ -1049,6 +593,7 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
                         mainColor: state.topColor,
                         fontColor: state.fontColor,
                         fontFamily: state.fontFamily,
+                        isAdmin: false,
                       ),
 
                       Positioned(
@@ -1153,8 +698,8 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
                           initSecondColor: state.secondColor,
                           initFont: state.fontFamily,
                           initFontColor: state.fontColor,
+
                           initFontSecondColor: state.secondFontColor,
-                          userMode: true,
                         ),
                       ),
                     ],
@@ -1258,113 +803,41 @@ productView(String marketId, styleState, MarketBloc marketBloc) {
   Widget templateWidget(int template) {
     switch (template) {
       case 0:
-        return buildProductGridView(
-          marketId: marketId,
-          templateIndex: 0,
-          isAdmin: true,
-        );
+        return buildProductGridView(marketId: marketId, templateIndex: 0);
       case 1:
-        return buildProductGridView(
-          marketId: marketId,
-          templateIndex: 1,
-          isAdmin: true,
-        );
+        return buildProductGridView(marketId: marketId, templateIndex: 1);
       case 2:
-        return buildProductGridView(
-          marketId: marketId,
-          templateIndex: 2,
-          isAdmin: true,
-        );
+        return buildProductGridView(marketId: marketId, templateIndex: 2);
       case 3:
-        return buildProductGridView(
-          marketId: marketId,
-          templateIndex: 3,
-          isAdmin: true,
-        );
+        return buildProductGridView(marketId: marketId, templateIndex: 3);
       case 4:
-        return buildProductGridView(
-          marketId: marketId,
-          templateIndex: 4,
-          isAdmin: true,
-        );
+        return buildProductGridView(marketId: marketId, templateIndex: 4);
       case 5:
-        return buildProductGridView(
-          marketId: marketId,
-          templateIndex: 5,
-          isAdmin: true,
-        );
+        return buildProductGridView(marketId: marketId, templateIndex: 5);
       case 6:
-        return buildProductGridView(
-          marketId: marketId,
-          templateIndex: 6,
-          isAdmin: true,
-        );
+        return buildProductGridView(marketId: marketId, templateIndex: 6);
       case 7:
-        return buildProductGridView(
-          marketId: marketId,
-          templateIndex: 7,
-          isAdmin: true,
-        );
+        return buildProductGridView(marketId: marketId, templateIndex: 7);
       case 8:
-        return buildProductGridView(
-          marketId: marketId,
-          templateIndex: 8,
-          isAdmin: true,
-        );
+        return buildProductGridView(marketId: marketId, templateIndex: 8);
       case 9:
-        return buildProductGridView(
-          marketId: marketId,
-          templateIndex: 9,
-          isAdmin: true,
-        );
+        return buildProductGridView(marketId: marketId, templateIndex: 9);
       case 10:
-        return buildProductGridView(
-          marketId: marketId,
-          templateIndex: 10,
-          isAdmin: true,
-        );
+        return buildProductGridView(marketId: marketId, templateIndex: 10);
       case 11:
-        return buildProductGridView(
-          marketId: marketId,
-          templateIndex: 11,
-          isAdmin: true,
-        );
+        return buildProductGridView(marketId: marketId, templateIndex: 11);
       case 12:
-        return buildProductGridView(
-          marketId: marketId,
-          templateIndex: 12,
-          isAdmin: true,
-        );
+        return buildProductGridView(marketId: marketId, templateIndex: 12);
       case 13:
-        return buildProductGridView(
-          marketId: marketId,
-          templateIndex: 13,
-          isAdmin: true,
-        );
+        return buildProductGridView(marketId: marketId, templateIndex: 13);
       case 14:
-        return buildProductGridView(
-          marketId: marketId,
-          templateIndex: 14,
-          isAdmin: true,
-        );
+        return buildProductGridView(marketId: marketId, templateIndex: 14);
       case 15:
-        return buildProductGridView(
-          marketId: marketId,
-          templateIndex: 15,
-          isAdmin: true,
-        );
+        return buildProductGridView(marketId: marketId, templateIndex: 15);
       case 16:
-        return buildProductGridView(
-          marketId: marketId,
-          templateIndex: 16,
-          isAdmin: true,
-        );
+        return buildProductGridView(marketId: marketId, templateIndex: 16);
       case 17:
-        return buildProductGridView(
-          marketId: marketId,
-          templateIndex: 17,
-          isAdmin: true,
-        );
+        return buildProductGridView(marketId: marketId, templateIndex: 17);
 
       default:
         return const SizedBox.shrink();
@@ -1411,67 +884,39 @@ productView(String marketId, styleState, MarketBloc marketBloc) {
             // Container(
             //   width: Dimensions.width,
             //   height: Dimensions.height * 0.07,
-            //   margin: EdgeInsets.symmetric(vertical: Dimensions.height * 0.01),
+            //   margin: EdgeInsets.symmetric(
+            //     vertical: Dimensions.height * 0.01
+            //   ),
             //   decoration: BoxDecoration(
             //     color: styleState.secondColor,
-            //     borderRadius: BorderRadius.circular(10),
+            //     borderRadius: BorderRadius.circular(10)
             //   ),
             //   child: MaterialButton(
-            //     onPressed: () {
-            //       marketBloc.add(
-            //         ShowTemplatesEvent(isShow: !state.showTemplates),
-            //       );
+            //     onPressed: (){
+            //       marketBloc.add(ShowTemplatesEvent(isShow: !state.showTemplates));
             //     },
             //     child: Row(
             //       mainAxisAlignment: MainAxisAlignment.center,
             //       children: [
+            //
             //         Text(
             //           'اضافه کردن قالب جدید',
             //           style: TextStyle(
             //             color: styleState.fontColor,
-            //             fontFamily: styleState.fontFamily,
+            //             fontFamily: styleState.fontFamily
             //           ),
             //         ),
-
-            //         SizedBox(width: Dimensions.width * 0.01),
-
-            //         Icon(Icons.add_box, color: styleState.fontColor),
+            //
+            //         SizedBox(width: Dimensions.width * 0.01,),
+            //
+            //         Icon(
+            //           Icons.add_box,
+            //           color: styleState.fontColor,
+            //         )
             //       ],
             //     ),
             //   ),
             // ),
-            if (state.templateList.isNotEmpty)
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  width: Dimensions.width * 0.25,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.width * 0.03,
-                    vertical: Dimensions.height * 0.005,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: styleState.topColor,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(Icons.visibility, color: styleState.fontColor),
-                      Icon(Icons.delete, color: styleState.fontColor),
-                      Icon(Icons.settings, color: styleState.fontColor),
-                    ],
-                  ),
-                ),
-              ),
-            //all templates
-            if (state.showTemplates == true) ...[
-              SizedBox(
-                width: Dimensions.width,
-                height: Dimensions.height * 0.45,
-                child: MultiViewSliderScreen(),
-              ),
-            ],
 
             //selected templates
             BlocBuilder<MarketBloc, MarketState>(

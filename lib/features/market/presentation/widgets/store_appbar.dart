@@ -23,6 +23,7 @@ class StoreAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.title,
     required this.description,
     this.image,
+    this.isAdmin = false,
   });
   final String title;
   final String description;
@@ -30,7 +31,7 @@ class StoreAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   final BuildContext context;
   final Widget? appbarTools;
-
+  final bool isAdmin;
   @override
   Widget build(BuildContext context) {
     return AppBar(
@@ -139,9 +140,9 @@ class StoreAppbar2 extends StatefulWidget {
   final String? logoImage;
   final String? backImage;
   final Color? mainColor;
-
   final Color? fontColor;
   final String? fontFamily;
+  final bool isAdmin;
 
   const StoreAppbar2({
     super.key,
@@ -151,9 +152,9 @@ class StoreAppbar2 extends StatefulWidget {
     this.logoImage,
     this.backImage,
     this.mainColor = Colora.primaryColor,
-
     this.fontColor = Colors.white,
     this.fontFamily,
+    this.isAdmin = false,
   });
 
   @override
@@ -940,16 +941,17 @@ class _StoreAppbar2State extends State<StoreAppbar2> {
               ),
 
               //image cover
-              InkWell(
-                onTap: () {
-                  changeBack(context);
-                },
-                child: Container(
-                  width: Dimensions.width,
-                  height: Dimensions.height * 0.25,
-                  color: widget.mainColor?.withOpacity(0.6),
+              if (widget.isAdmin)
+                InkWell(
+                  onTap: () {
+                    changeBack(context);
+                  },
+                  child: Container(
+                    width: Dimensions.width,
+                    height: Dimensions.height * 0.25,
+                    color: widget.mainColor?.withOpacity(0.6),
+                  ),
                 ),
-              ),
 
               //back
               Positioned(
@@ -1036,10 +1038,6 @@ class _StoreAppbar2State extends State<StoreAppbar2> {
                                           BlendMode.srcIn,
                                         ),
                                       )
-                                      // Image.asset(
-                                      //   'assets/images/logo.png',
-                                      //   fit: BoxFit.cover,
-                                      // )
                                       : initLogoImage.contains('http')
                                       ? CachedNetworkImage(
                                         imageUrl: initLogoImage,
@@ -1084,29 +1082,30 @@ class _StoreAppbar2State extends State<StoreAppbar2> {
                         ),
 
                         // edit
-                        Positioned(
-                          top: Dimensions.height * 0.07,
-                          child: InkWell(
-                            onTap: () {
-                              changeLogo(context);
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: widget.mainColor,
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: widget.mainColor!,
-                                  width: 2,
+                        if (widget.isAdmin)
+                          Positioned(
+                            top: Dimensions.height * 0.07,
+                            child: InkWell(
+                              onTap: () {
+                                changeLogo(context);
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: widget.mainColor,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    color: widget.mainColor!,
+                                    width: 2,
+                                  ),
                                 ),
-                              ),
-                              child: Icon(
-                                Icons.edit_rounded,
-                                color: widget.fontColor!,
-                                size: Dimensions.width * 0.05,
+                                child: Icon(
+                                  Icons.edit_rounded,
+                                  color: widget.fontColor!,
+                                  size: Dimensions.width * 0.05,
+                                ),
                               ),
                             ),
                           ),
-                        ),
                       ],
                     ),
                   ),

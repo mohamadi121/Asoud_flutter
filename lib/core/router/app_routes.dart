@@ -20,7 +20,7 @@ abstract class AppRoutes {
   static const storeDetail = "/store_screen";
 
   static const markets = "/markets";
-  static const editMarket = "/edit_market";
+  static const marketPreview = "/market_preview";
   static const editStoreInfo = "/edit_store_info";
   static const storeInfo = "/store_info";
   static const shoppingCart = "/shopping_cart";

@@ -62,74 +62,92 @@ class _MultiViewSliderScreenState extends State<MultiViewSliderScreen> {
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 0,
+                                isAdmin: false,
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 1,
+                                isAdmin: false,
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 2,
+                                isAdmin: false,
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 3,
+                                isAdmin: false,
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 4,
+                                isAdmin: false,
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 5,
+                                isAdmin: false,
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 6,
+                                isAdmin: false,
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 7,
+                                isAdmin: false,
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 8,
+                                isAdmin: false,
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 9,
+                                isAdmin: false,
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 10,
+                                isAdmin: false,
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 11,
+                                isAdmin: false,
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 12,
+                                isAdmin: false,
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 13,
+                                isAdmin: false,
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 14,
+                                isAdmin: false,
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 15,
+                                isAdmin: false,
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 16,
+                                isAdmin: false,
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 17,
+                                isAdmin: false,
                               ),
                             ],
                           ),
@@ -275,11 +293,13 @@ class _MultiViewSliderScreenState extends State<MultiViewSliderScreen> {
 class ProductGridView extends StatelessWidget {
   final String marketId;
   final int templateIndex;
+  final bool isAdmin;
 
   const ProductGridView({
     Key? key,
     required this.marketId,
     required this.templateIndex,
+    this.isAdmin = false,
   }) : super(key: key);
 
   @override
@@ -364,8 +384,12 @@ class ProductGridView extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          context.read<AddProductBloc>().add(ResetDataEvent());
-          context.push(AppRoutes.createProduct, extra: marketId);
+          if (isAdmin) {
+            context.read<AddProductBloc>().add(ResetDataEvent());
+            context.push(AppRoutes.createProduct, extra: marketId);
+          } else {
+            // context.push(AppRoutes.createProduct, extra: marketId);
+          }
         },
         child: Column(
           children: [
@@ -438,7 +462,6 @@ class ProductGridView extends StatelessWidget {
     return Container(
       width: width,
       height: height,
-
       margin: EdgeInsets.symmetric(
         horizontal: Dimensions.width * 0.01,
         vertical: Dimensions.height * 0.008,
@@ -458,8 +481,12 @@ class ProductGridView extends StatelessWidget {
         textDirection: leftAligned ? TextDirection.rtl : TextDirection.ltr,
         child: InkWell(
           onTap: () {
-            context.read<AddProductBloc>().add(ResetDataEvent());
-            context.push(AppRoutes.createProduct, extra: marketId);
+            if (isAdmin) {
+              context.read<AddProductBloc>().add(ResetDataEvent());
+              context.push(AppRoutes.createProduct, extra: marketId);
+            } else {
+              context.push(AppRoutes.createProduct, extra: marketId);
+            }
           },
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -1217,6 +1244,11 @@ class ProductGridView extends StatelessWidget {
 Widget buildProductGridView({
   required String marketId,
   required int templateIndex,
+  bool isAdmin = false,
 }) {
-  return ProductGridView(marketId: marketId, templateIndex: templateIndex);
+  return ProductGridView(
+    marketId: marketId,
+    templateIndex: templateIndex,
+    isAdmin: isAdmin,
+  );
 }

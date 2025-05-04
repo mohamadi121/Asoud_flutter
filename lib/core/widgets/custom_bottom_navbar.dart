@@ -12,7 +12,7 @@ import 'package:go_router/go_router.dart';
 
 class CustomBottomNavigationBar extends StatefulWidget {
   final String? marketId;
-
+  final bool? userMode;
   final Color? initTopColor;
   final Color? initBackColor;
   final Color? initSecondColor;
@@ -24,7 +24,7 @@ class CustomBottomNavigationBar extends StatefulWidget {
   const CustomBottomNavigationBar({
     super.key,
     this.marketId,
-
+    this.userMode = true,
     this.initBackColor,
     this.initTopColor,
     this.initSecondColor,
@@ -69,6 +69,7 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
           widget.initFont,
           widget.initFontColor,
           widget.initFontSecondColor,
+          widget.userMode,
         );
       },
       child: Container(
@@ -127,13 +128,17 @@ void showBottomSheet(
   initFont,
   initFontColor,
   initFontSecondColor,
+  userMode,
 ) {
   showModalBottomSheet(
     context: context,
     builder: (BuildContext context) {
       return Container(
         width: Dimensions.width,
-        height: Dimensions.height * 0.16,
+        height:
+            userMode == false
+                ? Dimensions.height * 0.16
+                : Dimensions.height * 0.1,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(27),
@@ -181,123 +186,128 @@ void showBottomSheet(
                 ],
               ),
 
-              SizedBox(width: Dimensions.width * .85, child: const Divider()),
+              if (userMode == false)
+                SizedBox(width: Dimensions.width * .85, child: const Divider()),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  //Takhfif Route
-                  IconButton(
-                    onPressed: () {
-                      context.push(AppRoutes.takhfif);
-                      /*  Navigator.push(
+              if (userMode == false)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    //Takhfif Route
+                    IconButton(
+                      onPressed: () {
+                        context.push(AppRoutes.takhfif);
+                        /*  Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const TakhfifScreen(),
                           ),
                         ); */
-                    },
-                    icon: const Icon(Icons.settings, color: Colors.white),
-                  ),
+                      },
+                      icon: const Icon(Icons.settings, color: Colors.white),
+                    ),
 
-                  //credit card
-                  IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.credit_card, color: Colors.white),
-                  ),
+                    //credit card
+                    IconButton(
+                      onPressed: () {},
+                      icon: const Icon(Icons.credit_card, color: Colors.white),
+                    ),
 
-                  //font
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      changeFont(
-                        context,
-                        bloc,
-                        marketId,
-                        initFont,
-                        initTopColor,
-                        initBackColor,
-                        initSecondColor,
-                        initFontColor,
-                        initFontSecondColor,
-                      );
+                    //font
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        changeFont(
+                          context,
+                          bloc,
+                          marketId,
+                          initFont,
+                          initTopColor,
+                          initBackColor,
+                          initSecondColor,
+                          initFontColor,
+                          initFontSecondColor,
+                        );
 
-                      // context.router.push(const FontColorSettingRoute());
-                      /*    Navigator.push(
+                        // context.router.push(const FontColorSettingRoute());
+                        /*    Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
                                 const FontColorSettingScreen(),
                           ),
                         ); */
-                    },
-                    icon: const Icon(Icons.font_download, color: Colors.white),
-                  ),
+                      },
+                      icon: const Icon(
+                        Icons.font_download,
+                        color: Colors.white,
+                      ),
+                    ),
 
-                  //color
-                  IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      changeColor(
-                        context,
-                        bloc,
-                        marketId,
-                        initFont,
-                        initTopColor,
-                        initBackColor,
-                        initSecondColor,
-                        initFontColor,
-                        initFontSecondColor,
-                      );
-                      // Navigator.pop(context);
-                      // context.router.push(const ColorSettingRoute());
-                      /*   Navigator.push(
+                    //color
+                    IconButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        changeColor(
+                          context,
+                          bloc,
+                          marketId,
+                          initFont,
+                          initTopColor,
+                          initBackColor,
+                          initSecondColor,
+                          initFontColor,
+                          initFontSecondColor,
+                        );
+                        // Navigator.pop(context);
+                        // context.router.push(const ColorSettingRoute());
+                        /*   Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => const ColorSettingScreen(),
                         ),
                       ); */
-                    },
-                    icon: const Icon(
-                      Icons.color_lens_outlined,
-                      color: Colors.white,
+                      },
+                      icon: const Icon(
+                        Icons.color_lens_outlined,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
 
-                  //view
-                  IconButton(
-                    onPressed: () {
-                      marketBloc.add(const ShowTemplatesEvent(isShow: true));
-                      Navigator.pop(context);
-                      // context.router.push(const MultiViewSliderRoute());
-                      /*   Navigator.push(
+                    //view
+                    IconButton(
+                      onPressed: () {
+                        marketBloc.add(const ShowTemplatesEvent(isShow: true));
+                        Navigator.pop(context);
+                        // context.router.push(const MultiViewSliderRoute());
+                        /*   Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const MultiViewSliderScreen(),
                           ),
                         ); */
-                    },
-                    icon: const Icon(
-                      Icons.window_outlined,
-                      color: Colors.white,
+                      },
+                      icon: const Icon(
+                        Icons.window_outlined,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
 
-                  // edit store info
-                  IconButton(
-                    onPressed: () {
-                      context.push(AppRoutes.editStoreInfo);
-                      /*      Navigator.push(
+                    // edit store info
+                    IconButton(
+                      onPressed: () {
+                        context.push(AppRoutes.editStoreInfo);
+                        /*      Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const EditStoreInfoScreen(),
                           ),
                         ); */
-                    },
-                    icon: const Icon(Icons.edit_square, color: Colors.white),
-                  ),
-                ],
-              ),
+                      },
+                      icon: const Icon(Icons.edit_square, color: Colors.white),
+                    ),
+                  ],
+                ),
             ],
           ),
         ),

@@ -376,7 +376,7 @@ class _StoreCardState extends State<StoreCard> {
                             width: 110,
                             onPress: () {
                               context.push(
-                                AppRoutes.editMarket,
+                                AppRoutes.marketPreview,
                                 extra: widget.market,
                               );
                             },

@@ -8,7 +8,7 @@ import 'package:asood/features/customer/presentation/screens/customer_dashboard_
 import 'package:asood/features/job_managment/presentation/bloc/jobmanagment_bloc.dart';
 import 'package:asood/features/job_managment/presentation/screen/job_managment.dart';
 import 'package:asood/features/market/presentation/screens/create_product.dart';
-import 'package:asood/features/market/presentation/screens/edit_market_screen.dart';
+import 'package:asood/features/market/presentation/screens/market_preview_screen.dart';
 import 'package:asood/features/market/presentation/screens/store_detail_screen.dart';
 import 'package:asood/features/market/presentation/screens/store_info.dart';
 import 'package:asood/features/panel/screens/panel_config_screen.dart';
@@ -72,10 +72,10 @@ class AppRouter {
         },
       ),
       GoRoute(
-        path: AppRoutes.editMarket,
+        path: AppRoutes.marketPreview,
         builder: (context, state) {
           final market = state.extra as MarketModel;
-          return EditMarketScreen(market: market);
+          return MarketPreviewScreen(market: market);
         },
       ),
       GoRoute(
