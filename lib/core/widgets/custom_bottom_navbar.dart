@@ -74,12 +74,12 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
       child: Container(
         height: Dimensions.height * 0.05,
         width: Dimensions.width,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
           ),
-          color: Colora.primaryColor,
+          color: bloc.state.topColor,
         ),
         child: Align(
           alignment: Alignment.topCenter,
@@ -134,12 +134,12 @@ void showBottomSheet(
       return Container(
         width: Dimensions.width,
         height: Dimensions.height * 0.16,
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(27),
             topLeft: Radius.circular(27),
           ),
-          color: Colora.primaryColor,
+          color: bloc.state.topColor,
         ),
         child: Center(
           child: Column(

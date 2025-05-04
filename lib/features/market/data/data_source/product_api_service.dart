@@ -1,4 +1,5 @@
 import 'package:asood/core/constants/endpoints.dart';
+import 'package:asood/core/helper/enum_changer.dart';
 import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/features/market/presentation/blocs/add_product/add_product_bloc.dart';
 import 'package:dio/dio.dart';
@@ -41,6 +42,7 @@ class ProductApiService {
     try {
       Response res = await dioClient.postData(
         Endpoints.createProduct,
+
         product.toJson(),
       );
       return apiStatus(res);
@@ -69,15 +71,13 @@ class ProductApiService {
     int days,
   ) async {
     try {
-      Response res = await dioClient.postData(
-        '${Endpoints.createProductDiscount}/$productId/',
-        {
-          "users": [],
-          "position": position,
-          "percentage": percent,
-          "duration": days,
-        },
-      );
+      Response res = await dioClient
+          .postData('${Endpoints.createProductDiscount}$productId/', {
+            "users": [],
+            "position": tagPositionEnumChanger(position),
+            "percentage": percent,
+            "duration": days,
+          });
       return apiStatus(res);
     } catch (e) {
       return customApiStatus();

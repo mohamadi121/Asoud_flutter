@@ -109,48 +109,12 @@ class SubmitNewProductEvent extends AddProductEvent {
   final String? name;
   final String? description;
   final String? technicalDetail;
-  final int? stock;
-  final int? price;
-  final int? requiredProduct;
-  final int? giftProduct;
-  final bool? isMarketer;
-  final SellTypeEnum? sellType;
-  final int? shipCost;
-  final SendPriceEnum? shipCostPayType;
-  final PublishStatusEnum? publishStatus;
-  final String? subCategory;
-  final List<String>? keywords;
-  final TagEnum? tag;
-  final PositionEnum? tagPosition;
-  final int? mainPrice;
-  final int? colleaguePrice;
-  final int? marketerPrice;
-  final int? maximumSellPrice;
-  final bool? isRequirement;
 
   const SubmitNewProductEvent({
     this.market,
     this.name,
     this.description,
     this.technicalDetail,
-    this.stock,
-    this.price,
-    this.requiredProduct,
-    this.giftProduct,
-    this.isMarketer,
-    this.sellType,
-    this.shipCost,
-    this.shipCostPayType,
-    this.publishStatus,
-    this.subCategory,
-    this.keywords,
-    this.tag,
-    this.tagPosition,
-    this.mainPrice,
-    this.colleaguePrice,
-    this.marketerPrice,
-    this.maximumSellPrice,
-    this.isRequirement,
   });
 }
 
@@ -181,6 +145,10 @@ class UpdatePublishStatusEvent extends AddProductEvent {
   final PublishStatusEnum publishStatus;
 
   const UpdatePublishStatusEvent({required this.publishStatus});
+}
+
+class ResetDataEvent extends AddProductEvent {
+  const ResetDataEvent();
 }
 
 class UpdateProductDetailEvent extends AddProductEvent {

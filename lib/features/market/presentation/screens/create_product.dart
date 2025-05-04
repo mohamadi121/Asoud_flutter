@@ -1,3 +1,4 @@
+import 'package:asood/core/router/app_routers.dart';
 import 'package:asood/features/create_workspace/presentation/bloc/create_workspace_bloc.dart';
 import 'package:asood/features/market/presentation/widgets/create_product/category_selection_section.dart';
 import 'package:asood/features/market/presentation/widgets/create_product/customer_postprice_section.dart';
@@ -14,10 +15,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:asood/core/constants/constants.dart';
 import 'package:asood/core/http_client/api_status.dart';
-import 'package:asood/core/router/app_routers.dart';
+
 import 'package:asood/core/widgets/appbar/default_appbar.dart';
 import 'package:asood/core/widgets/custom_textfield.dart';
-import 'package:asood/features/job_managment/presentation/bloc/jobmanagment_bloc.dart';
+
 import 'package:asood/features/market/presentation/blocs/add_product/add_product_bloc.dart';
 import 'package:asood/features/market/presentation/widgets/create_product/active_broadcast_widget.dart';
 import 'package:asood/features/market/presentation/widgets/create_product/keyword_builder_widget.dart';
@@ -25,9 +26,9 @@ import 'package:asood/features/market/presentation/widgets/create_product/produc
 import 'package:asood/features/market/presentation/widgets/create_product/stock_widget.dart';
 
 class CreateProduct extends StatefulWidget {
-  const CreateProduct({super.key, required this.templateId});
+  const CreateProduct({super.key, required this.marketId});
 
-  final String templateId;
+  final String marketId;
 
   @override
   State<CreateProduct> createState() => _CreateProductState();
@@ -54,6 +55,20 @@ class _CreateProductState extends State<CreateProduct> {
       child: SafeArea(
         child: BlocConsumer<AddProductBloc, AddProductState>(
           listener: (context, state) {
+            print("state.status");
+            print(state.status);
+            if (state.status == CWSStatus.success) {
+              context.pop();
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(
+                  backgroundColor: Colora.borderAvatar,
+                  content: Text(
+                    "کالا با موفقیت ثبت شد",
+                    style: TextStyle(color: Colora.scaffold),
+                  ),
+                ),
+              );
+            }
             if (state.status == CWSStatus.failure) {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
@@ -174,7 +189,7 @@ class _CreateProductState extends State<CreateProduct> {
 
                                   //gift and extra product
                                   SelectGiftExtraProductWidget(
-                                    marketId: widget.templateId,
+                                    marketId: widget.marketId,
                                   ),
 
                                   SizedBox(height: Dimensions.height * 0.01),
@@ -233,8 +248,9 @@ class _CreateProductState extends State<CreateProduct> {
                                                   .selectedCategoryId
                                                   .isEmpty ||
                                               state.keywords.isEmpty ||
-                                              state.productStock == 0 ||
-                                              state.productPrice == 0) {
+                                              (state.productStockEnable ==
+                                                      true &&
+                                                  state.productStock == 0)) {
                                             ScaffoldMessenger.of(
                                               context,
                                             ).showSnackBar(
@@ -273,31 +289,11 @@ class _CreateProductState extends State<CreateProduct> {
                                           } else {
                                             bloc.add(
                                               SubmitNewProductEvent(
-                                                market: widget.templateId,
+                                                market: widget.marketId,
                                                 name: name.text,
                                                 description: description.text,
                                                 technicalDetail:
                                                     technicalDescription.text,
-                                                stock:
-                                                    state.productStock == 0
-                                                        ? 0
-                                                        : int.parse(
-                                                          state.productStock
-                                                              .toString(),
-                                                        ),
-                                                price:
-                                                    state.productPrice == 0
-                                                        ? 0
-                                                        : int.parse(
-                                                          state.productPrice
-                                                              .toString(),
-                                                        ),
-
-                                                isMarketer: state.isMarketer,
-                                                sellType: state.productSellType,
-
-                                                shipCostPayType:
-                                                    state.productSendPrice,
                                               ),
                                             );
                                           }

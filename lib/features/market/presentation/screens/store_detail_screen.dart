@@ -43,7 +43,6 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
 
   int sliderLength = 6;
 
-  Color initTopColor = Colora.primaryColor;
   Color initBackColor = Colora.scaffold;
   Color initSecondColor = Colora.lightBlue;
 
@@ -71,10 +70,8 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
             topColor: Color(int.parse('0xFF${widget.market.theme!.color}')),
           ),
         );
-        initTopColor = Color(int.parse('0xFF${widget.market.theme!.color}'));
       } else {
         bloc.add(const SelectTopColor(topColor: Colora.primaryColor));
-        initTopColor = Colora.primaryColor;
       }
 
       //background color
@@ -158,7 +155,6 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
     } else {
       //top color
       bloc.add(const SelectTopColor(topColor: Colora.primaryColor));
-      initTopColor = Colora.primaryColor;
 
       //second top color
       bloc.add(const SelectSecondColor(secondColor: Colora.lightBlue));
@@ -1160,12 +1156,12 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
                         bottom: 0,
                         child: CustomBottomNavigationBar(
                           marketId: widget.market.id!,
-                          initTopColor: initTopColor,
-                          initBackColor: initBackColor,
-                          initSecondColor: initSecondColor,
-                          initFont: initFont,
-                          initFontColor: initFontColor,
-                          initFontSecondColor: initFontSecondColor,
+                          initTopColor: state.topColor,
+                          initBackColor: state.backColor,
+                          initSecondColor: state.secondColor,
+                          initFont: state.fontFamily,
+                          initFontColor: state.fontColor,
+                          initFontSecondColor: state.secondFontColor,
                         ),
                       ),
                     ],
@@ -1397,7 +1393,7 @@ productView(String marketId, styleState, MarketBloc marketBloc) {
             BlocBuilder<MarketBloc, MarketState>(
               builder: (context, state) {
                 if (state.templateList.isEmpty) {
-                  return const Center(child: Text(''));
+                  return const Center(child: Text('تمپلیتی وجود ندارد'));
                 } else {
                   return ListView.builder(
                     itemCount: state.templateList.length,

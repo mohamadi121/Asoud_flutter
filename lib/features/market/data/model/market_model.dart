@@ -1,8 +1,10 @@
+import 'package:asood/features/market/data/model/productl_model.dart';
+
 class TemplateModel {
   final String id;
   final String name;
   final int order;
-  final List products;
+  final List<ProductLModel> products;
 
   TemplateModel({
     required this.id,
@@ -10,12 +12,16 @@ class TemplateModel {
     required this.order,
     required this.products,
   });
+
   factory TemplateModel.fromJson(Map<String, dynamic> json) {
     return TemplateModel(
       id: json['id'],
       name: json['name'],
       order: json['order'],
-      products: json['products'],
+      products:
+          (json['products'] as List<dynamic>)
+              .map((item) => ProductLModel.fromJson(item))
+              .toList(),
     );
   }
 }

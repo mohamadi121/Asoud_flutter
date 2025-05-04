@@ -24,6 +24,7 @@ class _KeywordBuilderWidgetState extends State<KeywordBuilderWidget> {
       context.read<AddProductBloc>().add(
         AddKeywordsEvent(keyword: tagSearch.text),
       );
+      tagSearch.clear();
     }
   }
 

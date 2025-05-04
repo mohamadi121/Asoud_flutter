@@ -1,3 +1,4 @@
+import 'package:asood/features/market/presentation/blocs/add_product/add_product_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -350,6 +351,7 @@ class ProductGridView extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
+          context.read<AddProductBloc>().add(ResetDataEvent());
           context.push(AppRoutes.createProduct, extra: marketId);
         },
         child: Column(

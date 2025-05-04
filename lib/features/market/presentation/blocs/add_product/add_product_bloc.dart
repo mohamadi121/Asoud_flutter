@@ -13,6 +13,7 @@ part 'add_product_state.dart';
 class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
   final ProductRepository productRepository;
   AddProductBloc(this.productRepository) : super(AddProductState.initial()) {
+    on<ResetDataEvent>((event, emit) => emit(AddProductState.initial()));
     on<AddProductEvent>((event, emit) {});
 
     on<ProductTypeEvent>(_changeProductType);
@@ -201,74 +202,58 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
 
     ProductModel product = ProductModel(
       market: event.market,
+      type: state.productType.name,
       name: event.name,
       description: event.description,
       technicalDetail: event.technicalDetail,
-      stock: event.stock,
-      price: event.price,
-      requiredProduct: event.requiredProduct.toString(),
-      giftProduct: event.giftProduct.toString(),
-      isMarketer: event.isMarketer,
-      sellType: sellTypeEnumChanger(event.sellType),
+      stock: state.productStock,
+      price: state.productPrice,
+      requiredProduct: state.selectedProductGift?.id ?? "",
+      giftProduct: state.selectedProductGift?.id ?? "",
+      isMarketer: state.isMarketer,
+      sellType: sellTypeEnumChanger(state.productSellType),
 
       /// TODO: SHOULD CHANGE THIS SHIP COST SOON FROM BACKEND
       shipCost: 2000,
-      shipCostPayType:
-          event.shipCostPayType != null ? SendPriceEnum.market.name : "market",
-      publishStatus: publishStatusEnumChanger(event.publishStatus),
-      subCategory: event.subCategory,
-      keywords: event.keywords,
-      tag: tagEnumChanger(event.tag),
-      tagPosition: tagPositionEnumChanger(event.tagPosition),
-      mainPrice: event.mainPrice,
-      colleaguePrice: event.colleaguePrice,
-      marketerPrice: event.marketerPrice,
-      maximumSellPrice: event.maximumSellPrice,
-      isRequirement: event.isRequirement,
+      shipCostPayType: state.productSendPrice.name,
+      publishStatus: publishStatusEnumChanger(state.publishStatus),
+      subCategory: state.selectedCategoryId,
+      keywords: state.keywords,
+      tag: tagEnumChanger(state.productTag),
+      tagPosition: tagPositionEnumChanger(state.productPosition),
+      mainPrice: state.productPrice,
+      colleaguePrice: state.productPrice,
+      marketerPrice: state.productPrice,
+      maximumSellPrice: state.productPrice,
+      isRequirement: state.isRequirement,
     );
 
     try {
-      var res = await productRepository.createProductDiscount(
-        event.market,
-        state.discountPosition,
-        state.discountPercentage,
-        state.discountDays,
-      );
-      if (res is Success) {
-        res = await productRepository.createProduct(product);
+      if (state.discountType != DiscountType.none) {
+        var res = await productRepository.createProductDiscount(
+          event.market,
+          state.discountPosition,
+          state.discountPercentage,
+          state.discountDays,
+        );
         if (res is Success) {
           // var json = jsonDecode(res.response.toString());
-          emit(
-            AddProductState.initial(),
-            // state.copyWith(
-            //   productSendPrice: SendPriceEnum.market,
-            //   productSellType: SellTypeEnum.online,
-            //   productExtra: false,
-            //   productType: ProductType.good,
-            //   discountType: DiscountType.none,
-            //   isMarketer: false,
-            //   productGift: false,
-            //   productPrice: 0,
-            //   productPosition: PositionEnum.topLeft,
-            //   productTag: TagEnum.newProduct,
-            //   productStock: 0,
-            //   selectedProductExtra: null,
-            //   selectedProductGift: null,
-            //   tags: [],
-            //   keywords: [],
-            //   isRequirement: false,
-            //   publishStatus: PublishStatusEnum.published,
-            //   discountPosition: PositionEnum.topLeft,
-            //   discountPercentage: 0,
-            //   discountDays: 0,
-            //   status: CWSStatus.success,
-            // ),
-          );
+          emit(state.copyWith(status: CWSStatus.success));
+        } else {
+          emit(state.copyWith(status: CWSStatus.failure));
+          if (kDebugMode) {
+            print('add product error is ${res.errorResponse.toString()}');
+          }
         }
       } else {
-        emit(state.copyWith(status: CWSStatus.failure));
-        if (kDebugMode) {
-          print('add product error is ${res.error.toString()}');
+        var res = await productRepository.createProduct(product);
+        if (res is Success) {
+          emit(state.copyWith(status: CWSStatus.success));
+        } else if (res is Failure) {
+          emit(state.copyWith(status: CWSStatus.failure));
+          if (kDebugMode) {
+            print('add product error is ${res.errorResponse.toString()}');
+          }
         }
       }
     } catch (e) {

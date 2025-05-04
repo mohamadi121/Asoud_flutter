@@ -328,7 +328,9 @@ class ProductToggleSection extends StatelessWidget {
               ),
               child:
                   selectedProduct?.images.first.image == null
-                      ? const Center(child: Text('بدون عکس'))
+                      ? const Center(
+                        child: Text('بدون عکس', textAlign: TextAlign.center),
+                      )
                       : const SizedBox.shrink(),
             ),
           ),

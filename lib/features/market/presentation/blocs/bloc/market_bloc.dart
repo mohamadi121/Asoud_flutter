@@ -51,6 +51,12 @@ class MarketBloc extends Bloc<MarketEvent, MarketState> {
         final initList = res.response as List<dynamic>;
         final templateList =
             initList.map((e) => TemplateModel.fromJson(e)).toList();
+        print("templateList");
+        print(templateList.first.name);
+        print(templateList.first.id);
+        print("hereeeeeeeeeee");
+        print(templateList.first.products);
+        print(templateList.first.order);
         emit(
           state.copyWith(
             status: CWSStatus.success,

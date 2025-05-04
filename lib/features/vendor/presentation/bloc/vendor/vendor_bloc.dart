@@ -51,19 +51,23 @@ class VendorBloc extends Bloc<VendorEvent, VendorState> {
         status: CWSStatus.loading,
       ),
     );
+
     var res = await marketRepository.uploadMarketLogo(
       event.logoImage,
       event.id,
     );
+
     if (res is Success) {
-      var json = jsonDecode(res.response.toString());
-      emit(state.copyWith(status: CWSStatus.success));
+      final data = res.response as Map<String, dynamic>;
+
+      final logoUrl = data['logo_img'] as String? ?? '';
+
+      emit(state.copyWith(status: CWSStatus.success, logoUrl: logoUrl));
     } else {
       emit(
         state.copyWith(status: CWSStatus.failure, error: res.error.toString()),
       );
     }
-    emit(state.copyWith(status: CWSStatus.initial));
   }
 
   _deleteShopLogo(DeleteLogoEvent event, Emitter<VendorState> emit) async {

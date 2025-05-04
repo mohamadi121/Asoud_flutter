@@ -96,7 +96,7 @@ class AppRouter {
         builder: (context, state) {
           final templateId = state.extra as String;
 
-          return CreateProduct(templateId: templateId);
+          return CreateProduct(marketId: templateId);
         },
       ),
 

@@ -13,6 +13,7 @@ class VendorState {
   final CWSStatus status;
 
   final XFile logoFile;
+  final String logoUrl;
 
   final XFile backgroundFile;
 
@@ -44,6 +45,7 @@ class VendorState {
     required this.error,
 
     required this.logoFile,
+    required this.logoUrl,
     required this.backgroundFile,
 
     required this.sliderFile,
@@ -76,6 +78,7 @@ class VendorState {
       error: '',
 
       logoFile: XFile(''),
+      logoUrl: '',
       backgroundFile: XFile(''),
 
       sliderFile: XFile(''),
@@ -106,7 +109,9 @@ class VendorState {
     String? message,
     String? marketType,
     String? error,
+
     XFile? logoFile,
+    String? logoUrl,
     XFile? backgroundFile,
 
     CWSStatus? sliderStatus,
@@ -137,6 +142,7 @@ class VendorState {
       error: error ?? this.error,
 
       logoFile: logoFile ?? this.logoFile,
+      logoUrl: logoUrl ?? this.logoUrl,
       backgroundFile: backgroundFile ?? this.backgroundFile,
 
       sliderStatus: sliderStatus ?? this.sliderStatus,
