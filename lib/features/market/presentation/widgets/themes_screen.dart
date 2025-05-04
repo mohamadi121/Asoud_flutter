@@ -314,8 +314,21 @@ class ProductGridView extends StatelessWidget {
               return _buildTemplate10(styleState);
             case 11:
               return _buildTemplate11(styleState);
+            case 12:
+              return _buildTemplate12(styleState);
+            case 13:
+              return _buildTemplate13(styleState);
+            case 14:
+              return _buildTemplate14(styleState);
+            case 15:
+              return _buildTemplate15(styleState);
+            case 16:
+              return _buildTemplate16(styleState);
+            case 17:
+              return _buildTemplate17(styleState);
+
             default:
-              return _buildTemplate0(styleState);
+              return _buildTemplate1(styleState);
           }
         },
       ),
@@ -411,7 +424,106 @@ class ProductGridView extends StatelessWidget {
     );
   }
 
-  Widget _buildTemplate0(VendorState styleState) {
+  Widget _buildRowProductCard({
+    required BuildContext context,
+    required double width,
+    required double height,
+    required double imageHeight,
+    required double imageWidth,
+    required double fontSize,
+    required double priceFontSize,
+    required VendorState styleState,
+    required bool leftAligned,
+  }) {
+    return Container(
+      width: width,
+      height: height,
+
+      margin: EdgeInsets.symmetric(
+        horizontal: Dimensions.width * 0.01,
+        vertical: Dimensions.height * 0.008,
+      ),
+      decoration: BoxDecoration(
+        color: styleState.secondColor,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.3),
+            blurRadius: 5,
+            spreadRadius: 1,
+          ),
+        ],
+      ),
+      child: Directionality(
+        textDirection: leftAligned ? TextDirection.rtl : TextDirection.ltr,
+        child: InkWell(
+          onTap: () {
+            context.read<AddProductBloc>().add(ResetDataEvent());
+            context.push(AppRoutes.createProduct, extra: marketId);
+          },
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: Container(
+                  width: imageWidth,
+                  height: imageHeight,
+                  color: Colors.white,
+                  child: SvgPicture.asset(
+                    'assets/images/logo_svg.svg',
+                    colorFilter: ColorFilter.mode(
+                      styleState.secondColor,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                ),
+              ),
+              Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.width * 0.01,
+                      vertical: Dimensions.height * 0.007,
+                    ),
+                    child: Text(
+                      'عنوان محصول',
+                      softWrap: true,
+                      maxLines: 1,
+                      style: TextStyle(
+                        color: styleState.fontColor,
+                        fontFamily: styleState.fontFamily,
+                        fontWeight: FontWeight.bold,
+                        fontSize: fontSize,
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: Dimensions.width * 0.01,
+                      vertical: Dimensions.height * 0.005,
+                    ),
+                    child: Text(
+                      '120.000 تومان',
+                      softWrap: true,
+                      maxLines: 1,
+                      style: TextStyle(
+                        color: styleState.fontColor,
+                        fontFamily: styleState.fontFamily,
+                        fontSize: priceFontSize,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTemplate1(VendorState styleState) {
     return Builder(
       builder:
           (context) => Row(
@@ -458,7 +570,7 @@ class ProductGridView extends StatelessWidget {
     );
   }
 
-  Widget _buildTemplate1(VendorState styleState) {
+  Widget _buildTemplate0(VendorState styleState) {
     return Builder(
       builder:
           (context) => Row(
@@ -540,7 +652,7 @@ class ProductGridView extends StatelessWidget {
               ),
               _buildProductCard(
                 context: context,
-                width: Dimensions.width * 0.45,
+                width: Dimensions.width * 0.55,
                 height: Dimensions.height,
                 imageHeight: Dimensions.height * 0.275,
                 fontSize: Dimensions.width * 0.025,
@@ -559,7 +671,7 @@ class ProductGridView extends StatelessWidget {
             children: [
               _buildProductCard(
                 context: context,
-                width: Dimensions.width * 0.45,
+                width: Dimensions.width * 0.55,
                 height: Dimensions.height,
                 imageHeight: Dimensions.height * 0.275,
                 fontSize: Dimensions.width * 0.025,
@@ -632,33 +744,14 @@ class ProductGridView extends StatelessWidget {
                   ],
                 ),
               ),
-              Expanded(
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: _buildProductCard(
-                        context: context,
-                        width: double.infinity,
-                        height: double.infinity,
-                        imageHeight: Dimensions.height * 0.115,
-                        fontSize: Dimensions.width * 0.02,
-                        priceFontSize: Dimensions.width * 0.017,
-                        styleState: styleState,
-                      ),
-                    ),
-                    Expanded(
-                      child: _buildProductCard(
-                        context: context,
-                        width: double.infinity,
-                        height: double.infinity,
-                        imageHeight: Dimensions.height * 0.115,
-                        fontSize: Dimensions.width * 0.02,
-                        priceFontSize: Dimensions.width * 0.017,
-                        styleState: styleState,
-                      ),
-                    ),
-                  ],
-                ),
+              _buildProductCard(
+                context: context,
+                width: Dimensions.width * 0.40,
+                height: Dimensions.height,
+                imageHeight: Dimensions.height * 0.275,
+                fontSize: Dimensions.width * 0.025,
+                priceFontSize: Dimensions.width * 0.017,
+                styleState: styleState,
               ),
             ],
           ),
@@ -668,38 +761,19 @@ class ProductGridView extends StatelessWidget {
   Widget _buildTemplate5(VendorState styleState) {
     return Builder(
       builder:
-          (context) => Column(
+          (context) => Row(
             children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: _buildProductCard(
-                        context: context,
-                        width: double.infinity,
-                        height: double.infinity,
-                        imageHeight: Dimensions.height * 0.115,
-                        fontSize: Dimensions.width * 0.02,
-                        priceFontSize: Dimensions.width * 0.017,
-                        styleState: styleState,
-                      ),
-                    ),
-                    Expanded(
-                      child: _buildProductCard(
-                        context: context,
-                        width: double.infinity,
-                        height: double.infinity,
-                        imageHeight: Dimensions.height * 0.115,
-                        fontSize: Dimensions.width * 0.02,
-                        priceFontSize: Dimensions.width * 0.017,
-                        styleState: styleState,
-                      ),
-                    ),
-                  ],
-                ),
+              _buildProductCard(
+                context: context,
+                width: Dimensions.width * 0.40,
+                height: Dimensions.height,
+                imageHeight: Dimensions.height * 0.275,
+                fontSize: Dimensions.width * 0.025,
+                priceFontSize: Dimensions.width * 0.017,
+                styleState: styleState,
               ),
               Expanded(
-                child: Row(
+                child: Column(
                   children: [
                     Expanded(
                       child: _buildProductCard(
@@ -766,9 +840,10 @@ class ProductGridView extends StatelessWidget {
   Widget _buildTemplate7(VendorState styleState) {
     return Builder(
       builder:
-          (context) => Column(
+          (context) => Row(
             children: [
               Expanded(
+                flex: 2,
                 child: _buildProductCard(
                   context: context,
                   width: double.infinity,
@@ -780,6 +855,7 @@ class ProductGridView extends StatelessWidget {
                 ),
               ),
               Expanded(
+                flex: 1,
                 child: _buildProductCard(
                   context: context,
                   width: double.infinity,
@@ -801,34 +877,19 @@ class ProductGridView extends StatelessWidget {
           (context) => Row(
             children: [
               Expanded(
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: _buildProductCard(
-                        context: context,
-                        width: double.infinity,
-                        height: double.infinity,
-                        imageHeight: Dimensions.height * 0.115,
-                        fontSize: Dimensions.width * 0.02,
-                        priceFontSize: Dimensions.width * 0.017,
-                        styleState: styleState,
-                      ),
-                    ),
-                    Expanded(
-                      child: _buildProductCard(
-                        context: context,
-                        width: double.infinity,
-                        height: double.infinity,
-                        imageHeight: Dimensions.height * 0.115,
-                        fontSize: Dimensions.width * 0.02,
-                        priceFontSize: Dimensions.width * 0.017,
-                        styleState: styleState,
-                      ),
-                    ),
-                  ],
+                flex: 1,
+                child: _buildProductCard(
+                  context: context,
+                  width: double.infinity,
+                  height: double.infinity,
+                  imageHeight: Dimensions.height * 0.275,
+                  fontSize: Dimensions.width * 0.025,
+                  priceFontSize: Dimensions.width * 0.017,
+                  styleState: styleState,
                 ),
               ),
               Expanded(
+                flex: 2,
                 child: _buildProductCard(
                   context: context,
                   width: double.infinity,
@@ -847,45 +908,20 @@ class ProductGridView extends StatelessWidget {
   Widget _buildTemplate9(VendorState styleState) {
     return Builder(
       builder:
-          (context) => Row(
+          (context) => Column(
             children: [
-              Expanded(
-                child: _buildProductCard(
+              SizedBox(
+                height: Dimensions.height * 0.175,
+                child: _buildRowProductCard(
                   context: context,
                   width: double.infinity,
-                  height: double.infinity,
-                  imageHeight: Dimensions.height * 0.275,
+                  height: Dimensions.height * 0.175,
+                  imageHeight: Dimensions.height * 0.175,
+                  imageWidth: Dimensions.width * 0.4,
                   fontSize: Dimensions.width * 0.025,
                   priceFontSize: Dimensions.width * 0.017,
                   styleState: styleState,
-                ),
-              ),
-              Expanded(
-                child: Column(
-                  children: [
-                    Expanded(
-                      child: _buildProductCard(
-                        context: context,
-                        width: double.infinity,
-                        height: double.infinity,
-                        imageHeight: Dimensions.height * 0.115,
-                        fontSize: Dimensions.width * 0.02,
-                        priceFontSize: Dimensions.width * 0.017,
-                        styleState: styleState,
-                      ),
-                    ),
-                    Expanded(
-                      child: _buildProductCard(
-                        context: context,
-                        width: double.infinity,
-                        height: double.infinity,
-                        imageHeight: Dimensions.height * 0.115,
-                        fontSize: Dimensions.width * 0.02,
-                        priceFontSize: Dimensions.width * 0.017,
-                        styleState: styleState,
-                      ),
-                    ),
-                  ],
+                  leftAligned: true,
                 ),
               ),
             ],
@@ -898,43 +934,18 @@ class ProductGridView extends StatelessWidget {
       builder:
           (context) => Column(
             children: [
-              Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: _buildProductCard(
-                        context: context,
-                        width: double.infinity,
-                        height: double.infinity,
-                        imageHeight: Dimensions.height * 0.115,
-                        fontSize: Dimensions.width * 0.02,
-                        priceFontSize: Dimensions.width * 0.017,
-                        styleState: styleState,
-                      ),
-                    ),
-                    Expanded(
-                      child: _buildProductCard(
-                        context: context,
-                        width: double.infinity,
-                        height: double.infinity,
-                        imageHeight: Dimensions.height * 0.115,
-                        fontSize: Dimensions.width * 0.02,
-                        priceFontSize: Dimensions.width * 0.017,
-                        styleState: styleState,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: _buildProductCard(
+              SizedBox(
+                height: Dimensions.height * 0.175,
+                child: _buildRowProductCard(
                   context: context,
                   width: double.infinity,
-                  height: double.infinity,
-                  imageHeight: Dimensions.height * 0.275,
+                  height: Dimensions.height * 0.175,
+                  imageHeight: Dimensions.height * 0.175,
+                  imageWidth: Dimensions.width * 0.4,
                   fontSize: Dimensions.width * 0.025,
                   priceFontSize: Dimensions.width * 0.017,
                   styleState: styleState,
+                  leftAligned: false,
                 ),
               ),
             ],
@@ -958,32 +969,243 @@ class ProductGridView extends StatelessWidget {
                   styleState: styleState,
                 ),
               ),
+            ],
+          ),
+    );
+  }
+
+  Widget _buildTemplate12(VendorState styleState) {
+    return Builder(
+      builder:
+          (context) => Row(
+            children: [
               Expanded(
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: _buildProductCard(
-                        context: context,
-                        width: double.infinity,
-                        height: double.infinity,
-                        imageHeight: Dimensions.height * 0.115,
-                        fontSize: Dimensions.width * 0.02,
-                        priceFontSize: Dimensions.width * 0.017,
-                        styleState: styleState,
-                      ),
-                    ),
-                    Expanded(
-                      child: _buildProductCard(
-                        context: context,
-                        width: double.infinity,
-                        height: double.infinity,
-                        imageHeight: Dimensions.height * 0.115,
-                        fontSize: Dimensions.width * 0.02,
-                        priceFontSize: Dimensions.width * 0.017,
-                        styleState: styleState,
-                      ),
-                    ),
-                  ],
+                child: _buildProductCard(
+                  context: context,
+                  width: double.infinity,
+                  height: double.infinity,
+                  imageHeight: Dimensions.height * 0.275,
+                  fontSize: Dimensions.width * 0.025,
+                  priceFontSize: Dimensions.width * 0.017,
+                  styleState: styleState,
+                ),
+              ),
+              Expanded(
+                child: _buildProductCard(
+                  context: context,
+                  width: double.infinity,
+                  height: double.infinity,
+                  imageHeight: Dimensions.height * 0.275,
+                  fontSize: Dimensions.width * 0.025,
+                  priceFontSize: Dimensions.width * 0.017,
+                  styleState: styleState,
+                ),
+              ),
+              Expanded(
+                child: _buildProductCard(
+                  context: context,
+                  width: double.infinity,
+                  height: double.infinity,
+                  imageHeight: Dimensions.height * 0.275,
+                  fontSize: Dimensions.width * 0.025,
+                  priceFontSize: Dimensions.width * 0.017,
+                  styleState: styleState,
+                ),
+              ),
+            ],
+          ),
+    );
+  }
+
+  Widget _buildTemplate13(VendorState styleState) {
+    return Builder(
+      builder:
+          (context) => Row(
+            children: [
+              Expanded(
+                child: SizedBox(
+                  height: Dimensions.height * 0.35 * 0.75,
+                  child: _buildProductCard(
+                    context: context,
+                    width: double.infinity,
+                    height: double.infinity,
+                    imageHeight: Dimensions.height * 0.275,
+                    fontSize: Dimensions.width * 0.025,
+                    priceFontSize: Dimensions.width * 0.017,
+                    styleState: styleState,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: SizedBox(
+                  height: Dimensions.height * 0.35 * 0.75,
+                  child: _buildProductCard(
+                    context: context,
+                    width: double.infinity,
+                    height: double.infinity,
+                    imageHeight: Dimensions.height * 0.275,
+                    fontSize: Dimensions.width * 0.025,
+                    priceFontSize: Dimensions.width * 0.017,
+                    styleState: styleState,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: SizedBox(
+                  height: Dimensions.height * 0.35 * 0.75,
+                  child: _buildProductCard(
+                    context: context,
+                    width: double.infinity,
+                    height: double.infinity,
+                    imageHeight: Dimensions.height * 0.275,
+                    fontSize: Dimensions.width * 0.025,
+                    priceFontSize: Dimensions.width * 0.017,
+                    styleState: styleState,
+                  ),
+                ),
+              ),
+            ],
+          ),
+    );
+  }
+
+  Widget _buildTemplate14(VendorState styleState) {
+    return Builder(
+      builder:
+          (context) => Row(
+            children: [
+              Expanded(
+                child: SizedBox(
+                  height: Dimensions.height * 0.25 * 0.75,
+                  child: _buildProductCard(
+                    context: context,
+                    width: double.infinity,
+                    height: double.infinity,
+                    imageHeight: Dimensions.height * 0.275,
+                    fontSize: Dimensions.width * 0.025,
+                    priceFontSize: Dimensions.width * 0.017,
+                    styleState: styleState,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: SizedBox(
+                  height: Dimensions.height * 0.25 * 0.75,
+                  child: _buildProductCard(
+                    context: context,
+                    width: double.infinity,
+                    height: double.infinity,
+                    imageHeight: Dimensions.height * 0.275,
+                    fontSize: Dimensions.width * 0.025,
+                    priceFontSize: Dimensions.width * 0.017,
+                    styleState: styleState,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: SizedBox(
+                  height: Dimensions.height * 0.25 * 0.75,
+                  child: _buildProductCard(
+                    context: context,
+                    width: double.infinity,
+                    height: double.infinity,
+                    imageHeight: Dimensions.height * 0.275,
+                    fontSize: Dimensions.width * 0.025,
+                    priceFontSize: Dimensions.width * 0.017,
+                    styleState: styleState,
+                  ),
+                ),
+              ),
+            ],
+          ),
+    );
+  }
+
+  Widget _buildTemplate15(VendorState styleState) {
+    return Builder(
+      builder:
+          (context) => Row(
+            children: [
+              Expanded(
+                child: _buildProductCard(
+                  context: context,
+                  width: Dimensions.width * 0.4,
+                  height: double.infinity,
+                  imageHeight: Dimensions.height * 0.275,
+                  fontSize: Dimensions.width * 0.025,
+                  priceFontSize: Dimensions.width * 0.017,
+                  styleState: styleState,
+                ),
+              ),
+              _buildProductCard(
+                context: context,
+                width: Dimensions.width * 0.55,
+                height: double.infinity,
+                imageHeight: Dimensions.height * 0.275,
+                fontSize: Dimensions.width * 0.025,
+                priceFontSize: Dimensions.width * 0.017,
+                styleState: styleState,
+              ),
+            ],
+          ),
+    );
+  }
+
+  Widget _buildTemplate16(VendorState styleState) {
+    return Builder(
+      builder:
+          (context) => Row(
+            children: [
+              _buildProductCard(
+                context: context,
+                width: Dimensions.width * 0.55,
+                height: double.infinity,
+                imageHeight: Dimensions.height * 0.275,
+                fontSize: Dimensions.width * 0.025,
+                priceFontSize: Dimensions.width * 0.017,
+                styleState: styleState,
+              ),
+              Expanded(
+                child: _buildProductCard(
+                  context: context,
+                  width: Dimensions.width * 0.4,
+                  height: double.infinity,
+                  imageHeight: Dimensions.height * 0.275,
+                  fontSize: Dimensions.width * 0.025,
+                  priceFontSize: Dimensions.width * 0.017,
+                  styleState: styleState,
+                ),
+              ),
+            ],
+          ),
+    );
+  }
+
+  Widget _buildTemplate17(VendorState styleState) {
+    return Builder(
+      builder:
+          (context) => Row(
+            children: [
+              Expanded(
+                child: _buildProductCard(
+                  context: context,
+                  width: double.infinity,
+                  height: double.infinity,
+                  imageHeight: Dimensions.height * 0.275,
+                  fontSize: Dimensions.width * 0.025,
+                  priceFontSize: Dimensions.width * 0.017,
+                  styleState: styleState,
+                ),
+              ),
+              Expanded(
+                child: _buildProductCard(
+                  context: context,
+                  width: double.infinity,
+                  height: double.infinity,
+                  imageHeight: Dimensions.height * 0.275,
+                  fontSize: Dimensions.width * 0.025,
+                  priceFontSize: Dimensions.width * 0.017,
+                  styleState: styleState,
                 ),
               ),
             ],
