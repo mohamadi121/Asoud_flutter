@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 
 class Success {
@@ -21,8 +23,8 @@ apiStatus(Response response) {
     var res = response.data;
 
     if (res['success'] == true) {
-      print("__________new data in api status___________");
-      print(res);
+      log("__________new data in api status___________");
+      log(res.toString());
       return Success(
         code: res['code'],
         response: res['data'],

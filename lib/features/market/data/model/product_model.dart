@@ -22,6 +22,7 @@ class ProductModel {
   String? sellType;
   int? shipCost;
   String? shipCostPayType;
+  String? image;
 
   ProductModel({
     this.market,
@@ -47,6 +48,7 @@ class ProductModel {
     this.maximumSellPrice,
     this.isRequirement,
     this.tag,
+    this.image,
   });
 
   ProductModel.fromJson(Map<String, dynamic> json) {
@@ -73,6 +75,7 @@ class ProductModel {
     maximumSellPrice = json['maximum_sell_price'];
     isRequirement = json['is_requirement'];
     tag = json['tag'];
+    image = json['image'];
   }
 
   Map<String, dynamic> toJson() {
@@ -106,6 +109,7 @@ class ProductModel {
     }
     data['is_requirement'] = isRequirement;
     data['tag'] = tag;
+    data['image'] = image;
 
     return data;
   }

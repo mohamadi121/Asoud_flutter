@@ -1,25 +1,27 @@
 // این مدل برای قسمت لود محصولات از اندپوینت `owner/product/list/` استفاده میشود
 // به خاطر این اندپوینت از ایدی استفاده میکنه به جای مارکت به عنوان کلید مپ
 
-class ProductLModel {
+class ThemeProductModel {
   final String id;
   final String name;
   final String description;
   final String mainPrice;
   final String stock;
   final List<ProductImage> images;
+  final String? themeIndex;
 
-  ProductLModel({
+  ThemeProductModel({
     required this.id,
     required this.name,
     required this.description,
     required this.mainPrice,
     required this.stock,
     required this.images,
+    this.themeIndex,
   });
 
-  factory ProductLModel.fromJson(Map<String, dynamic> json) {
-    return ProductLModel(
+  factory ThemeProductModel.fromJson(Map<String, dynamic> json) {
+    return ThemeProductModel(
       id: json['id'],
       name: json['name'],
       description: json['description'],
@@ -29,6 +31,7 @@ class ProductLModel {
           (json['images'] as List<dynamic>)
               .map((img) => ProductImage.fromJson(img))
               .toList(),
+      themeIndex: json['theme_index'],
     );
   }
 }

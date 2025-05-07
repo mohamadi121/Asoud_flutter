@@ -698,7 +698,7 @@ class _MarketPreviewScreenState extends State<MarketPreviewScreen> {
                           initSecondColor: state.secondColor,
                           initFont: state.fontFamily,
                           initFontColor: state.fontColor,
-
+                          userMode: true,
                           initFontSecondColor: state.secondFontColor,
                         ),
                       ),

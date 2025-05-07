@@ -26,10 +26,14 @@ import 'package:asood/features/market/presentation/widgets/create_product/produc
 import 'package:asood/features/market/presentation/widgets/create_product/stock_widget.dart';
 
 class CreateProduct extends StatefulWidget {
-  const CreateProduct({super.key, required this.marketId});
+  const CreateProduct({
+    super.key,
+    required this.marketId,
+    required this.themeIndex,
+  });
 
   final String marketId;
-
+  final int themeIndex;
   @override
   State<CreateProduct> createState() => _CreateProductState();
 }

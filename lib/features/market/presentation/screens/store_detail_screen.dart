@@ -1,9 +1,6 @@
 import 'dart:io';
 
-import 'package:asood/core/helper/snack_bar_util.dart';
-import 'package:asood/core/http_client/api_status.dart';
-import 'package:asood/features/vendor/presentation/bloc/vendor/vendor_bloc.dart';
-import 'package:asood/features/vendor/presentation/bloc/workspace/workspace_bloc.dart';
+import 'package:asood/features/market/data/model/theme_model_model.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -13,15 +10,18 @@ import 'package:image_picker/image_picker.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'package:asood/core/constants/constants.dart';
+import 'package:asood/core/helper/snack_bar_util.dart';
+import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/core/models/location_model.dart';
 import 'package:asood/core/models/market_model.dart';
-
 import 'package:asood/core/widgets/custom_bottom_navbar.dart';
 import 'package:asood/core/widgets/map_widget_2.dart';
 import 'package:asood/features/market/presentation/blocs/bloc/market_bloc.dart';
 import 'package:asood/features/market/presentation/widgets/comment_messagebox_widget.dart';
 import 'package:asood/features/market/presentation/widgets/store_appbar.dart';
 import 'package:asood/features/market/presentation/widgets/themes_screen.dart';
+import 'package:asood/features/vendor/presentation/bloc/vendor/vendor_bloc.dart';
+import 'package:asood/features/vendor/presentation/bloc/workspace/workspace_bloc.dart';
 
 class StoreDetailScreen extends StatefulWidget {
   const StoreDetailScreen({super.key, required this.market});
@@ -1049,6 +1049,7 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
                         mainColor: state.topColor,
                         fontColor: state.fontColor,
                         fontFamily: state.fontFamily,
+                        isAdmin: true,
                       ),
 
                       Positioned(
@@ -1154,7 +1155,7 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
                           initFont: state.fontFamily,
                           initFontColor: state.fontColor,
                           initFontSecondColor: state.secondFontColor,
-                          userMode: true,
+                          userMode: false,
                         ),
                       ),
                     ],
@@ -1255,115 +1256,155 @@ selectPageView(index, String marketId, styleState, MarketBloc marketBloc) {
 }
 
 productView(String marketId, styleState, MarketBloc marketBloc) {
-  Widget templateWidget(int template) {
+  Widget templateWidget(
+    int template,
+    String themeId,
+    List<ThemeProductModel> products,
+  ) {
     switch (template) {
       case 0:
         return buildProductGridView(
           marketId: marketId,
           templateIndex: 0,
           isAdmin: true,
+          themeId: themeId,
+          products: products,
         );
       case 1:
         return buildProductGridView(
           marketId: marketId,
           templateIndex: 1,
           isAdmin: true,
+          themeId: themeId,
+          products: products,
         );
       case 2:
         return buildProductGridView(
           marketId: marketId,
           templateIndex: 2,
           isAdmin: true,
+          themeId: themeId,
+          products: products,
         );
       case 3:
         return buildProductGridView(
           marketId: marketId,
           templateIndex: 3,
           isAdmin: true,
+          themeId: themeId,
+          products: products,
         );
       case 4:
         return buildProductGridView(
           marketId: marketId,
           templateIndex: 4,
           isAdmin: true,
+          themeId: themeId,
+          products: products,
         );
       case 5:
         return buildProductGridView(
           marketId: marketId,
           templateIndex: 5,
           isAdmin: true,
+          themeId: themeId,
+          products: products,
         );
       case 6:
         return buildProductGridView(
           marketId: marketId,
           templateIndex: 6,
           isAdmin: true,
+          themeId: themeId,
+          products: products,
         );
       case 7:
         return buildProductGridView(
           marketId: marketId,
           templateIndex: 7,
           isAdmin: true,
+          themeId: themeId,
+          products: products,
         );
       case 8:
         return buildProductGridView(
           marketId: marketId,
           templateIndex: 8,
           isAdmin: true,
+          themeId: themeId,
+          products: products,
         );
       case 9:
         return buildProductGridView(
           marketId: marketId,
           templateIndex: 9,
           isAdmin: true,
+          themeId: themeId,
+          products: products,
         );
       case 10:
         return buildProductGridView(
           marketId: marketId,
           templateIndex: 10,
           isAdmin: true,
+          themeId: themeId,
+          products: products,
         );
       case 11:
         return buildProductGridView(
           marketId: marketId,
           templateIndex: 11,
           isAdmin: true,
+          themeId: themeId,
+          products: products,
         );
       case 12:
         return buildProductGridView(
           marketId: marketId,
           templateIndex: 12,
           isAdmin: true,
+          themeId: themeId,
+          products: products,
         );
       case 13:
         return buildProductGridView(
           marketId: marketId,
           templateIndex: 13,
           isAdmin: true,
+          themeId: themeId,
+          products: products,
         );
       case 14:
         return buildProductGridView(
           marketId: marketId,
           templateIndex: 14,
           isAdmin: true,
+          themeId: themeId,
+          products: products,
         );
       case 15:
         return buildProductGridView(
           marketId: marketId,
           templateIndex: 15,
           isAdmin: true,
+          themeId: themeId,
+          products: products,
         );
       case 16:
         return buildProductGridView(
           marketId: marketId,
           templateIndex: 16,
           isAdmin: true,
+          themeId: themeId,
+          products: products,
         );
       case 17:
         return buildProductGridView(
           marketId: marketId,
           templateIndex: 17,
           isAdmin: true,
+          themeId: themeId,
+          products: products,
         );
 
       default:
@@ -1408,63 +1449,6 @@ productView(String marketId, styleState, MarketBloc marketBloc) {
               ],
             ),
 
-            // Container(
-            //   width: Dimensions.width,
-            //   height: Dimensions.height * 0.07,
-            //   margin: EdgeInsets.symmetric(vertical: Dimensions.height * 0.01),
-            //   decoration: BoxDecoration(
-            //     color: styleState.secondColor,
-            //     borderRadius: BorderRadius.circular(10),
-            //   ),
-            //   child: MaterialButton(
-            //     onPressed: () {
-            //       marketBloc.add(
-            //         ShowTemplatesEvent(isShow: !state.showTemplates),
-            //       );
-            //     },
-            //     child: Row(
-            //       mainAxisAlignment: MainAxisAlignment.center,
-            //       children: [
-            //         Text(
-            //           'اضافه کردن قالب جدید',
-            //           style: TextStyle(
-            //             color: styleState.fontColor,
-            //             fontFamily: styleState.fontFamily,
-            //           ),
-            //         ),
-
-            //         SizedBox(width: Dimensions.width * 0.01),
-
-            //         Icon(Icons.add_box, color: styleState.fontColor),
-            //       ],
-            //     ),
-            //   ),
-            // ),
-            if (state.templateList.isNotEmpty)
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Container(
-                  width: Dimensions.width * 0.25,
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.width * 0.03,
-                    vertical: Dimensions.height * 0.005,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: styleState.topColor,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(Icons.visibility, color: styleState.fontColor),
-                      Icon(Icons.delete, color: styleState.fontColor),
-                      Icon(Icons.settings, color: styleState.fontColor),
-                    ],
-                  ),
-                ),
-              ),
-            //all templates
             if (state.showTemplates == true) ...[
               SizedBox(
                 width: Dimensions.width,
@@ -1473,7 +1457,6 @@ productView(String marketId, styleState, MarketBloc marketBloc) {
               ),
             ],
 
-            //selected templates
             BlocBuilder<MarketBloc, MarketState>(
               builder: (context, state) {
                 if (state.templateList.isEmpty) {
@@ -1487,6 +1470,40 @@ productView(String marketId, styleState, MarketBloc marketBloc) {
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
+                          if (state.templateList.isNotEmpty)
+                            Align(
+                              alignment: Alignment.centerLeft,
+                              child: Container(
+                                width: Dimensions.width * 0.25,
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: Dimensions.width * 0.03,
+                                  vertical: Dimensions.height * 0.005,
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: styleState.topColor,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(
+                                      Icons.visibility,
+                                      color: styleState.fontColor,
+                                    ),
+                                    Icon(
+                                      Icons.delete,
+                                      color: styleState.fontColor,
+                                    ),
+                                    Icon(
+                                      Icons.settings,
+                                      color: styleState.fontColor,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
                           Container(
                             width: Dimensions.width,
                             margin: EdgeInsets.symmetric(
@@ -1494,27 +1511,10 @@ productView(String marketId, styleState, MarketBloc marketBloc) {
                             ),
                             child: templateWidget(
                               state.templateList[index].order,
+                              state.templateList[index].id,
+                              state.templateList[index].products,
                             ),
                           ),
-
-                          // SizedBox(
-                          //   height: Dimensions.height * 0.05,
-                          //   width: Dimensions.width,
-                          //   child: Row(
-                          //     children: [
-                          //       IconButton(
-                          //         onPressed: (){
-                          //           marketBloc.add(RemoveTemplateEvent(index: index));
-                          //           // state.templateList.removeAt(index);
-                          //         },
-                          //         icon: const Icon(
-                          //           Icons.delete_rounded,
-                          //           color: Colors.redAccent,
-                          //         )
-                          //       )
-                          //     ],
-                          //   ),
-                          // )
                         ],
                       );
                     },

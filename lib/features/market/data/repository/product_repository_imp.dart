@@ -42,7 +42,11 @@ class ProductRepositoryImp implements ProductRepository {
   }
 
   @override
-  Future updateMarketTheme(String marketId, List<String> products) async {
-    return await productApiService.updateMarketTheme(marketId, products);
+  Future updateMarketTheme(
+    String marketId,
+    List<String> products,
+    int index,
+  ) async {
+    return await productApiService.updateMarketTheme(marketId, products, index);
   }
 }

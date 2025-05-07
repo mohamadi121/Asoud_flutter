@@ -162,3 +162,13 @@ class UpdateProductDetailEvent extends AddProductEvent {
     this.productTechnicalDescription,
   });
 }
+
+class UpdateCategoryImageEvent extends AddProductEvent {
+  final String selectedCategoryImage;
+  final XFile? selectedCategoryImageFile;
+
+  const UpdateCategoryImageEvent({
+    required this.selectedCategoryImage,
+    required this.selectedCategoryImageFile,
+  });
+}

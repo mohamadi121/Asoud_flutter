@@ -105,11 +105,15 @@ class ProductApiService {
     }
   }
 
-  Future updateMarketTheme(String marketId, List<String> products) async {
+  Future updateMarketTheme(
+    String marketId,
+    List<String> products,
+    int index,
+  ) async {
     try {
       Response res = await dioClient.putData(
         "${Endpoints.ownerProductThemeUpdate}$marketId/",
-        {"products": products},
+        {"products": products, "index": index},
       );
       return apiStatus(res);
     } catch (e) {

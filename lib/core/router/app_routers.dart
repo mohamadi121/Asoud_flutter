@@ -93,9 +93,10 @@ class AppRouter {
       GoRoute(
         path: AppRoutes.createProduct,
         builder: (context, state) {
-          final templateId = state.extra as String;
-
-          return CreateProduct(marketId: templateId);
+          List extra = state.extra as List;
+          final templateId = extra[0];
+          final themeIndex = extra[1];
+          return CreateProduct(marketId: templateId, themeIndex: themeIndex);
         },
       ),
 

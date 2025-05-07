@@ -15,5 +15,6 @@ abstract class ProductRepository {
   Future<dynamic> updateMarketTheme(
     String marketId,
     List<String> products,
+    int index,
   ) async {}
 }

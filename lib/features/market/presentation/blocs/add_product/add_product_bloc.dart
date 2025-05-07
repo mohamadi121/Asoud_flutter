@@ -6,6 +6,7 @@ import 'package:asood/features/market/domain/repository/product_repository.dart'
 import 'package:bloc/bloc.dart';
 
 import 'package:flutter/foundation.dart';
+import 'package:image_picker/image_picker.dart';
 
 part 'add_product_event.dart';
 part 'add_product_state.dart';
@@ -43,6 +44,8 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     on<UpdatePublishStatusEvent>(_updatePublishStatus);
 
     on<UpdateProductDetailEvent>(_updateProductDetail);
+
+    on<UpdateCategoryImageEvent>(_updateCategoryImage);
   }
 
   _changeProductType(ProductTypeEvent event, Emitter<AddProductState> emit) {
@@ -171,6 +174,18 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     }
   }
 
+  _updateCategoryImage(
+    UpdateCategoryImageEvent event,
+    Emitter<AddProductState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        selectedCategoryImage: event.selectedCategoryImage,
+        selectedCategoryImageFile: event.selectedCategoryImageFile,
+      ),
+    );
+  }
+
   _updatePublishStatus(
     UpdatePublishStatusEvent event,
     Emitter<AddProductState> emit,
@@ -226,6 +241,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
       marketerPrice: state.productPrice,
       maximumSellPrice: state.productPrice,
       isRequirement: state.isRequirement,
+      image: state.selectedCategoryImage,
     );
 
     try {

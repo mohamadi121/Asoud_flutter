@@ -36,6 +36,8 @@ class AddProductState {
 
   final String selectedCategoryName;
   final String selectedCategoryId;
+  final String? selectedCategoryImage;
+  final XFile? selectedCategoryImageFile;
 
   final List<String> tags;
   final List<String> keywords;
@@ -112,6 +114,9 @@ class AddProductState {
     required this.productImages,
 
     required this.publishStatus,
+
+    required this.selectedCategoryImage,
+    required this.selectedCategoryImageFile,
   });
 
   factory AddProductState.initial() {
@@ -160,6 +165,9 @@ class AddProductState {
       productImages: [],
 
       publishStatus: PublishStatusEnum.published,
+
+      selectedCategoryImage: null,
+      selectedCategoryImageFile: null,
     );
   }
 
@@ -208,6 +216,9 @@ class AddProductState {
     List? productImages,
 
     PublishStatusEnum? publishStatus,
+
+    String? selectedCategoryImage,
+    XFile? selectedCategoryImageFile,
   }) {
     return AddProductState(
       status: status ?? this.status,
@@ -255,6 +266,11 @@ class AddProductState {
       productImages: productImages ?? this.productImages,
 
       publishStatus: publishStatus ?? this.publishStatus,
+
+      selectedCategoryImage:
+          selectedCategoryImage ?? this.selectedCategoryImage,
+      selectedCategoryImageFile:
+          selectedCategoryImageFile ?? this.selectedCategoryImageFile,
     );
   }
 }

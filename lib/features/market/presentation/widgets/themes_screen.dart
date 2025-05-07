@@ -1,4 +1,7 @@
+import 'package:asood/features/market/data/model/productL_model.dart';
+import 'package:asood/features/market/data/model/theme_model_model.dart';
 import 'package:asood/features/market/presentation/blocs/add_product/add_product_bloc.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -63,91 +66,109 @@ class _MultiViewSliderScreenState extends State<MultiViewSliderScreen> {
                                 marketId: bloc.state.marketId,
                                 templateIndex: 0,
                                 isAdmin: false,
+                                themeId: "",
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 1,
                                 isAdmin: false,
+                                themeId: "",
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 2,
                                 isAdmin: false,
+                                themeId: "",
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 3,
                                 isAdmin: false,
+                                themeId: "",
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 4,
                                 isAdmin: false,
+                                themeId: "",
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 5,
                                 isAdmin: false,
+                                themeId: "",
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 6,
                                 isAdmin: false,
+                                themeId: "",
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 7,
                                 isAdmin: false,
+                                themeId: "",
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 8,
                                 isAdmin: false,
+                                themeId: "",
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 9,
                                 isAdmin: false,
+                                themeId: "",
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 10,
                                 isAdmin: false,
+                                themeId: "",
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 11,
                                 isAdmin: false,
+                                themeId: "",
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 12,
                                 isAdmin: false,
+                                themeId: "",
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 13,
                                 isAdmin: false,
+                                themeId: "",
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 14,
                                 isAdmin: false,
+                                themeId: "",
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 15,
                                 isAdmin: false,
+                                themeId: "",
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 16,
                                 isAdmin: false,
+                                themeId: "",
                               ),
                               buildProductGridView(
                                 marketId: bloc.state.marketId,
                                 templateIndex: 17,
                                 isAdmin: false,
+                                themeId: "",
                               ),
                             ],
                           ),
@@ -294,16 +315,21 @@ class ProductGridView extends StatelessWidget {
   final String marketId;
   final int templateIndex;
   final bool isAdmin;
-
+  final String themeId;
+  final List<ThemeProductModel>? products;
   const ProductGridView({
     Key? key,
     required this.marketId,
     required this.templateIndex,
     this.isAdmin = false,
+    required this.themeId,
+    this.products,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print("products --------");
+    print(products);
     return SizedBox(
       width: Dimensions.width,
       height: Dimensions.height * 0.35,
@@ -311,44 +337,44 @@ class ProductGridView extends StatelessWidget {
         builder: (context, styleState) {
           switch (templateIndex) {
             case 0:
-              return _buildTemplate0(styleState);
+              return _buildTemplate0(styleState, products);
             case 1:
-              return _buildTemplate1(styleState);
+              return _buildTemplate1(styleState, products);
             case 2:
-              return _buildTemplate2(styleState);
+              return _buildTemplate2(styleState, products);
             case 3:
-              return _buildTemplate3(styleState);
+              return _buildTemplate3(styleState, products);
             case 4:
-              return _buildTemplate4(styleState);
+              return _buildTemplate4(styleState, products);
             case 5:
-              return _buildTemplate5(styleState);
+              return _buildTemplate5(styleState, products);
             case 6:
-              return _buildTemplate6(styleState);
+              return _buildTemplate6(styleState, products);
             case 7:
-              return _buildTemplate7(styleState);
+              return _buildTemplate7(styleState, products);
             case 8:
-              return _buildTemplate8(styleState);
+              return _buildTemplate8(styleState, products);
             case 9:
-              return _buildTemplate9(styleState);
+              return _buildTemplate9(styleState, products);
             case 10:
-              return _buildTemplate10(styleState);
+              return _buildTemplate10(styleState, products);
             case 11:
-              return _buildTemplate11(styleState);
+              return _buildTemplate11(styleState, products);
             case 12:
-              return _buildTemplate12(styleState);
+              return _buildTemplate12(styleState, products);
             case 13:
-              return _buildTemplate13(styleState);
+              return _buildTemplate13(styleState, products);
             case 14:
-              return _buildTemplate14(styleState);
+              return _buildTemplate14(styleState, products);
             case 15:
-              return _buildTemplate15(styleState);
+              return _buildTemplate15(styleState, products);
             case 16:
-              return _buildTemplate16(styleState);
+              return _buildTemplate16(styleState, products);
             case 17:
-              return _buildTemplate17(styleState);
+              return _buildTemplate17(styleState, products);
 
             default:
-              return _buildTemplate1(styleState);
+              return _buildTemplate1(styleState, products);
           }
         },
       ),
@@ -363,6 +389,8 @@ class ProductGridView extends StatelessWidget {
     required double fontSize,
     required double priceFontSize,
     required VendorState styleState,
+    required int themeIndex,
+    ThemeProductModel? product,
   }) {
     return Container(
       width: width,
@@ -398,14 +426,21 @@ class ProductGridView extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 child: Container(
                   height: imageHeight,
+                  width: width,
                   color: Colors.white,
-                  child: SvgPicture.asset(
-                    'assets/images/logo_svg.svg',
-                    colorFilter: ColorFilter.mode(
-                      styleState.secondColor,
-                      BlendMode.srcIn,
-                    ),
-                  ),
+                  child:
+                      product?.images != null
+                          ? CachedNetworkImage(
+                            imageUrl: product?.images[0].image ?? "",
+                            fit: BoxFit.cover,
+                          )
+                          : SvgPicture.asset(
+                            'assets/images/logo_svg.svg',
+                            colorFilter: ColorFilter.mode(
+                              styleState.secondColor,
+                              BlendMode.srcIn,
+                            ),
+                          ),
                 ),
               ),
             ),
@@ -415,7 +450,7 @@ class ProductGridView extends StatelessWidget {
                 vertical: Dimensions.height * 0.007,
               ),
               child: Text(
-                'عنوان محصول',
+                product?.name ?? 'عنوان محصول',
                 softWrap: true,
                 maxLines: 1,
                 style: TextStyle(
@@ -432,7 +467,9 @@ class ProductGridView extends StatelessWidget {
                 vertical: Dimensions.height * 0.005,
               ),
               child: Text(
-                '120.000 تومان',
+                product?.mainPrice != null
+                    ? "${product?.mainPrice} تومان"
+                    : "قیمت محصول",
                 softWrap: true,
                 maxLines: 1,
                 style: TextStyle(
@@ -458,6 +495,8 @@ class ProductGridView extends StatelessWidget {
     required double priceFontSize,
     required VendorState styleState,
     required bool leftAligned,
+    required int themeIndex,
+    ThemeProductModel? product,
   }) {
     return Container(
       width: width,
@@ -483,9 +522,16 @@ class ProductGridView extends StatelessWidget {
           onTap: () {
             if (isAdmin) {
               context.read<AddProductBloc>().add(ResetDataEvent());
-              context.push(AppRoutes.createProduct, extra: marketId);
+              context.push(
+                AppRoutes.createProduct,
+                extra: [marketId, themeIndex],
+              );
             } else {
-              context.push(AppRoutes.createProduct, extra: marketId);
+              // TODO: SHOULD CHANGE THIS TO PRODUCT DETAILS
+              context.push(
+                AppRoutes.createProduct,
+                extra: [marketId, themeIndex],
+              );
             }
           },
           child: Row(
@@ -497,13 +543,19 @@ class ProductGridView extends StatelessWidget {
                   width: imageWidth,
                   height: imageHeight,
                   color: Colors.white,
-                  child: SvgPicture.asset(
-                    'assets/images/logo_svg.svg',
-                    colorFilter: ColorFilter.mode(
-                      styleState.secondColor,
-                      BlendMode.srcIn,
-                    ),
-                  ),
+                  child:
+                      product?.images.isNotEmpty ?? false
+                          ? SvgPicture.network(
+                            product?.images[0].image ?? "",
+                            fit: BoxFit.cover,
+                          )
+                          : SvgPicture.asset(
+                            'assets/images/logo_svg.svg',
+                            colorFilter: ColorFilter.mode(
+                              styleState.secondColor,
+                              BlendMode.srcIn,
+                            ),
+                          ),
                 ),
               ),
               Column(
@@ -514,7 +566,7 @@ class ProductGridView extends StatelessWidget {
                       vertical: Dimensions.height * 0.007,
                     ),
                     child: Text(
-                      'عنوان محصول',
+                      product?.name ?? 'عنوان محصول',
                       softWrap: true,
                       maxLines: 1,
                       style: TextStyle(
@@ -531,7 +583,9 @@ class ProductGridView extends StatelessWidget {
                       vertical: Dimensions.height * 0.005,
                     ),
                     child: Text(
-                      '120.000 تومان',
+                      product?.mainPrice != ""
+                          ? "${product?.mainPrice} تومان"
+                          : 'قیمت محصول',
                       softWrap: true,
                       maxLines: 1,
                       style: TextStyle(
@@ -550,7 +604,10 @@ class ProductGridView extends StatelessWidget {
     );
   }
 
-  Widget _buildTemplate1(VendorState styleState) {
+  Widget _buildTemplate1(
+    VendorState styleState,
+    List<ThemeProductModel>? products,
+  ) {
     return Builder(
       builder:
           (context) => Row(
@@ -567,6 +624,8 @@ class ProductGridView extends StatelessWidget {
                         fontSize: Dimensions.width * 0.02,
                         priceFontSize: Dimensions.width * 0.017,
                         styleState: styleState,
+                        themeIndex: 1,
+                        product: getProductByThemeIndex(1, products),
                       ),
                     ),
                     Expanded(
@@ -578,6 +637,8 @@ class ProductGridView extends StatelessWidget {
                         fontSize: Dimensions.width * 0.02,
                         priceFontSize: Dimensions.width * 0.017,
                         styleState: styleState,
+                        themeIndex: 2,
+                        product: getProductByThemeIndex(2, products),
                       ),
                     ),
                   ],
@@ -591,13 +652,31 @@ class ProductGridView extends StatelessWidget {
                 fontSize: Dimensions.width * 0.025,
                 priceFontSize: Dimensions.width * 0.017,
                 styleState: styleState,
+                themeIndex: 3,
+                product: getProductByThemeIndex(3, products),
               ),
             ],
           ),
     );
   }
 
-  Widget _buildTemplate0(VendorState styleState) {
+  ThemeProductModel? getProductByThemeIndex(
+    int index,
+    List<ThemeProductModel>? products,
+  ) {
+    try {
+      return products?.firstWhere(
+        (product) => product.themeIndex == index.toString(),
+      );
+    } catch (_) {
+      return null;
+    }
+  }
+
+  Widget _buildTemplate0(
+    VendorState styleState,
+    List<ThemeProductModel>? products,
+  ) {
     return Builder(
       builder:
           (context) => Row(
@@ -610,6 +689,8 @@ class ProductGridView extends StatelessWidget {
                 fontSize: Dimensions.width * 0.025,
                 priceFontSize: Dimensions.width * 0.017,
                 styleState: styleState,
+                themeIndex: 1,
+                product: getProductByThemeIndex(1, products),
               ),
               Expanded(
                 child: Column(
@@ -623,6 +704,8 @@ class ProductGridView extends StatelessWidget {
                         fontSize: Dimensions.width * 0.02,
                         priceFontSize: Dimensions.width * 0.017,
                         styleState: styleState,
+                        themeIndex: 2,
+                        product: getProductByThemeIndex(2, products),
                       ),
                     ),
                     Expanded(
@@ -634,6 +717,8 @@ class ProductGridView extends StatelessWidget {
                         fontSize: Dimensions.width * 0.02,
                         priceFontSize: Dimensions.width * 0.017,
                         styleState: styleState,
+                        themeIndex: 3,
+                        product: getProductByThemeIndex(3, products),
                       ),
                     ),
                   ],
@@ -644,7 +729,10 @@ class ProductGridView extends StatelessWidget {
     );
   }
 
-  Widget _buildTemplate2(VendorState styleState) {
+  Widget _buildTemplate2(
+    VendorState styleState,
+    List<ThemeProductModel>? products,
+  ) {
     return Builder(
       builder:
           (context) => Row(
@@ -661,6 +749,8 @@ class ProductGridView extends StatelessWidget {
                         fontSize: Dimensions.width * 0.02,
                         priceFontSize: Dimensions.width * 0.017,
                         styleState: styleState,
+                        themeIndex: 1,
+                        product: getProductByThemeIndex(1, products),
                       ),
                     ),
                     Expanded(
@@ -672,6 +762,8 @@ class ProductGridView extends StatelessWidget {
                         fontSize: Dimensions.width * 0.02,
                         priceFontSize: Dimensions.width * 0.017,
                         styleState: styleState,
+                        themeIndex: 2,
+                        product: getProductByThemeIndex(2, products),
                       ),
                     ),
                   ],
@@ -685,13 +777,18 @@ class ProductGridView extends StatelessWidget {
                 fontSize: Dimensions.width * 0.025,
                 priceFontSize: Dimensions.width * 0.017,
                 styleState: styleState,
+                themeIndex: 3,
+                product: getProductByThemeIndex(3, products),
               ),
             ],
           ),
     );
   }
 
-  Widget _buildTemplate3(VendorState styleState) {
+  Widget _buildTemplate3(
+    VendorState styleState,
+    List<ThemeProductModel>? products,
+  ) {
     return Builder(
       builder:
           (context) => Row(
@@ -704,6 +801,8 @@ class ProductGridView extends StatelessWidget {
                 fontSize: Dimensions.width * 0.025,
                 priceFontSize: Dimensions.width * 0.017,
                 styleState: styleState,
+                themeIndex: 1,
+                product: getProductByThemeIndex(1, products),
               ),
               Expanded(
                 child: Column(
@@ -717,6 +816,8 @@ class ProductGridView extends StatelessWidget {
                         fontSize: Dimensions.width * 0.02,
                         priceFontSize: Dimensions.width * 0.017,
                         styleState: styleState,
+                        themeIndex: 2,
+                        product: getProductByThemeIndex(2, products),
                       ),
                     ),
                     Expanded(
@@ -728,6 +829,8 @@ class ProductGridView extends StatelessWidget {
                         fontSize: Dimensions.width * 0.02,
                         priceFontSize: Dimensions.width * 0.017,
                         styleState: styleState,
+                        themeIndex: 3,
+                        product: getProductByThemeIndex(3, products),
                       ),
                     ),
                   ],
@@ -738,7 +841,10 @@ class ProductGridView extends StatelessWidget {
     );
   }
 
-  Widget _buildTemplate4(VendorState styleState) {
+  Widget _buildTemplate4(
+    VendorState styleState,
+    List<ThemeProductModel>? products,
+  ) {
     return Builder(
       builder:
           (context) => Row(
@@ -755,6 +861,8 @@ class ProductGridView extends StatelessWidget {
                         fontSize: Dimensions.width * 0.02,
                         priceFontSize: Dimensions.width * 0.017,
                         styleState: styleState,
+                        themeIndex: 1,
+                        product: getProductByThemeIndex(1, products),
                       ),
                     ),
                     Expanded(
@@ -766,6 +874,8 @@ class ProductGridView extends StatelessWidget {
                         fontSize: Dimensions.width * 0.02,
                         priceFontSize: Dimensions.width * 0.017,
                         styleState: styleState,
+                        themeIndex: 2,
+                        product: getProductByThemeIndex(2, products),
                       ),
                     ),
                   ],
@@ -779,13 +889,18 @@ class ProductGridView extends StatelessWidget {
                 fontSize: Dimensions.width * 0.025,
                 priceFontSize: Dimensions.width * 0.017,
                 styleState: styleState,
+                themeIndex: 4,
+                product: getProductByThemeIndex(4, products),
               ),
             ],
           ),
     );
   }
 
-  Widget _buildTemplate5(VendorState styleState) {
+  Widget _buildTemplate5(
+    VendorState styleState,
+    List<ThemeProductModel>? products,
+  ) {
     return Builder(
       builder:
           (context) => Row(
@@ -798,6 +913,8 @@ class ProductGridView extends StatelessWidget {
                 fontSize: Dimensions.width * 0.025,
                 priceFontSize: Dimensions.width * 0.017,
                 styleState: styleState,
+                themeIndex: 1,
+                product: getProductByThemeIndex(1, products),
               ),
               Expanded(
                 child: Column(
@@ -811,6 +928,8 @@ class ProductGridView extends StatelessWidget {
                         fontSize: Dimensions.width * 0.02,
                         priceFontSize: Dimensions.width * 0.017,
                         styleState: styleState,
+                        themeIndex: 2,
+                        product: getProductByThemeIndex(2, products),
                       ),
                     ),
                     Expanded(
@@ -822,6 +941,8 @@ class ProductGridView extends StatelessWidget {
                         fontSize: Dimensions.width * 0.02,
                         priceFontSize: Dimensions.width * 0.017,
                         styleState: styleState,
+                        themeIndex: 3,
+                        product: getProductByThemeIndex(3, products),
                       ),
                     ),
                   ],
@@ -832,7 +953,10 @@ class ProductGridView extends StatelessWidget {
     );
   }
 
-  Widget _buildTemplate6(VendorState styleState) {
+  Widget _buildTemplate6(
+    VendorState styleState,
+    List<ThemeProductModel>? products,
+  ) {
     return Builder(
       builder:
           (context) => Row(
@@ -846,6 +970,8 @@ class ProductGridView extends StatelessWidget {
                   fontSize: Dimensions.width * 0.025,
                   priceFontSize: Dimensions.width * 0.017,
                   styleState: styleState,
+                  themeIndex: 1,
+                  product: getProductByThemeIndex(1, products),
                 ),
               ),
               Expanded(
@@ -857,6 +983,8 @@ class ProductGridView extends StatelessWidget {
                   fontSize: Dimensions.width * 0.025,
                   priceFontSize: Dimensions.width * 0.017,
                   styleState: styleState,
+                  themeIndex: 2,
+                  product: getProductByThemeIndex(2, products),
                 ),
               ),
             ],
@@ -864,7 +992,10 @@ class ProductGridView extends StatelessWidget {
     );
   }
 
-  Widget _buildTemplate7(VendorState styleState) {
+  Widget _buildTemplate7(
+    VendorState styleState,
+    List<ThemeProductModel>? products,
+  ) {
     return Builder(
       builder:
           (context) => Row(
@@ -879,6 +1010,8 @@ class ProductGridView extends StatelessWidget {
                   fontSize: Dimensions.width * 0.025,
                   priceFontSize: Dimensions.width * 0.017,
                   styleState: styleState,
+                  themeIndex: 1,
+                  product: getProductByThemeIndex(1, products),
                 ),
               ),
               Expanded(
@@ -891,6 +1024,8 @@ class ProductGridView extends StatelessWidget {
                   fontSize: Dimensions.width * 0.025,
                   priceFontSize: Dimensions.width * 0.017,
                   styleState: styleState,
+                  themeIndex: 2,
+                  product: getProductByThemeIndex(2, products),
                 ),
               ),
             ],
@@ -898,7 +1033,10 @@ class ProductGridView extends StatelessWidget {
     );
   }
 
-  Widget _buildTemplate8(VendorState styleState) {
+  Widget _buildTemplate8(
+    VendorState styleState,
+    List<ThemeProductModel>? products,
+  ) {
     return Builder(
       builder:
           (context) => Row(
@@ -913,6 +1051,8 @@ class ProductGridView extends StatelessWidget {
                   fontSize: Dimensions.width * 0.025,
                   priceFontSize: Dimensions.width * 0.017,
                   styleState: styleState,
+                  themeIndex: 1,
+                  product: getProductByThemeIndex(1, products),
                 ),
               ),
               Expanded(
@@ -925,6 +1065,8 @@ class ProductGridView extends StatelessWidget {
                   fontSize: Dimensions.width * 0.025,
                   priceFontSize: Dimensions.width * 0.017,
                   styleState: styleState,
+                  themeIndex: 2,
+                  product: getProductByThemeIndex(2, products),
                 ),
               ),
             ],
@@ -932,7 +1074,10 @@ class ProductGridView extends StatelessWidget {
     );
   }
 
-  Widget _buildTemplate9(VendorState styleState) {
+  Widget _buildTemplate9(
+    VendorState styleState,
+    List<ThemeProductModel>? products,
+  ) {
     return Builder(
       builder:
           (context) => Column(
@@ -949,6 +1094,8 @@ class ProductGridView extends StatelessWidget {
                   priceFontSize: Dimensions.width * 0.017,
                   styleState: styleState,
                   leftAligned: true,
+                  themeIndex: 1,
+                  product: getProductByThemeIndex(1, products),
                 ),
               ),
             ],
@@ -956,7 +1103,10 @@ class ProductGridView extends StatelessWidget {
     );
   }
 
-  Widget _buildTemplate10(VendorState styleState) {
+  Widget _buildTemplate10(
+    VendorState styleState,
+    List<ThemeProductModel>? products,
+  ) {
     return Builder(
       builder:
           (context) => Column(
@@ -973,6 +1123,8 @@ class ProductGridView extends StatelessWidget {
                   priceFontSize: Dimensions.width * 0.017,
                   styleState: styleState,
                   leftAligned: false,
+                  themeIndex: 1,
+                  product: getProductByThemeIndex(1, products),
                 ),
               ),
             ],
@@ -980,7 +1132,10 @@ class ProductGridView extends StatelessWidget {
     );
   }
 
-  Widget _buildTemplate11(VendorState styleState) {
+  Widget _buildTemplate11(
+    VendorState styleState,
+    List<ThemeProductModel>? products,
+  ) {
     return Builder(
       builder:
           (context) => Column(
@@ -994,6 +1149,8 @@ class ProductGridView extends StatelessWidget {
                   fontSize: Dimensions.width * 0.025,
                   priceFontSize: Dimensions.width * 0.017,
                   styleState: styleState,
+                  themeIndex: 1,
+                  product: getProductByThemeIndex(1, products),
                 ),
               ),
             ],
@@ -1001,7 +1158,10 @@ class ProductGridView extends StatelessWidget {
     );
   }
 
-  Widget _buildTemplate12(VendorState styleState) {
+  Widget _buildTemplate12(
+    VendorState styleState,
+    List<ThemeProductModel>? products,
+  ) {
     return Builder(
       builder:
           (context) => Row(
@@ -1015,6 +1175,8 @@ class ProductGridView extends StatelessWidget {
                   fontSize: Dimensions.width * 0.025,
                   priceFontSize: Dimensions.width * 0.017,
                   styleState: styleState,
+                  themeIndex: 1,
+                  product: getProductByThemeIndex(1, products),
                 ),
               ),
               Expanded(
@@ -1026,6 +1188,8 @@ class ProductGridView extends StatelessWidget {
                   fontSize: Dimensions.width * 0.025,
                   priceFontSize: Dimensions.width * 0.017,
                   styleState: styleState,
+                  themeIndex: 2,
+                  product: getProductByThemeIndex(2, products),
                 ),
               ),
               Expanded(
@@ -1037,6 +1201,8 @@ class ProductGridView extends StatelessWidget {
                   fontSize: Dimensions.width * 0.025,
                   priceFontSize: Dimensions.width * 0.017,
                   styleState: styleState,
+                  themeIndex: 3,
+                  product: getProductByThemeIndex(3, products),
                 ),
               ),
             ],
@@ -1044,7 +1210,10 @@ class ProductGridView extends StatelessWidget {
     );
   }
 
-  Widget _buildTemplate13(VendorState styleState) {
+  Widget _buildTemplate13(
+    VendorState styleState,
+    List<ThemeProductModel>? products,
+  ) {
     return Builder(
       builder:
           (context) => Row(
@@ -1060,6 +1229,8 @@ class ProductGridView extends StatelessWidget {
                     fontSize: Dimensions.width * 0.025,
                     priceFontSize: Dimensions.width * 0.017,
                     styleState: styleState,
+                    themeIndex: 1,
+                    product: getProductByThemeIndex(1, products),
                   ),
                 ),
               ),
@@ -1074,6 +1245,8 @@ class ProductGridView extends StatelessWidget {
                     fontSize: Dimensions.width * 0.025,
                     priceFontSize: Dimensions.width * 0.017,
                     styleState: styleState,
+                    themeIndex: 2,
+                    product: getProductByThemeIndex(2, products),
                   ),
                 ),
               ),
@@ -1088,6 +1261,8 @@ class ProductGridView extends StatelessWidget {
                     fontSize: Dimensions.width * 0.025,
                     priceFontSize: Dimensions.width * 0.017,
                     styleState: styleState,
+                    themeIndex: 3,
+                    product: getProductByThemeIndex(3, products),
                   ),
                 ),
               ),
@@ -1096,7 +1271,10 @@ class ProductGridView extends StatelessWidget {
     );
   }
 
-  Widget _buildTemplate14(VendorState styleState) {
+  Widget _buildTemplate14(
+    VendorState styleState,
+    List<ThemeProductModel>? products,
+  ) {
     return Builder(
       builder:
           (context) => Row(
@@ -1112,6 +1290,8 @@ class ProductGridView extends StatelessWidget {
                     fontSize: Dimensions.width * 0.025,
                     priceFontSize: Dimensions.width * 0.017,
                     styleState: styleState,
+                    themeIndex: 1,
+                    product: getProductByThemeIndex(1, products),
                   ),
                 ),
               ),
@@ -1126,6 +1306,8 @@ class ProductGridView extends StatelessWidget {
                     fontSize: Dimensions.width * 0.025,
                     priceFontSize: Dimensions.width * 0.017,
                     styleState: styleState,
+                    themeIndex: 2,
+                    product: getProductByThemeIndex(2, products),
                   ),
                 ),
               ),
@@ -1140,6 +1322,8 @@ class ProductGridView extends StatelessWidget {
                     fontSize: Dimensions.width * 0.025,
                     priceFontSize: Dimensions.width * 0.017,
                     styleState: styleState,
+                    themeIndex: 3,
+                    product: getProductByThemeIndex(3, products),
                   ),
                 ),
               ),
@@ -1148,37 +1332,50 @@ class ProductGridView extends StatelessWidget {
     );
   }
 
-  Widget _buildTemplate15(VendorState styleState) {
+  Widget _buildTemplate15(
+    VendorState styleState,
+    List<ThemeProductModel>? products,
+  ) {
     return Builder(
       builder:
           (context) => Row(
             children: [
               Expanded(
-                child: _buildProductCard(
-                  context: context,
-                  width: Dimensions.width * 0.4,
-                  height: double.infinity,
-                  imageHeight: Dimensions.height * 0.275,
-                  fontSize: Dimensions.width * 0.025,
-                  priceFontSize: Dimensions.width * 0.017,
-                  styleState: styleState,
+                child: SizedBox(
+                  height: Dimensions.height * 0.35 * 0.75,
+                  child: _buildProductCard(
+                    context: context,
+                    width: Dimensions.width * 0.4,
+                    height: double.infinity,
+                    imageHeight: Dimensions.height * 0.275,
+                    fontSize: Dimensions.width * 0.025,
+                    priceFontSize: Dimensions.width * 0.017,
+                    styleState: styleState,
+                    themeIndex: 1,
+                    product: getProductByThemeIndex(1, products),
+                  ),
                 ),
               ),
               _buildProductCard(
                 context: context,
                 width: Dimensions.width * 0.55,
-                height: double.infinity,
+                height: Dimensions.height * 0.35 * 0.75,
                 imageHeight: Dimensions.height * 0.275,
                 fontSize: Dimensions.width * 0.025,
                 priceFontSize: Dimensions.width * 0.017,
                 styleState: styleState,
+                themeIndex: 2,
+                product: getProductByThemeIndex(2, products),
               ),
             ],
           ),
     );
   }
 
-  Widget _buildTemplate16(VendorState styleState) {
+  Widget _buildTemplate16(
+    VendorState styleState,
+    List<ThemeProductModel>? products,
+  ) {
     return Builder(
       builder:
           (context) => Row(
@@ -1186,21 +1383,28 @@ class ProductGridView extends StatelessWidget {
               _buildProductCard(
                 context: context,
                 width: Dimensions.width * 0.55,
-                height: double.infinity,
+                height: Dimensions.height * 0.35 * 0.75,
                 imageHeight: Dimensions.height * 0.275,
                 fontSize: Dimensions.width * 0.025,
                 priceFontSize: Dimensions.width * 0.017,
                 styleState: styleState,
+                themeIndex: 1,
+                product: getProductByThemeIndex(1, products),
               ),
               Expanded(
-                child: _buildProductCard(
-                  context: context,
-                  width: Dimensions.width * 0.4,
-                  height: double.infinity,
-                  imageHeight: Dimensions.height * 0.275,
-                  fontSize: Dimensions.width * 0.025,
-                  priceFontSize: Dimensions.width * 0.017,
-                  styleState: styleState,
+                child: SizedBox(
+                  height: Dimensions.height * 0.35 * 0.75,
+                  child: _buildProductCard(
+                    context: context,
+                    width: Dimensions.width * 0.4,
+                    height: double.infinity,
+                    imageHeight: Dimensions.height * 0.275,
+                    fontSize: Dimensions.width * 0.025,
+                    priceFontSize: Dimensions.width * 0.017,
+                    styleState: styleState,
+                    themeIndex: 2,
+                    product: getProductByThemeIndex(2, products),
+                  ),
                 ),
               ),
             ],
@@ -1208,31 +1412,45 @@ class ProductGridView extends StatelessWidget {
     );
   }
 
-  Widget _buildTemplate17(VendorState styleState) {
+  Widget _buildTemplate17(
+    VendorState styleState,
+    List<ThemeProductModel>? products,
+  ) {
     return Builder(
       builder:
           (context) => Row(
             children: [
               Expanded(
-                child: _buildProductCard(
-                  context: context,
-                  width: double.infinity,
-                  height: double.infinity,
-                  imageHeight: Dimensions.height * 0.275,
-                  fontSize: Dimensions.width * 0.025,
-                  priceFontSize: Dimensions.width * 0.017,
-                  styleState: styleState,
+                child: SizedBox(
+                  height: Dimensions.height * 0.35 * 0.75,
+                  child: _buildProductCard(
+                    context: context,
+                    width: double.infinity,
+                    height: double.infinity,
+                    imageHeight: Dimensions.height * 0.275,
+                    fontSize: Dimensions.width * 0.025,
+                    priceFontSize: Dimensions.width * 0.017,
+                    styleState: styleState,
+                    themeIndex: 1,
+                    product: getProductByThemeIndex(1, products),
+                  ),
                 ),
               ),
               Expanded(
-                child: _buildProductCard(
-                  context: context,
-                  width: double.infinity,
-                  height: double.infinity,
-                  imageHeight: Dimensions.height * 0.275,
-                  fontSize: Dimensions.width * 0.025,
-                  priceFontSize: Dimensions.width * 0.017,
-                  styleState: styleState,
+                child: SizedBox(
+                  height: Dimensions.height * 0.35 * 0.75,
+
+                  child: _buildProductCard(
+                    context: context,
+                    width: double.infinity,
+                    height: double.infinity,
+                    imageHeight: Dimensions.height * 0.275,
+                    fontSize: Dimensions.width * 0.025,
+                    priceFontSize: Dimensions.width * 0.017,
+                    styleState: styleState,
+                    themeIndex: 2,
+                    product: getProductByThemeIndex(2, products),
+                  ),
                 ),
               ),
             ],
@@ -1243,12 +1461,16 @@ class ProductGridView extends StatelessWidget {
 
 Widget buildProductGridView({
   required String marketId,
+  String? themeId,
   required int templateIndex,
   bool isAdmin = false,
+  List<ThemeProductModel>? products,
 }) {
   return ProductGridView(
     marketId: marketId,
     templateIndex: templateIndex,
     isAdmin: isAdmin,
+    themeId: themeId = "",
+    products: products,
   );
 }

@@ -1,10 +1,10 @@
-import 'package:asood/features/market/data/model/productl_model.dart';
+import 'package:asood/features/market/data/model/theme_model_model.dart';
 
 class TemplateModel {
   final String id;
   final String name;
   final int order;
-  final List<ProductLModel> products;
+  final List<ThemeProductModel> products;
 
   TemplateModel({
     required this.id,
@@ -20,7 +20,7 @@ class TemplateModel {
       order: json['order'],
       products:
           (json['products'] as List<dynamic>)
-              .map((item) => ProductLModel.fromJson(item))
+              .map((item) => ThemeProductModel.fromJson(item))
               .toList(),
     );
   }
