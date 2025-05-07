@@ -104,7 +104,7 @@ class DioClient {
   // Perform a POST request with multipart data (e.g., file upload)
   Future<Response> postMultipartData(
     String uri,
-    Map<String, String> data,
+    Map<String, dynamic> data,
     List<MultipartBody> multipartBody, {
     Map<String, dynamic>? headers,
   }) async {
@@ -112,7 +112,7 @@ class DioClient {
       FormData formData = FormData();
       // Add text fields
       data.forEach((key, value) {
-        formData.fields.add(MapEntry(key, value));
+        formData.fields.add(MapEntry(key, value.toString()));
       });
       // Add files
       for (MultipartBody multipart in multipartBody) {

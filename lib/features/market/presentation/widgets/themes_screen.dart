@@ -328,11 +328,9 @@ class ProductGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("products --------");
-    print(products);
     return SizedBox(
       width: Dimensions.width,
-      height: Dimensions.height * 0.35,
+      // height: Dimensions.height * 0.35,
       child: BlocBuilder<VendorBloc, VendorState>(
         builder: (context, styleState) {
           switch (templateIndex) {
@@ -414,9 +412,12 @@ class ProductGridView extends StatelessWidget {
         onTap: () {
           if (isAdmin) {
             context.read<AddProductBloc>().add(ResetDataEvent());
-            context.push(AppRoutes.createProduct, extra: marketId);
+            context.push(
+              AppRoutes.createProduct,
+              extra: [marketId, themeId, themeIndex],
+            );
           } else {
-            // context.push(AppRoutes.createProduct, extra: marketId);
+            // context.push(AppRoutes.createProduct, extra: [marketId, themeIndex]);
           }
         },
         child: Column(
@@ -1470,7 +1471,7 @@ Widget buildProductGridView({
     marketId: marketId,
     templateIndex: templateIndex,
     isAdmin: isAdmin,
-    themeId: themeId = "",
+    themeId: themeId!,
     products: products,
   );
 }

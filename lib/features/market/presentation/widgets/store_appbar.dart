@@ -1124,16 +1124,40 @@ class _StoreAppbar2State extends State<StoreAppbar2> {
                   SizedBox(height: Dimensions.height * 0.005),
 
                   //des
-                  Text(
-                    'برند اصل برای همه',
-                    style: TextStyle(
-                      color: widget.fontColor,
-                      fontSize: Dimensions.width * 0.035,
-                      fontFamily: widget.fontFamily,
+                  Expanded(
+                    child: Text(
+                      'برند اصل برای همه',
+                      style: TextStyle(
+                        color: widget.fontColor,
+                        fontSize: Dimensions.width * 0.035,
+                        fontFamily: widget.fontFamily,
+                      ),
                     ),
                   ),
                 ],
               ),
+              if (widget.isAdmin)
+                Positioned(
+                  left: 50,
+                  bottom: 50,
+                  child: InkWell(
+                    onTap: () {
+                      changeLogo(context);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: widget.mainColor,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: widget.mainColor!, width: 2),
+                      ),
+                      child: Icon(
+                        Icons.edit_rounded,
+                        color: widget.fontColor!,
+                        size: Dimensions.width * 0.05,
+                      ),
+                    ),
+                  ),
+                ),
             ],
           ),
         ),

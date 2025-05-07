@@ -1,5 +1,7 @@
+import 'package:asood/core/router/app_routers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shimmer/shimmer.dart';
 
 import 'package:asood/core/constants/constants.dart';
@@ -54,6 +56,14 @@ class _MarketsScreenState extends State<MarketsScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          context.push(AppRoutes.createWorkSpace);
+        },
+        backgroundColor: Colora.primaryColor,
+        child: Icon(Icons.add, color: Colora.scaffold),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       body: BlocConsumer<WorkspaceBloc, WorkspaceState>(
         listener: (context, state) {
           // _tabController.index = state.activeTabIndex;
@@ -70,6 +80,7 @@ class _MarketsScreenState extends State<MarketsScreen>
             );
           }
         },
+
         builder: (context, state) {
           return Container(
             color: Colora.primaryColor,
@@ -141,13 +152,22 @@ class _MarketsScreenState extends State<MarketsScreen>
                                   ),
                                 ],
                               )
-                              : SingleChildScrollView(
-                                child: Column(
-                                  children: [
-                                    SizedBox(height: Dimensions.height * 0.11),
-                                    buildTabStoreList(state),
-                                  ],
-                                ),
+                              : Column(
+                                children: [
+                                  SizedBox(height: Dimensions.height * 0.11),
+                                  Expanded(
+                                    child: ListView.builder(
+                                      itemCount: state.storesList.length,
+                                      itemBuilder: (context, index) {
+                                        return StoreCard(
+                                          index: index,
+                                          market: state.storesList[index],
+                                          bloc: bloc,
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ],
                               ),
                     ),
 
@@ -231,20 +251,6 @@ class _MarketsScreenState extends State<MarketsScreen>
           );
         },
       ),
-    );
-  }
-
-  Widget buildTabStoreList(WorkspaceState state) {
-    return ListView.builder(
-      itemCount: state.storesList.length,
-      shrinkWrap: true,
-      itemBuilder: (context, index) {
-        return StoreCard(
-          index: index,
-          market: state.storesList[index],
-          bloc: bloc,
-        );
-      },
     );
   }
 

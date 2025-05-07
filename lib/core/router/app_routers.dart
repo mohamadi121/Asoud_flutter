@@ -94,9 +94,14 @@ class AppRouter {
         path: AppRoutes.createProduct,
         builder: (context, state) {
           List extra = state.extra as List;
-          final templateId = extra[0];
-          final themeIndex = extra[1];
-          return CreateProduct(marketId: templateId, themeIndex: themeIndex);
+          final marketId = extra[0];
+          final themeId = extra[1];
+          final themeIndex = extra[2];
+          return CreateProduct(
+            marketId: marketId,
+            themeId: themeId,
+            themeIndex: themeIndex,
+          );
         },
       ),
 

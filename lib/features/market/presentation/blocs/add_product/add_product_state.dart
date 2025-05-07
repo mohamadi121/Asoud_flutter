@@ -36,8 +36,8 @@ class AddProductState {
 
   final String selectedCategoryName;
   final String selectedCategoryId;
-  final String? selectedCategoryImage;
-  final XFile? selectedCategoryImageFile;
+  final List<String>? selectedCategoryImage;
+  final List<XFile>? selectedCategoryImageFile;
 
   final List<String> tags;
   final List<String> keywords;
@@ -217,8 +217,8 @@ class AddProductState {
 
     PublishStatusEnum? publishStatus,
 
-    String? selectedCategoryImage,
-    XFile? selectedCategoryImageFile,
+    List<String>? selectedCategoryImage,
+    List<XFile>? selectedCategoryImageFile,
   }) {
     return AddProductState(
       status: status ?? this.status,

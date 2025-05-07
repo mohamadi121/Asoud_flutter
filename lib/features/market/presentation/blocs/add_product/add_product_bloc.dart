@@ -178,10 +178,16 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     UpdateCategoryImageEvent event,
     Emitter<AddProductState> emit,
   ) {
+    final currentImages = state.selectedCategoryImage ?? [];
+    final currentImageFiles = state.selectedCategoryImageFile ?? [];
+
     emit(
       state.copyWith(
-        selectedCategoryImage: event.selectedCategoryImage,
-        selectedCategoryImageFile: event.selectedCategoryImageFile,
+        selectedCategoryImage: [...currentImages, event.selectedCategoryImage],
+        selectedCategoryImageFile: [
+          ...currentImageFiles,
+          event.selectedCategoryImageFile!,
+        ],
       ),
     );
   }
@@ -215,69 +221,78 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
   ) async {
     emit(state.copyWith(status: CWSStatus.loading));
 
-    ProductModel product = ProductModel(
-      market: event.market,
-      type: state.productType.name,
-      name: event.name,
-      description: event.description,
-      technicalDetail: event.technicalDetail,
-      stock: state.productStock,
-      price: state.productPrice,
-      requiredProduct: state.selectedProductGift?.id ?? "",
-      giftProduct: state.selectedProductGift?.id ?? "",
-      isMarketer: state.isMarketer,
-      sellType: sellTypeEnumChanger(state.productSellType),
-
-      /// TODO: SHOULD CHANGE THIS SHIP COST SOON FROM BACKEND
-      shipCost: 2000,
-      shipCostPayType: state.productSendPrice.name,
-      publishStatus: publishStatusEnumChanger(state.publishStatus),
-      subCategory: state.selectedCategoryId,
-      keywords: state.keywords,
-      tag: tagEnumChanger(state.productTag),
-      tagPosition: tagPositionEnumChanger(state.productPosition),
-      mainPrice: state.productPrice,
-      colleaguePrice: state.productPrice,
-      marketerPrice: state.productPrice,
-      maximumSellPrice: state.productPrice,
-      isRequirement: state.isRequirement,
-      image: state.selectedCategoryImage,
-    );
-
     try {
+      ProductModel product = ProductModel(
+        market: event.market,
+        type: state.productType.name,
+        name: event.name,
+        description: event.description,
+        technicalDetail: event.technicalDetail,
+        stock: state.productStock,
+        price: state.productPrice,
+        requiredProduct: state.selectedProductGift?.id ?? "",
+        giftProduct: state.selectedProductGift?.id ?? "",
+        isMarketer: state.isMarketer,
+        sellType: sellTypeEnumChanger(state.productSellType),
+        shipCost: 2000, // TODO: Update ship cost from backend
+        shipCostPayType: state.productSendPrice.name,
+        publishStatus: publishStatusEnumChanger(state.publishStatus),
+        subCategory: state.selectedCategoryId,
+        keywords: state.keywords,
+        tag: tagEnumChanger(state.productTag),
+        tagPosition: tagPositionEnumChanger(state.productPosition),
+        mainPrice: state.productPrice,
+        colleaguePrice: state.productPrice,
+        marketerPrice: state.productPrice,
+        maximumSellPrice: state.productPrice,
+        isRequirement: state.isRequirement,
+        image: state.selectedCategoryImageFile,
+      );
+
       if (state.discountType != DiscountType.none) {
-        var res = await productRepository.createProductDiscount(
+        final discountRes = await productRepository.createProductDiscount(
           event.market,
           state.discountPosition,
           state.discountPercentage,
           state.discountDays,
         );
-        if (res is Success) {
-          // var json = jsonDecode(res.response.toString());
-          emit(state.copyWith(status: CWSStatus.success));
-        } else {
-          emit(state.copyWith(status: CWSStatus.failure));
-          if (kDebugMode) {
-            print('add product error is ${res.errorResponse.toString()}');
-          }
-        }
-      } else {
-        var res = await productRepository.createProduct(product);
-        if (res is Success) {
-          emit(state.copyWith(status: CWSStatus.success));
-        } else if (res is Failure) {
-          emit(state.copyWith(status: CWSStatus.failure));
-          if (kDebugMode) {
-            print('add product error is ${res.errorResponse.toString()}');
-          }
+
+        if (discountRes is! Success) {
+          throw Exception('Failed to create product discount');
         }
       }
+
+      final createProductRes = await productRepository.createProduct(product);
+      if (createProductRes is! Success) {
+        throw Exception(
+          'Failed to create product: ${(createProductRes as Failure).errorResponse}',
+        );
+      }
+      final productModel = ProductModel.fromJson(
+        createProductRes.response as Map<String, dynamic>,
+      );
+      print('productModel is ${productModel.market!}');
+      print('event.themeId is ${event.themeId}');
+      print('event.themeIndex is ${event.themeIndex}');
+      final themeRes = await productRepository.updateMarketTheme(
+        productModel.market!,
+        event.themeId,
+        event.themeIndex,
+      );
+      print('themeRes is $themeRes');
+      if (themeRes is! Success) {
+        throw Exception('Failed to update market theme');
+      }
+
+      emit(state.copyWith(status: CWSStatus.success));
     } catch (e) {
-      emit(state.copyWith(status: CWSStatus.failure));
+      print('Add product error: $e');
       if (kDebugMode) {
-        print('add product error is $e');
+        print('Add product error: $e');
       }
+      emit(state.copyWith(status: CWSStatus.failure));
+    } finally {
+      emit(state.copyWith(status: CWSStatus.initial));
     }
-    emit(state.copyWith(status: CWSStatus.initial));
   }
 }

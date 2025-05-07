@@ -1,5 +1,6 @@
 import 'package:asood/core/router/app_routers.dart';
 import 'package:asood/features/create_workspace/presentation/bloc/create_workspace_bloc.dart';
+import 'package:asood/features/market/presentation/blocs/bloc/market_bloc.dart';
 import 'package:asood/features/market/presentation/widgets/create_product/category_selection_section.dart';
 import 'package:asood/features/market/presentation/widgets/create_product/customer_postprice_section.dart';
 import 'package:asood/features/market/presentation/widgets/create_product/discount_builder.dart';
@@ -29,10 +30,12 @@ class CreateProduct extends StatefulWidget {
   const CreateProduct({
     super.key,
     required this.marketId,
+    required this.themeId,
     required this.themeIndex,
   });
 
   final String marketId;
+  final String themeId;
   final int themeIndex;
   @override
   State<CreateProduct> createState() => _CreateProductState();
@@ -60,7 +63,11 @@ class _CreateProductState extends State<CreateProduct> {
         child: BlocConsumer<AddProductBloc, AddProductState>(
           listener: (context, state) {
             if (state.status == CWSStatus.success) {
+              context.read<MarketBloc>().add(
+                LoadTemplateEvent(marketId: widget.marketId),
+              );
               context.pop();
+
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   backgroundColor: Colora.borderAvatar,
@@ -252,7 +259,9 @@ class _CreateProductState extends State<CreateProduct> {
                                               state.keywords.isEmpty ||
                                               (state.productStockEnable ==
                                                       true &&
-                                                  state.productStock == 0)) {
+                                                  state.productStock == 0) ||
+                                              state.selectedCategoryImage ==
+                                                  null) {
                                             ScaffoldMessenger.of(
                                               context,
                                             ).showSnackBar(
@@ -296,6 +305,10 @@ class _CreateProductState extends State<CreateProduct> {
                                                 description: description.text,
                                                 technicalDetail:
                                                     technicalDescription.text,
+                                                themeId: widget.themeId,
+                                                themeIndex:
+                                                    widget.themeIndex
+                                                        .toString(),
                                               ),
                                             );
                                           }

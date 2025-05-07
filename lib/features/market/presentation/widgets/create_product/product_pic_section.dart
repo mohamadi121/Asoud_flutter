@@ -45,7 +45,7 @@ class ProductPicSection extends StatelessWidget {
                         width: 50,
                         height: 50,
                         child: Image.file(
-                          File(state.selectedCategoryImage!),
+                          File(state.selectedCategoryImage!.first),
                           fit: BoxFit.cover,
                         ),
                       ),

@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:image_picker/image_picker.dart';
+
 class ProductModel {
   String? market;
   String? type;
@@ -22,7 +26,7 @@ class ProductModel {
   String? sellType;
   int? shipCost;
   String? shipCostPayType;
-  String? image;
+  List<XFile>? image;
 
   ProductModel({
     this.market,
@@ -53,29 +57,6 @@ class ProductModel {
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     market = json['market'];
-    type = json['type'];
-    name = json['name'];
-    description = json['description'];
-    technicalDetail = json['technical_detail'];
-    subCategory = json['sub_category'];
-    keywords = json['keywords'];
-    stock = json['stock'];
-    price = json['price'];
-    giftProduct = json['gift_product'];
-    requiredProduct = json['required_product'];
-    isMarketer = json['is_marketer'];
-    sellType = json['sell_type'];
-    shipCost = json['ship_cost'];
-    shipCostPayType = json['ship_cost_pay_type'];
-    publishStatus = json['status'];
-    tagPosition = json['tag_position'];
-    mainPrice = json['main_price'];
-    colleaguePrice = json['colleague_price'];
-    marketerPrice = json['marketer_price'];
-    maximumSellPrice = json['maximum_sell_price'];
-    isRequirement = json['is_requirement'];
-    tag = json['tag'];
-    image = json['image'];
   }
 
   Map<String, dynamic> toJson() {
@@ -109,7 +90,6 @@ class ProductModel {
     }
     data['is_requirement'] = isRequirement;
     data['tag'] = tag;
-    data['image'] = image;
 
     return data;
   }

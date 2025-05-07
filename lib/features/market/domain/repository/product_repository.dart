@@ -13,8 +13,8 @@ abstract class ProductRepository {
   Future<dynamic> createMarketTheme(String marketId, int order) async {}
   Future<dynamic> getMarketTheme(String marketId) async {}
   Future<dynamic> updateMarketTheme(
-    String marketId,
-    List<String> products,
-    int index,
+    String productId,
+    String themeId,
+    String themeIndex,
   ) async {}
 }

@@ -105,16 +105,20 @@ class ProductTagSaleEvent extends AddProductEvent {
 }
 
 class SubmitNewProductEvent extends AddProductEvent {
-  final String? market;
-  final String? name;
-  final String? description;
-  final String? technicalDetail;
+  final String market;
+  final String name;
+  final String description;
+  final String technicalDetail;
+  final String themeId;
+  final String themeIndex;
 
   const SubmitNewProductEvent({
-    this.market,
-    this.name,
-    this.description,
-    this.technicalDetail,
+    required this.market,
+    required this.name,
+    required this.description,
+    required this.technicalDetail,
+    required this.themeId,
+    required this.themeIndex,
   });
 }
 
