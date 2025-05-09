@@ -491,7 +491,11 @@ class _MarketPreviewScreenState extends State<MarketPreviewScreen> {
                               ),
 
                               const SizedBox(height: 7),
-
+                              Container(
+                                height: 150,
+                                decoration: BoxDecoration(),
+                                child: Text("توضیحات"),
+                              ),
                               //buttons
                               Container(
                                 width: Dimensions.width,
@@ -803,41 +807,113 @@ productView(String marketId, styleState, MarketBloc marketBloc) {
   Widget templateWidget(int template) {
     switch (template) {
       case 0:
-        return buildProductGridView(marketId: marketId, templateIndex: 0);
+        return buildProductGridView(
+          marketId: marketId,
+          templateIndex: 0,
+          themeId: "",
+        );
       case 1:
-        return buildProductGridView(marketId: marketId, templateIndex: 1);
+        return buildProductGridView(
+          marketId: marketId,
+          templateIndex: 1,
+          themeId: "",
+        );
       case 2:
-        return buildProductGridView(marketId: marketId, templateIndex: 2);
+        return buildProductGridView(
+          marketId: marketId,
+          templateIndex: 2,
+          themeId: "",
+        );
       case 3:
-        return buildProductGridView(marketId: marketId, templateIndex: 3);
+        return buildProductGridView(
+          marketId: marketId,
+          templateIndex: 3,
+          themeId: "",
+        );
       case 4:
-        return buildProductGridView(marketId: marketId, templateIndex: 4);
+        return buildProductGridView(
+          marketId: marketId,
+          templateIndex: 4,
+          themeId: "",
+        );
       case 5:
-        return buildProductGridView(marketId: marketId, templateIndex: 5);
+        return buildProductGridView(
+          marketId: marketId,
+          templateIndex: 5,
+          themeId: "",
+        );
       case 6:
-        return buildProductGridView(marketId: marketId, templateIndex: 6);
+        return buildProductGridView(
+          marketId: marketId,
+          templateIndex: 6,
+          themeId: "",
+        );
       case 7:
-        return buildProductGridView(marketId: marketId, templateIndex: 7);
+        return buildProductGridView(
+          marketId: marketId,
+          templateIndex: 7,
+          themeId: "",
+        );
       case 8:
-        return buildProductGridView(marketId: marketId, templateIndex: 8);
+        return buildProductGridView(
+          marketId: marketId,
+          templateIndex: 8,
+          themeId: "",
+        );
       case 9:
-        return buildProductGridView(marketId: marketId, templateIndex: 9);
+        return buildProductGridView(
+          marketId: marketId,
+          templateIndex: 9,
+          themeId: "",
+        );
       case 10:
-        return buildProductGridView(marketId: marketId, templateIndex: 10);
+        return buildProductGridView(
+          marketId: marketId,
+          templateIndex: 10,
+          themeId: "",
+        );
       case 11:
-        return buildProductGridView(marketId: marketId, templateIndex: 11);
+        return buildProductGridView(
+          marketId: marketId,
+          templateIndex: 11,
+          themeId: "",
+        );
       case 12:
-        return buildProductGridView(marketId: marketId, templateIndex: 12);
+        return buildProductGridView(
+          marketId: marketId,
+          templateIndex: 12,
+          themeId: "",
+        );
       case 13:
-        return buildProductGridView(marketId: marketId, templateIndex: 13);
+        return buildProductGridView(
+          marketId: marketId,
+          templateIndex: 13,
+          themeId: "",
+        );
       case 14:
-        return buildProductGridView(marketId: marketId, templateIndex: 14);
+        return buildProductGridView(
+          marketId: marketId,
+          templateIndex: 14,
+          themeId: "",
+        );
       case 15:
-        return buildProductGridView(marketId: marketId, templateIndex: 15);
+        return buildProductGridView(
+          marketId: marketId,
+          templateIndex: 15,
+          themeId: "",
+        );
       case 16:
-        return buildProductGridView(marketId: marketId, templateIndex: 16);
+        return buildProductGridView(
+          marketId: marketId,
+          templateIndex: 16,
+          themeId: "",
+        );
       case 17:
-        return buildProductGridView(marketId: marketId, templateIndex: 17);
+        return buildProductGridView(
+          marketId: marketId,
+          templateIndex: 17,
+          themeId: "",
+        );
 
       default:
         return const SizedBox.shrink();
