@@ -51,13 +51,7 @@ class CreateWorkSpaceBloc
           List<MarketScheduleModel> updatedSchedules = List.from(
             state.marketSchedules,
           );
-          for (var element in updatedSchedules) {
-            print("________________________");
-            print(element.market);
-            print(element.day);
-            print(element.start);
-            print(element.end);
-          }
+
           if (existingIndex != -1) {
             // اگر قبلاً وجود داشت، جایگزین کن
             updatedSchedules[existingIndex] = event.scheduleModel;
@@ -225,7 +219,9 @@ class CreateWorkSpaceBloc
           ),
         );
       }
-    } catch (e) {}
+    } catch (e) {
+      emit(state.copyWith(status: CWSStatus.failure));
+    }
   }
 
   //market location

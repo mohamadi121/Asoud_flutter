@@ -93,10 +93,6 @@ void paymentDialog(BuildContext context) {
                       context.pushReplacement(AppRoutes.markets);
                     }
                   }
-
-                  context.read<CreateWorkSpaceBloc>().add(
-                    ChangeWorkspaceTabView(activeTabIndex: 0),
-                  );
                 },
                 text: "بعدا",
                 width: 90,
