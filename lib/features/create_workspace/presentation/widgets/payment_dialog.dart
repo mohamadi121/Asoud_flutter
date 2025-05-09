@@ -1,9 +1,11 @@
 import 'package:asood/core/constants/constants.dart';
+import 'package:asood/core/http_client/api_status.dart';
 import 'package:asood/core/router/app_routers.dart';
 import 'package:asood/core/widgets/custom_button.dart';
 import 'package:asood/core/widgets/custom_dialog.dart';
 import 'package:asood/core/widgets/custom_textfield.dart';
 import 'package:asood/features/create_workspace/presentation/bloc/create_workspace_bloc.dart';
+import 'package:asood/features/vendor/presentation/bloc/workspace/workspace_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -76,9 +78,22 @@ void paymentDialog(BuildContext context) {
               ),
               CustomButton(
                 onPress: () {
-                  Navigator.pop(context);
+                  WorkspaceBloc workSpace = context.read<WorkspaceBloc>();
+                  workSpace.add(LoadStores());
+                  if (workSpace.state.status == CWSStatus.success) {
+                    if (workSpace.state.storesList.length == 1) {
+                      Navigator.pop(context);
+                      context.pushReplacement(AppRoutes.markets);
+                      context.push(
+                        AppRoutes.storeDetail,
+                        extra: workSpace.state.storesList.first,
+                      );
+                    } else {
+                      Navigator.pop(context);
+                      context.pushReplacement(AppRoutes.markets);
+                    }
+                  }
 
-                  context.push(AppRoutes.markets);
                   context.read<CreateWorkSpaceBloc>().add(
                     ChangeWorkspaceTabView(activeTabIndex: 0),
                   );

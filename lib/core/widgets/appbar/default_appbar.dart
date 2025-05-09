@@ -211,7 +211,7 @@ class NewAppBar extends StatelessWidget {
                     color: Colora.scaffold,
                     size: Dimensions.width * 0.07,
                   ),
-                  onPressed: () => context.pop(),
+                  onPressed: () => Navigator.pop(context),
                 ),
       ),
     );

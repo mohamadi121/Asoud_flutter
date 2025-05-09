@@ -110,4 +110,9 @@ class CreateMarketRepositoryImp implements CreateMarketRepository {
   Future uploadMarketSlider(marketId, XFile imagesFile) async {
     return await marketApiService.createMarketSlider(marketId, imagesFile);
   }
+
+  @override
+  Future createSchedule(scheduleMarketModel) async {
+    return await marketApiService.setSchedule(scheduleMarketModel);
+  }
 }

@@ -1,4 +1,3 @@
-import 'package:asood/features/market/data/model/productL_model.dart';
 import 'package:asood/features/market/data/model/theme_model_model.dart';
 import 'package:asood/features/market/presentation/blocs/add_product/add_product_bloc.dart';
 import 'package:cached_network_image/cached_network_image.dart';

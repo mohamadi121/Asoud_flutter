@@ -48,6 +48,8 @@ class CreateWorkSpaceState {
   final List<CountryModel> provinceList;
   final List<CountryModel> cityList;
 
+  final List<MarketScheduleModel> marketSchedules;
+
   const CreateWorkSpaceState({
     required this.marketId,
     required this.idCode,
@@ -90,6 +92,7 @@ class CreateWorkSpaceState {
     required this.countryList,
     required this.provinceList,
     required this.cityList,
+    required this.marketSchedules,
   });
 
   factory CreateWorkSpaceState.initial() {
@@ -150,6 +153,7 @@ class CreateWorkSpaceState {
       countryList: const [],
       provinceList: const [],
       cityList: const [],
+      marketSchedules: [],
     );
   }
 
@@ -195,6 +199,8 @@ class CreateWorkSpaceState {
     List<CountryModel>? countryList,
     List<CountryModel>? provinceList,
     List<CountryModel>? cityList,
+
+    List<MarketScheduleModel>? marketSchedules,
   }) {
     return CreateWorkSpaceState(
       marketId: marketId ?? this.marketId,
@@ -237,6 +243,7 @@ class CreateWorkSpaceState {
       countryList: countryList ?? this.countryList,
       provinceList: provinceList ?? this.provinceList,
       cityList: cityList ?? this.cityList,
+      marketSchedules: marketSchedules ?? this.marketSchedules,
     );
   }
 }

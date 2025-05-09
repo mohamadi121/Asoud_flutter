@@ -54,10 +54,10 @@ class AddProductState {
   final PositionEnum discountPosition;
 
   final bool productGift;
-  final ProductLModel? selectedProductGift;
+  final ThemeProductModel? selectedProductGift;
   final bool productExtra;
-  final ProductLModel? selectedProductExtra;
-  final List<ProductLModel> productList;
+  final ThemeProductModel? selectedProductExtra;
+  final List<ThemeProductModel> productList;
 
   final TagEnum productTag;
   final PositionEnum productPosition;
@@ -202,10 +202,10 @@ class AddProductState {
     PositionEnum? discountPosition,
 
     bool? productGift,
-    ProductLModel? selectedProductGift,
+    ThemeProductModel? selectedProductGift,
     bool? productExtra,
-    ProductLModel? selectedProductExtra,
-    List<ProductLModel>? productList,
+    ThemeProductModel? selectedProductExtra,
+    List<ThemeProductModel>? productList,
 
     TagEnum? productTag,
     PositionEnum? productPosition,

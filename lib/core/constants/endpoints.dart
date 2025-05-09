@@ -24,7 +24,6 @@ class Endpoints {
 
   /// market
   static String baseMarket = 'owner/market';
-  static String ownerMarket = 'owner/market/';
   static String ownerMarketList = '$baseMarket/list/';
   static String ownerCreateMarket = '$baseMarket/create/';
   static String ownerCreateMarketContect = '$baseMarket/contact/create/';
@@ -37,6 +36,7 @@ class Endpoints {
   static String ownerQueue = '$baseMarket/queue';
   static String ownerInactive = '$baseMarket/inactive';
   static String ownerLocationCreate = '$baseMarket/location/create/';
+  static String ownerCreateSchedule = '$baseMarket/schedules/create/';
 
   /// Product
   // owner

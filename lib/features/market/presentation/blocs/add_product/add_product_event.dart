@@ -136,8 +136,8 @@ class LoadProductListEvent extends AddProductEvent {
 }
 
 class ChangeProductGiftAndRequiredEvent extends AddProductEvent {
-  final ProductLModel? selectedProductGift;
-  final ProductLModel? selectedProductExtra;
+  final ThemeProductModel? selectedProductGift;
+  final ThemeProductModel? selectedProductExtra;
 
   const ChangeProductGiftAndRequiredEvent({
     this.selectedProductGift,

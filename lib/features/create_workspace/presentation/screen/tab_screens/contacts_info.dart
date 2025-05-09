@@ -74,7 +74,17 @@ class _ContactsInfoState extends State<ContactsInfo>
   }
 
   submit() {
-    if (_formKey.currentState!.validate()) {
+    bool isEmptySchedule = false;
+    if (widget.bloc.state.hasWorkTime == true &&
+        widget.bloc.state.marketSchedules.isNotEmpty) {
+      isEmptySchedule = false;
+    } else if (widget.bloc.state.hasWorkTime == true &&
+        widget.bloc.state.marketSchedules.isEmpty) {
+      isEmptySchedule = true;
+    }
+    print("onsubmit ----------");
+    print(isEmptySchedule);
+    if (_formKey.currentState!.validate() && isEmptySchedule == false) {
       widget.bloc.add(
         MarketContact(
           marketId: widget.bloc.state.marketId!,
@@ -235,8 +245,14 @@ class _ContactsInfoState extends State<ContactsInfo>
                   switchValue: widget.bloc.state.hasWorkTime,
                 ),
 
-                // if (widget.bloc.state.hasWorkTime == true) WeekdayOpentime(),
-                if (widget.bloc.state.hasWorkTime == true) WeekdayOpentime(),
+                if (widget.bloc.state.hasWorkTime == true)
+                  BlocBuilder<CreateWorkSpaceBloc, CreateWorkSpaceState>(
+                    builder:
+                        (context, state) => WeekdayOpentime(
+                          marketId: widget.bloc.state.marketId!,
+                        ),
+                  ),
+
                 SizedBox(height: Dimensions.height * 0.01),
 
                 //button

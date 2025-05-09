@@ -1,4 +1,5 @@
 import 'package:asood/features/create_workspace/data/model/market_contact.dart';
+import 'package:asood/features/create_workspace/data/model/market_schedule.dart';
 import 'package:dio/dio.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -271,6 +272,19 @@ class CreateMarketApiService {
     try {
       Response res = await dioClient.getData(
         "${Endpoints.ownerCommentList}/$marketId/",
+      );
+      return apiStatus(res);
+    } catch (e) {
+      return customApiStatus();
+    }
+  }
+
+  // post schedule
+  Future setSchedule(MarketScheduleModel marketSchedule) async {
+    try {
+      Response res = await dioClient.postData(
+        Endpoints.ownerCreateSchedule,
+        marketSchedule.toJson(),
       );
       return apiStatus(res);
     } catch (e) {

@@ -1161,15 +1161,6 @@ class _StoreDetailScreenState extends State<StoreDetailScreen> {
                     ],
                   ),
                 ),
-                // bottomNavigationBar: CustomBottomNavigationBar(
-                //   marketId: widget.market.id!,
-                //   initTopColor: initTopColor,
-                //   initBackColor: initBackColor,
-                //   initSecondColor: initSecondColor,
-                //   initFont: initFont,
-                //   initFontColor: initFontColor,
-                //   initFontSecondColor: initFontSecondColor,
-                // ),
               ),
             ),
           );

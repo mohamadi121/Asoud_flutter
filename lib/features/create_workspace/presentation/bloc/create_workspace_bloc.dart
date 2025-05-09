@@ -1,4 +1,5 @@
 import 'package:asood/features/create_workspace/data/model/market_contact.dart';
+import 'package:asood/features/create_workspace/data/model/market_schedule.dart';
 import 'package:asood/features/create_workspace/data/model/marketbase_model.dart';
 
 import 'package:flutter/material.dart';
@@ -33,6 +34,55 @@ class CreateWorkSpaceBloc
 
     on<UpdateMessengerIds>((event, emit) {
       emit(state.copyWith(messengerIds: event.messengerIds));
+    });
+    on<SetMarketScheduleEvent>((event, emit) async {
+      emit(state.copyWith(status: CWSStatus.loading));
+
+      try {
+        var res = await marketRepo.createSchedule(event.scheduleModel);
+
+        if (res is Success) {
+          final existingIndex = state.marketSchedules.indexWhere(
+            (s) =>
+                s.market == event.scheduleModel.market &&
+                s.day == event.scheduleModel.day,
+          );
+
+          List<MarketScheduleModel> updatedSchedules = List.from(
+            state.marketSchedules,
+          );
+          for (var element in updatedSchedules) {
+            print("________________________");
+            print(element.market);
+            print(element.day);
+            print(element.start);
+            print(element.end);
+          }
+          if (existingIndex != -1) {
+            // اگر قبلاً وجود داشت، جایگزین کن
+            updatedSchedules[existingIndex] = event.scheduleModel;
+          } else {
+            // اگر نبود، اضافه کن
+            updatedSchedules.add(event.scheduleModel);
+          }
+
+          emit(
+            state.copyWith(
+              marketSchedules: updatedSchedules,
+              status: CWSStatus.success,
+            ),
+          );
+        } else {
+          emit(
+            state.copyWith(
+              status: CWSStatus.failure,
+              error: res.error.toString(),
+            ),
+          );
+        }
+      } catch (e) {
+        emit(state.copyWith(status: CWSStatus.failure));
+      }
     });
 
     //set market type

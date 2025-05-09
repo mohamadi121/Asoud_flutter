@@ -1,11 +1,16 @@
+import 'package:asood/core/http_client/api_status.dart';
+import 'package:asood/features/create_workspace/data/model/market_schedule.dart';
+import 'package:asood/features/create_workspace/presentation/bloc/create_workspace_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_time_picker_spinner/flutter_time_picker_spinner.dart';
 import 'package:asood/core/constants/constants.dart';
 import 'package:asood/core/widgets/custom_button.dart';
 import 'package:asood/features/create_workspace/presentation/widgets/row_widget_title_widget.dart';
 
 class WeekdayOpentime extends StatefulWidget {
-  const WeekdayOpentime({super.key});
+  final String marketId;
+  const WeekdayOpentime({super.key, required this.marketId});
 
   @override
   State<WeekdayOpentime> createState() => _WeekdayOpentimeState();
@@ -23,6 +28,59 @@ class _WeekdayOpentimeState extends State<WeekdayOpentime> {
   ];
 
   final Map<String, List<TimeOfDay?>> _timeRanges = {};
+  final Map<String, int> _dayIndexMap = {
+    "شنبه": 1,
+    "یکشنبه": 2,
+    "دوشنبه": 3,
+    "سه‌شنبه": 4,
+    "چهارشنبه": 5,
+    "پنج‌شنبه": 6,
+    "جمعه": 7,
+  };
+
+  String _formatTime(TimeOfDay time) {
+    final hour = time.hour.toString().padLeft(2, '0');
+    final minute = time.minute.toString().padLeft(2, '0');
+    return '$hour:$minute';
+  }
+
+  List<MarketScheduleModel> getMarketSchedules(String marketID) {
+    final List<MarketScheduleModel> schedules = [];
+
+    _timeRanges.forEach((dayName, times) {
+      final day = _dayIndexMap[dayName]!.toString();
+
+      // بازه 1
+      final from1 = times[0];
+      final to1 = times[1];
+      if (from1 != null) {
+        schedules.add(
+          MarketScheduleModel(
+            market: marketID,
+            day: day,
+            start: _formatTime(from1),
+            end: to1 != null ? _formatTime(to1) : null,
+          ),
+        );
+      }
+
+      // بازه 2
+      final from2 = times[2];
+      final to2 = times[3];
+      if (from2 != null) {
+        schedules.add(
+          MarketScheduleModel(
+            market: marketID,
+            day: day,
+            start: _formatTime(from2),
+            end: to2 != null ? _formatTime(to2) : null,
+          ),
+        );
+      }
+    });
+
+    return schedules;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,23 +109,48 @@ class _WeekdayOpentimeState extends State<WeekdayOpentime> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        // درون _buildTimeRow برای بازه اول
                         _buildTimeRow(
                           _timeRanges[day]![0],
                           _timeRanges[day]![1],
-                          (from) => setState(() => _timeRanges[day]![0] = from),
+                          (from) {
+                            setState(() => _timeRanges[day]![0] = from);
+
+                            final model = MarketScheduleModel(
+                              market: widget.marketId,
+                              day: _dayIndexMap[day]!.toString(),
+                              start: _formatTime(from),
+                              end: null,
+                            );
+                            BlocProvider.of<CreateWorkSpaceBloc>(
+                              context,
+                            ).add(SetMarketScheduleEvent(scheduleModel: model));
+                          },
                           (to) {
                             if (_isToAfterFrom(_timeRanges[day]![0], to)) {
                               setState(() => _timeRanges[day]![1] = to);
+                              final from = _timeRanges[day]![0]!;
+                              final model = MarketScheduleModel(
+                                market: widget.marketId,
+                                day: _dayIndexMap[day]!.toString(),
+                                start: _formatTime(from),
+                                end: _formatTime(to),
+                              );
+                              BlocProvider.of<CreateWorkSpaceBloc>(context).add(
+                                SetMarketScheduleEvent(scheduleModel: model),
+                              );
                             } else {
                               _showError(context);
                             }
                           },
-                          onClear:
-                              () => setState(() {
-                                _timeRanges[day]![0] = null;
-                                _timeRanges[day]![1] = null;
-                              }),
+                          onClear: () {
+                            setState(() {
+                              _timeRanges[day]![0] = null;
+                              _timeRanges[day]![1] = null;
+                            });
+                          },
                         ),
+
                         const SizedBox(height: 6),
                         _buildTimeRow(
                           _timeRanges[day]![2],
@@ -76,10 +159,27 @@ class _WeekdayOpentimeState extends State<WeekdayOpentime> {
                           (to) {
                             if (_isToAfterFrom(_timeRanges[day]![2], to)) {
                               setState(() => _timeRanges[day]![3] = to);
+
+                              final from = _timeRanges[day]![2];
+                              if (from != null) {
+                                final model = MarketScheduleModel(
+                                  market: widget.marketId,
+                                  day: _dayIndexMap[day]!.toString(),
+                                  start: _formatTime(from),
+                                  end: _formatTime(to),
+                                );
+
+                                BlocProvider.of<CreateWorkSpaceBloc>(
+                                  context,
+                                ).add(
+                                  SetMarketScheduleEvent(scheduleModel: model),
+                                );
+                              }
                             } else {
                               _showError(context);
                             }
                           },
+
                           onClear:
                               () => setState(() {
                                 _timeRanges[day]![2] = null;
@@ -136,23 +236,49 @@ class _WeekdayOpentimeState extends State<WeekdayOpentime> {
           const SizedBox(width: 6),
           const Text("-", style: TextStyle(color: Colors.white)),
           const SizedBox(width: 6),
-          TimePickerField(
-            label: "تا ساعت",
-            time: to,
-            onTap: () {
-              showCustomTimePicker(
-                context: context,
-                initialTime: to ?? TimeOfDay.now(),
-                onTimeSelected: onToSelected,
-              );
-            },
+          GestureDetector(
+            onTap:
+                from != null
+                    ? () {
+                      showCustomTimePicker(
+                        context: context,
+                        initialTime: to ?? TimeOfDay.now(),
+                        onTimeSelected: onToSelected,
+                      );
+                    }
+                    : () {
+                      ScaffoldMessenger.of(context)
+                        ..clearSnackBars()
+                        ..showSnackBar(
+                          const SnackBar(
+                            content: Text("لطفا فیلد اول را وارد کنید"),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                    },
+            child: Opacity(
+              opacity: from != null ? 1.0 : 0.4,
+              child: Container(
+                width: 90,
+                height: 30,
+                decoration: BoxDecoration(
+                  color: Colora.primaryColor,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
+                  child: Text(
+                    to != null ? to.format(context) : "تا ساعت",
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
           ),
           const SizedBox(width: 8),
           if (showClear)
             InkWell(
               onTap: onClear,
-
-              child: Icon(Icons.clear, color: Colors.white),
+              child: const Icon(Icons.clear, color: Colors.white),
             ),
         ],
       ),
@@ -283,17 +409,39 @@ void showCustomTimePicker({
                         ),
                       ),
                     ),
-                    Flexible(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CustomButton(
-                          onPress: () {
-                            Navigator.pop(context);
-                            onTimeSelected(selectedTime);
-                          },
-                          text: "تایید",
-                        ),
-                      ),
+                    BlocBuilder<CreateWorkSpaceBloc, CreateWorkSpaceState>(
+                      builder: (context, state) {
+                        return Flexible(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CustomButton(
+                              onPress: () {
+                                onTimeSelected(selectedTime);
+                                Navigator.pop(context);
+                              },
+
+                              text:
+                                  state.status == CWSStatus.loading
+                                      ? null
+                                      : "تایید",
+                              color: Colors.white,
+                              textColor: Colora.primaryColor,
+                              height: 40,
+                              width: 100,
+                              btnWidget:
+                                  state.status == CWSStatus.loading
+                                      ? const Center(
+                                        child: SizedBox(
+                                          height: 25,
+                                          width: 25,
+                                          child: CircularProgressIndicator(),
+                                        ),
+                                      )
+                                      : null,
+                            ),
+                          ),
+                        );
+                      },
                     ),
                   ],
                 ),

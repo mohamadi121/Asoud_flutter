@@ -1,7 +1,7 @@
 import 'package:asood/core/helper/enum_changer.dart';
 import 'package:asood/core/http_client/api_status.dart';
-import 'package:asood/features/market/data/model/productL_model.dart';
 import 'package:asood/features/market/data/model/product_model.dart';
+import 'package:asood/features/market/data/model/theme_model_model.dart';
 import 'package:asood/features/market/domain/repository/product_repository.dart';
 import 'package:bloc/bloc.dart';
 
@@ -165,8 +165,10 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     emit(state.copyWith(giftStatus: CWSStatus.loading));
     var res = await productRepository.productList(event.marketId);
     if (res is Success) {
-      List<ProductLModel> product =
-          (res.response as List).map((e) => ProductLModel.fromJson(e)).toList();
+      List<ThemeProductModel> product =
+          (res.response as List)
+              .map((e) => ThemeProductModel.fromJson(e))
+              .toList();
 
       emit(state.copyWith(giftStatus: CWSStatus.success, productList: product));
     } else if (res is Failure) {

@@ -138,3 +138,8 @@ class LoadCity extends CreateWorkSpaceEvent {
   final String provinceId;
   const LoadCity({required this.provinceId});
 }
+
+class SetMarketScheduleEvent extends CreateWorkSpaceEvent {
+  final MarketScheduleModel scheduleModel;
+  const SetMarketScheduleEvent({required this.scheduleModel});
+}

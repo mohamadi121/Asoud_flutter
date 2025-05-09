@@ -46,4 +46,6 @@ abstract class CreateMarketRepository {
   Future<dynamic> setMarketTheme(String marketId, ThemeModel themeModel);
 
   Future<dynamic> getMarketComments(marketId);
+
+  Future<dynamic> createSchedule(scheduleMarketModel);
 }
