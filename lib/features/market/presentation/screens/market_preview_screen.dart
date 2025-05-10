@@ -1006,37 +1006,52 @@ productView(String marketId, styleState, MarketBloc marketBloc) {
                     reverse: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          Container(
-                            width: Dimensions.width,
-                            margin: EdgeInsets.symmetric(
-                              vertical: Dimensions.height * 0.0,
-                            ),
-                            child: templateWidget(
-                              state.templateList[index].order,
-                            ),
+                      return SingleChildScrollView(
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxHeight: Dimensions.height * 0.9,
                           ),
 
-                          // SizedBox(
-                          //   height: Dimensions.height * 0.05,
-                          //   width: Dimensions.width,
-                          //   child: Row(
-                          //     children: [
-                          //       IconButton(
-                          //         onPressed: (){
-                          //           marketBloc.add(RemoveTemplateEvent(index: index));
-                          //           // state.templateList.removeAt(index);
-                          //         },
-                          //         icon: const Icon(
-                          //           Icons.delete_rounded,
-                          //           color: Colors.redAccent,
-                          //         )
-                          //       )
-                          //     ],
-                          //   ),
-                          // )
-                        ],
+                          child: IntrinsicHeight(
+                            child: Column(
+                              children: [
+                                Flexible(
+                                  child: templateWidget(
+                                    state.templateList[index].order,
+                                  ),
+                                ),
+                                // Container(
+                                //   width: Dimensions.width,
+                                //   margin: EdgeInsets.symmetric(
+                                //     vertical: Dimensions.height * 0.0,
+                                //   ),
+                                //   child: templateWidget(
+                                //     state.templateList[index].order,
+                                //   ),
+                                // ),
+
+                                // SizedBox(
+                                //   height: Dimensions.height * 0.05,
+                                //   width: Dimensions.width,
+                                //   child: Row(
+                                //     children: [
+                                //       IconButton(
+                                //         onPressed: (){
+                                //           marketBloc.add(RemoveTemplateEvent(index: index));
+                                //           // state.templateList.removeAt(index);
+                                //         },
+                                //         icon: const Icon(
+                                //           Icons.delete_rounded,
+                                //           color: Colors.redAccent,
+                                //         )
+                                //       )
+                                //     ],
+                                //   ),
+                                // )
+                              ],
+                            ),
+                          ),
+                        ),
                       );
                     },
                   );

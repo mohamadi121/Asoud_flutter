@@ -46,6 +46,7 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     on<UpdateProductDetailEvent>(_updateProductDetail);
 
     on<UpdateCategoryImageEvent>(_updateCategoryImage);
+    on<SubmitThemeWithProductEvent>(_submitAndUpdatewithProduct);
   }
 
   _changeProductType(ProductTypeEvent event, Emitter<AddProductState> emit) {
@@ -217,6 +218,10 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     );
   }
 
+  _submitAndUpdatewithProduct(
+    SubmitThemeWithProductEvent event,
+    Emitter<AddProductState> emit,
+  ) async {}
   _submitNewProduct(
     SubmitNewProductEvent event,
     Emitter<AddProductState> emit,
@@ -224,7 +229,22 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
     emit(state.copyWith(status: CWSStatus.loading));
 
     try {
-      ProductModel product = ProductModel(
+      // مرحله ۱: اگر تخفیف فعاله، اول تخفیف رو ایجاد کن
+      if (state.discountType != DiscountType.none) {
+        final discountRes = await productRepository.createProductDiscount(
+          event.market,
+          state.discountPosition,
+          state.discountPercentage,
+          state.discountDays,
+        );
+
+        if (discountRes is! Success) {
+          throw Exception('Failed to create product discount');
+        }
+      }
+
+      // مرحله ۲: ساخت مدل محصول
+      final product = ProductModel(
         market: event.market,
         type: state.productType.name,
         name: event.name,
@@ -251,47 +271,28 @@ class AddProductBloc extends Bloc<AddProductEvent, AddProductState> {
         image: state.selectedCategoryImageFile,
       );
 
-      if (state.discountType != DiscountType.none) {
-        final discountRes = await productRepository.createProductDiscount(
-          event.market,
-          state.discountPosition,
-          state.discountPercentage,
-          state.discountDays,
-        );
-
-        if (discountRes is! Success) {
-          throw Exception('Failed to create product discount');
-        }
-      }
-
+      // مرحله ۳: ساخت محصول
       final createProductRes = await productRepository.createProduct(product);
-      if (createProductRes is! Success) {
-        throw Exception(
-          'Failed to create product: ${(createProductRes as Failure).errorResponse}',
+      if (createProductRes is Success) {
+        final productModel = ProductModel.fromJson(
+          createProductRes.response as Map<String, dynamic>,
         );
-      }
-      final productModel = ProductModel.fromJson(
-        createProductRes.response as Map<String, dynamic>,
-      );
-      print('productModel is ${productModel.market!}');
-      print('event.themeId is ${event.themeId}');
-      print('event.themeIndex is ${event.themeIndex}');
-      final themeRes = await productRepository.updateMarketTheme(
-        productModel.market!,
-        event.themeId,
-        event.themeIndex,
-      );
-      print('themeRes is $themeRes');
-      if (themeRes is! Success) {
-        throw Exception('Failed to update market theme');
-      }
 
-      emit(state.copyWith(status: CWSStatus.success));
+        // مرحله ۴: آپدیت تم مارکت
+        final themeRes = await productRepository.updateMarketTheme(
+          themeId: event.themeId,
+          productId: productModel.product!,
+          themeIndex: event.themeIndex,
+        );
+
+        if (themeRes is! Success) {
+          throw Exception('Failed to update market theme');
+        }
+
+        emit(state.copyWith(status: CWSStatus.success));
+      }
     } catch (e) {
       print('Add product error: $e');
-      if (kDebugMode) {
-        print('Add product error: $e');
-      }
       emit(state.copyWith(status: CWSStatus.failure));
     } finally {
       emit(state.copyWith(status: CWSStatus.initial));

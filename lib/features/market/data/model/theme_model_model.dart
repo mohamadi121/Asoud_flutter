@@ -23,8 +23,8 @@ class ThemeProductModel {
   factory ThemeProductModel.fromJson(Map<String, dynamic> json) {
     return ThemeProductModel(
       id: json['id'],
-      name: json['name'],
-      description: json['description'],
+      name: json['name'] ?? "",
+      description: json['description'] ?? "",
       mainPrice: json['main_price'].toString(),
       stock: json['stock'].toString(),
       images:

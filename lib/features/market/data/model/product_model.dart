@@ -1,6 +1,7 @@
 import 'package:image_picker/image_picker.dart';
 
 class ProductModel {
+  String? product;
   String? market;
   String? type;
   String? name;
@@ -28,6 +29,7 @@ class ProductModel {
 
   ProductModel({
     this.market,
+    this.product,
     this.type,
     this.name,
     this.description,
@@ -55,6 +57,7 @@ class ProductModel {
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     market = json['market'];
+    product = json['product'];
   }
 
   Map<String, dynamic> toJson() {

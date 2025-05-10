@@ -68,7 +68,7 @@ class AddProductState {
   final List productImages;
 
   final PublishStatusEnum publishStatus;
-
+  final String? productId;
   const AddProductState({
     required this.status,
     required this.giftStatus,
@@ -117,6 +117,7 @@ class AddProductState {
 
     required this.selectedCategoryImage,
     required this.selectedCategoryImageFile,
+    this.productId,
   });
 
   factory AddProductState.initial() {
@@ -168,6 +169,7 @@ class AddProductState {
 
       selectedCategoryImage: null,
       selectedCategoryImageFile: null,
+      productId: null,
     );
   }
 
@@ -219,6 +221,9 @@ class AddProductState {
 
     List<String>? selectedCategoryImage,
     List<XFile>? selectedCategoryImageFile,
+
+    // this is loaded product id
+    String? productId,
   }) {
     return AddProductState(
       status: status ?? this.status,
@@ -271,6 +276,7 @@ class AddProductState {
           selectedCategoryImage ?? this.selectedCategoryImage,
       selectedCategoryImageFile:
           selectedCategoryImageFile ?? this.selectedCategoryImageFile,
+      productId: productId ?? this.productId,
     );
   }
 }

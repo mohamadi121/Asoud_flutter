@@ -1468,54 +1468,61 @@ productView(String marketId, styleState, MarketBloc marketBloc) {
                     reverse: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          if (state.templateList.isNotEmpty)
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                width: Dimensions.width * 0.25,
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: Dimensions.width * 0.03,
-                                  vertical: Dimensions.height * 0.005,
-                                ),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  color: styleState.topColor,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Icon(
-                                      Icons.visibility,
-                                      color: styleState.fontColor,
+                      return SingleChildScrollView(
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxHeight: Dimensions.height * 0.9,
+                          ),
+
+                          child: IntrinsicHeight(
+                            child: Column(
+                              children: [
+                                if (state.templateList.isNotEmpty)
+                                  Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Container(
+                                      width: Dimensions.width * 0.25,
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: Dimensions.width * 0.03,
+                                        vertical: Dimensions.height * 0.005,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: styleState.topColor,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.visibility,
+                                            color: styleState.fontColor,
+                                          ),
+                                          Icon(
+                                            Icons.delete,
+                                            color: styleState.fontColor,
+                                          ),
+                                          Icon(
+                                            Icons.settings,
+                                            color: styleState.fontColor,
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    Icon(
-                                      Icons.delete,
-                                      color: styleState.fontColor,
-                                    ),
-                                    Icon(
-                                      Icons.settings,
-                                      color: styleState.fontColor,
-                                    ),
-                                  ],
+                                  ),
+                                Flexible(
+                                  child: templateWidget(
+                                    state.templateList[index].order,
+                                    state.templateList[index].id,
+                                    state.templateList[index].products,
+                                  ),
                                 ),
-                              ),
-                            ),
-                          Container(
-                            width: Dimensions.width,
-                            margin: EdgeInsets.symmetric(
-                              vertical: Dimensions.height * 0.0,
-                            ),
-                            child: templateWidget(
-                              state.templateList[index].order,
-                              state.templateList[index].id,
-                              state.templateList[index].products,
+                              ],
                             ),
                           ),
-                        ],
+                        ),
                       );
                     },
                   );

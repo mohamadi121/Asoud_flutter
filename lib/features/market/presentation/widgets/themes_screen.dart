@@ -182,9 +182,6 @@ class _MultiViewSliderScreenState extends State<MultiViewSliderScreen> {
                         //save button
                         BlocBuilder<MarketBloc, MarketState>(
                           builder: (context, state) {
-                            if (bloc.state.status == CWSStatus.success) {
-                              showSnackBar(context, "قالب با موفقیت اضافه شد");
-                            }
                             return ClipRRect(
                               borderRadius: BorderRadius.circular(20),
                               child: Container(
@@ -199,6 +196,14 @@ class _MultiViewSliderScreenState extends State<MultiViewSliderScreen> {
                                           marketId: bloc.state.marketId,
                                           template: bloc.state.templateIndex,
                                         ),
+                                      );
+                                    }
+                                    if (bloc.state.status ==
+                                            CWSStatus.success &&
+                                        state.status != CWSStatus.loading) {
+                                      showSnackBar(
+                                        context,
+                                        "قالب با موفقیت اضافه شد",
                                       );
                                     }
                                   },
@@ -327,9 +332,8 @@ class ProductGridView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: Dimensions.width,
-      height: Dimensions.height * 0.35,
+    return ConstrainedBox(
+      constraints: BoxConstraints(maxHeight: Dimensions.height * 0.3),
       child: BlocBuilder<VendorBloc, VendorState>(
         builder: (context, styleState) {
           switch (templateIndex) {
@@ -411,7 +415,6 @@ class ProductGridView extends StatelessWidget {
         onTap: () {
           if (isAdmin) {
             context.read<AddProductBloc>().add(ResetDataEvent());
-            context.push(AppRoutes.createProduct, extra: marketId);
             context.push(
               AppRoutes.createProduct,
               extra: [marketId, themeId, themeIndex],
@@ -430,9 +433,9 @@ class ProductGridView extends StatelessWidget {
                   width: width,
                   color: Colors.white,
                   child:
-                      product?.images != null
+                      product?.images != null && product!.images.isNotEmpty
                           ? CachedNetworkImage(
-                            imageUrl: product?.images[0].image ?? "",
+                            imageUrl: product.images[0].image,
                             fit: BoxFit.cover,
                           )
                           : SvgPicture.asset(
@@ -559,44 +562,48 @@ class ProductGridView extends StatelessWidget {
                           ),
                 ),
               ),
-              Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: Dimensions.width * 0.01,
-                      vertical: Dimensions.height * 0.007,
-                    ),
-                    child: Text(
-                      product?.name ?? 'عنوان محصول',
-                      softWrap: true,
-                      maxLines: 1,
-                      style: TextStyle(
-                        color: styleState.fontColor,
-                        fontFamily: styleState.fontFamily,
-                        fontWeight: FontWeight.bold,
-                        fontSize: fontSize,
+              Flexible(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Dimensions.width * 0.01,
+                        vertical: Dimensions.height * 0.007,
+                      ),
+                      child: Text(
+                        product?.name ?? 'عنوان محصول',
+                        softWrap: true,
+                        maxLines: 1,
+                        style: TextStyle(
+                          color: styleState.fontColor,
+                          fontFamily: styleState.fontFamily,
+                          fontWeight: FontWeight.bold,
+                          fontSize: fontSize,
+                        ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: Dimensions.width * 0.01,
-                      vertical: Dimensions.height * 0.005,
-                    ),
-                    child: Text(
-                      product?.mainPrice != ""
-                          ? "${product?.mainPrice} تومان"
-                          : 'قیمت محصول',
-                      softWrap: true,
-                      maxLines: 1,
-                      style: TextStyle(
-                        color: styleState.fontColor,
-                        fontFamily: styleState.fontFamily,
-                        fontSize: priceFontSize,
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: Dimensions.width * 0.01,
+                        vertical: Dimensions.height * 0.005,
+                      ),
+                      child: Text(
+                        product?.mainPrice != ""
+                            ? "${product?.mainPrice} تومان"
+                            : 'قیمت محصول',
+                        softWrap: true,
+                        maxLines: 1,
+                        style: TextStyle(
+                          color: styleState.fontColor,
+                          fontFamily: styleState.fontFamily,
+                          fontSize: priceFontSize,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),
@@ -1084,12 +1091,12 @@ class ProductGridView extends StatelessWidget {
           (context) => Column(
             children: [
               SizedBox(
-                height: Dimensions.height * 0.175,
+                height: Dimensions.height * 0.15,
                 child: _buildRowProductCard(
                   context: context,
                   width: double.infinity,
-                  height: Dimensions.height * 0.175,
-                  imageHeight: Dimensions.height * 0.175,
+                  height: Dimensions.height * 0.15,
+                  imageHeight: Dimensions.height * 0.15,
                   imageWidth: Dimensions.width * 0.4,
                   fontSize: Dimensions.width * 0.025,
                   priceFontSize: Dimensions.width * 0.017,
@@ -1113,12 +1120,12 @@ class ProductGridView extends StatelessWidget {
           (context) => Column(
             children: [
               SizedBox(
-                height: Dimensions.height * 0.175,
+                height: Dimensions.height * 0.15,
                 child: _buildRowProductCard(
                   context: context,
                   width: double.infinity,
-                  height: Dimensions.height * 0.175,
-                  imageHeight: Dimensions.height * 0.175,
+                  height: Dimensions.height * 0.15,
+                  imageHeight: Dimensions.height * 0.15,
                   imageWidth: Dimensions.width * 0.4,
                   fontSize: Dimensions.width * 0.025,
                   priceFontSize: Dimensions.width * 0.017,
@@ -1141,7 +1148,8 @@ class ProductGridView extends StatelessWidget {
       builder:
           (context) => Column(
             children: [
-              Expanded(
+              SizedBox(
+                height: Dimensions.height * 0.35,
                 child: _buildProductCard(
                   context: context,
                   width: double.infinity,
@@ -1357,16 +1365,19 @@ class ProductGridView extends StatelessWidget {
                   ),
                 ),
               ),
-              _buildProductCard(
-                context: context,
-                width: Dimensions.width * 0.55,
+              SizedBox(
                 height: Dimensions.height * 0.35 * 0.75,
-                imageHeight: Dimensions.height * 0.275,
-                fontSize: Dimensions.width * 0.025,
-                priceFontSize: Dimensions.width * 0.017,
-                styleState: styleState,
-                themeIndex: 2,
-                product: getProductByThemeIndex(2, products),
+                child: _buildProductCard(
+                  context: context,
+                  width: Dimensions.width * 0.55,
+                  height: Dimensions.height * 0.35 * 0.75,
+                  imageHeight: Dimensions.height * 0.275,
+                  fontSize: Dimensions.width * 0.025,
+                  priceFontSize: Dimensions.width * 0.017,
+                  styleState: styleState,
+                  themeIndex: 2,
+                  product: getProductByThemeIndex(2, products),
+                ),
               ),
             ],
           ),
@@ -1381,16 +1392,19 @@ class ProductGridView extends StatelessWidget {
       builder:
           (context) => Row(
             children: [
-              _buildProductCard(
-                context: context,
-                width: Dimensions.width * 0.55,
+              SizedBox(
                 height: Dimensions.height * 0.35 * 0.75,
-                imageHeight: Dimensions.height * 0.275,
-                fontSize: Dimensions.width * 0.025,
-                priceFontSize: Dimensions.width * 0.017,
-                styleState: styleState,
-                themeIndex: 1,
-                product: getProductByThemeIndex(1, products),
+                child: _buildProductCard(
+                  context: context,
+                  width: Dimensions.width * 0.55,
+                  height: Dimensions.height * 0.35 * 0.75,
+                  imageHeight: Dimensions.height * 0.275,
+                  fontSize: Dimensions.width * 0.025,
+                  priceFontSize: Dimensions.width * 0.017,
+                  styleState: styleState,
+                  themeIndex: 1,
+                  product: getProductByThemeIndex(1, products),
+                ),
               ),
               Expanded(
                 child: SizedBox(
@@ -1462,7 +1476,7 @@ class ProductGridView extends StatelessWidget {
 
 Widget buildProductGridView({
   required String marketId,
-  required String themeId,
+  String? themeId,
   required int templateIndex,
   bool isAdmin = false,
   List<ThemeProductModel>? products,
@@ -1471,7 +1485,7 @@ Widget buildProductGridView({
     marketId: marketId,
     templateIndex: templateIndex,
     isAdmin: isAdmin,
-    themeId: themeId,
+    themeId: themeId ?? "",
     products: products,
   );
 }

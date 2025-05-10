@@ -126,7 +126,7 @@ class ProductApiService {
     try {
       Response res = await dioClient.putData(
         "${Endpoints.ownerProductThemeUpdate}$themeId/",
-        {"product": productId, "index": themeIndex},
+        {"product": productId, "index": int.parse(themeIndex)},
       );
       return apiStatus(res);
     } catch (e) {
